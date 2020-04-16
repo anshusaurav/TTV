@@ -172,26 +172,33 @@ function loadNewSliders(sliderIndex) {
     console.log(preIn, postIn);
     //prevVidElem.setAttribute('src', videoArr[preIn].videourl );
     //nextVidElem.setAttribute('src', videoArr[postIn].videourl );
-    embedOne = new Twitch.Embed("twitch-embed1", {
-        width: 162,
-        height: 90,
-        layout: "video",
-        autoplay: false,
-        channel: objArr[preIn].user_name
-    });
+    prevVidElem.innerHTML = `<img src=${getImageThumb(objArr[preIn].thumbnail_url)} class='prev-thumb'>`;
+    nextVidElem.innerHTML = `<img src=${getImageThumb(objArr[postIn].thumbnail_url)} class='next-thumb'>`;
+    // embedOne = new Twitch.Embed("twitch-embed1", {
+    //     width: 162,
+    //     height: 90,
+    //     layout: "video",
+    //     autoplay: false,
+    //     channel: objArr[preIn].user_name
+    // });
     embedTwo = new Twitch.Embed("twitch-embed2", {
         width: 720,
         height: 400,
         layout: "video",
         channel: objArr[sliderIndex].user_name
     });
-    embedThree = new Twitch.Embed("twitch-embed3", {
-        width:162,
-        height: 90,
-        layout: "video",
-        autoplay: false,
-        channel: objArr[postIn].user_name
-    });
+    // embedThree = new Twitch.Embed("twitch-embed3", {
+    //     width:162,
+    //     height: 90,
+    //     layout: "video",
+    //     autoplay: false,
+    //     channel: objArr[postIn].user_name
+    // });
 }
-
+function getImageThumb(str){
+    let ind = str.indexOf('-{width}x{height}');
+    let res = str.substr(0, ind) + str.substr(ind+17);
+    console.log(res);
+    return res;
+}
 
