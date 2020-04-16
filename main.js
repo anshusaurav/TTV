@@ -93,8 +93,8 @@ function loadNewSliders(sliderIndex) {
     nextVidElem.innerHTML = `<img src=${getImageThumb(objArr[postIn].thumbnail_url)} class='next-thumb'>`;
 
     embedTwo = new Twitch.Embed("twitch-embed2", {
-        width: 720,
-        height: 400,
+        width: 900,
+        height: 600,
         layout: "video",
         channel: objArr[sliderIndex].user_name
     });
