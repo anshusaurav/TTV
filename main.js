@@ -8,6 +8,10 @@ let langArr = [{"Alpha2_Code": "aa", "Alpha3b_Code": "aar", "Alpha3t_Code": null
 //     {id: 5, username: 'Emperor Penguin', userimg: 'assets/media/image-5.png', videourl: 'assets/media/clip-5.mp4', gamename: 'Counter-Fight', parlorname: 'VivianVR', descone:'Had so much fun playing at VivianVR', desctwo: 'Checkout game on steam. '}
 //     ];
 let objArr = [];
+let sliderIndex;
+let preIn;
+let postIn ;
+var embedOne, embedTwo, embedThree;
 async function showTopic() {
     let feeds,response;
     // response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gameId}`,{
@@ -24,9 +28,13 @@ async function showTopic() {
     });
     feeds = await response.json();
     console.log('search');
-    console.log(feeds);
+    //console.log(feeds);
     objArr.push(...feeds.data);
     console.log(objArr);
+    sliderIndex = 0;
+    preIn = objArr.length-1;
+    postIn = 1;
+    loadNewSliders(sliderIndex)
     // resultPosts.forEach(elem=>createLiElem(elem));
    
 }
@@ -35,10 +43,7 @@ showTopic();
 // https://codepen.io/butlerx/details/xgGaWr
 // initial bug if smaller width
 // size fix for max-width media query calculate and assign proper size
-let sliderIndex = 0;
-let preIn = objArr.length-1;
-let postIn = 1;
-var embedOne, embedTwo, embedThree;
+
 console.log(objArr);  
 let mainContElem = document.querySelector('.full-container');
 let contElem = document.querySelector('.container');
@@ -134,6 +139,9 @@ function previous(event) {
     loadNewSliders(sliderIndex);
 }
 function loadNewSliders(sliderIndex) {
+    embedOne = null;
+    embedTwo = null;
+    embedThree = null; 
     introElem.innerHTML = 
     `<div class='user-img-div'>
     <div class='img-circle'>
