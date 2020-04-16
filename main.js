@@ -1,5 +1,6 @@
 
 let objArr = [];
+let gameArr = []
 let sliderIndex;
 let preIn;
 let postIn ;
@@ -30,6 +31,32 @@ async function showTopic() {
    
 }
 showTopic();
+async function showGame(gameId) {
+    let feeds,response;
+    response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gameId}`,{
+        method:'GET',
+        headers: {
+        'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
+        }
+    });
+    
+    feeds = await response.json();
+    console.log('game');
+    console.log(feeds);
+    gameArr.push(...feeds.data);
+    console.log(gameArr);
+    
+   
+}
+//512804 fifa
+//29595 dota
+//"516575"volarant
+// 33214 fortnite
+//493057  pubg PC
+//"32982" GTA
+//"512710" COD
+
+showGame('512804');
 console.log(objArr);  
 let mainContElem = document.querySelector('.full-container');
 let contElem = document.querySelector('.container');
@@ -95,7 +122,7 @@ function loadNewSliders(sliderIndex) {
     embedTwo = new Twitch.Embed("twitch-embed2", {
         width: 900,
         height: 600,
-        layout: "video",
+        layout: "video-with-chat",
         channel: objArr[sliderIndex].user_name
     });
     

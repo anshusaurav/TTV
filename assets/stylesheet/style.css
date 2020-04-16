@@ -60,12 +60,12 @@ body{
     min-width: 1280px;
     max-height: 660px;
     min-height: 660px;
-    margin: 48px auto;
+    margin: 0 auto;
     display:grid;
     justify-content: space-between;
     grid-template-columns: 2fr 4fr 2fr;
     align-items: center;
-    border: 1px solid indianred;
+    border: 4px ridge #9147FF;
 }
 .prev-video, .next-video{
     /* background-image: url("assets/media/giphy.gif") center center no-repeat; */
@@ -96,10 +96,11 @@ body{
     /* border: 1px solid black; */
 }
 .prev-video-wrapper, .next-video-wrapper{
-    background-image: url("assets/media/giphy.gif") center center no-repeat;
+    
+    background-image: url("/assets/media/giphy.gif") center center no-repeat;
 }
 #twitch-embed2{
-    background-image: url("assets/media/giphy.gif") center center no-repeat;
+    background-image: url("/assets/media/giphy.gif") center center no-repeat;
 }
 .container{
     max-height: 600px;
@@ -141,7 +142,7 @@ body{
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
-    background: url("assets/media/giphy.gif") center center no-repeat;
+    background: url("/assets/media/giphy.gif") center center no-repeat;
     background-repeat: none;
     object-fit: cover;
     /* background: linear-gradient(0deg,rgba(0,0,0,.8),transparent 320px); */
