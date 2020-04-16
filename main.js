@@ -142,6 +142,9 @@ function loadNewSliders(sliderIndex) {
     embedOne = null;
     embedTwo = null;
     embedThree = null; 
+    while(videoElem.firstChild){
+        videoElem.removeChild(videoElem.firstChild);
+    }
     introElem.innerHTML = 
     `<div class='user-img-div'>
     <div class='img-circle'>
