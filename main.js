@@ -38,6 +38,7 @@ showTopic();
 let sliderIndex = 0;
 let preIn = objArr.length-1;
 let postIn = 1;
+var embedOne, embedTwo, embedThree;
 console.log(objArr);  
 let mainContElem = document.querySelector('.full-container');
 let contElem = document.querySelector('.container');
@@ -101,8 +102,8 @@ leftElem.addEventListener('click', previous);
 
 //     }
 // }
-videoElem.addEventListener('ended',next);
-function next(event){
+// videoElem.addEventListener('ended',next);
+function next(event) {
 //event.preventDefault();
 
     console.log('dsdas');
@@ -117,8 +118,8 @@ function next(event){
     if(postIn == objArr.length)
     postIn = 0;
     loadNewSliders(sliderIndex);
-    }
-function previous(event){
+}
+function previous(event) {
     //event.preventDefault();
     console.log('dsdas');
     postIn = sliderIndex;
@@ -132,7 +133,7 @@ function previous(event){
     preIn = objArr.length-1;
     loadNewSliders(sliderIndex);
 }
-function loadNewSliders(sliderIndex){
+function loadNewSliders(sliderIndex) {
     introElem.innerHTML = 
     `<div class='user-img-div'>
     <div class='img-circle'>
@@ -163,22 +164,24 @@ function loadNewSliders(sliderIndex){
     console.log(preIn, postIn);
     //prevVidElem.setAttribute('src', videoArr[preIn].videourl );
     //nextVidElem.setAttribute('src', videoArr[postIn].videourl );
-    new Twitch.Embed("twitch-embed1", {
+    embedOne = new Twitch.Embed("twitch-embed1", {
         width: 162,
         height: 90,
         layout: "video",
+        autoplay: false,
         channel: objArr[preIn].user_name
     });
-    new Twitch.Embed("twitch-embed2", {
+    embedTwo = new Twitch.Embed("twitch-embed2", {
         width: 720,
         height: 400,
         layout: "video",
         channel: objArr[sliderIndex].user_name
     });
-    new Twitch.Embed("twitch-embed3", {
+    embedThree = new Twitch.Embed("twitch-embed3", {
         width:162,
         height: 90,
         layout: "video",
+        autoplay: false,
         channel: objArr[postIn].user_name
     });
 }
