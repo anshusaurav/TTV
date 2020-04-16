@@ -154,31 +154,30 @@ function loadNewSliders(sliderIndex) {
     // });
     // let feeds = await response.json();
     // console.log(feeds);
-    introElem.innerHTML = 
-    `<div class='user-img-div'>
-    <div class='img-circle'>
+    // introElem.innerHTML = 
+    // `<div class='user-img-div'>
+    // <div class='img-circle'>
     
-    </div>
-    </div>
-    <div class='user-info-one'>
-        <h3 class='user-name'>${objArr[preIn].user_id}</h3>
-        <input class='follow-btn' type='button' value='follow'>
-    </div>
-    <div class='user-info-two'>
-        <p class='game-info'> 
-            Playing
-            <span class='game-span'>
-                <a class='game-link'>${objArr[preIn].language}</a>
-            </span> 
-            at 
-            <span class='game-span'>${objArr[preIn].viewer_count} 
-            </span>
-            viewers
-        </p>
-    </div>`
-    descElem.innerHTML = 
-    `<p>${objArr[preIn].title}</p>
-    <p>${objArr[sliderIndex].thumbnail_url}</p>  `;
+    // </div>
+    // </div>
+    // <div class='user-info-one'>
+    //     <h3 class='user-name'>${objArr[sliderIndex].user_id}</h3>
+    //     <input class='follow-btn' type='button' value='follow'>
+    // </div>
+    // <div class='user-info-two'>
+    //     <p class='game-info'> 
+    //         Playing
+    //         <span class='game-span'>
+    //             <a class='game-link'>${objArr[sliderIndex].language}</a>
+    //         </span> 
+    //         at 
+    //         <span class='game-span'>${objArr[sliderIndex].viewer_count} 
+    //         </span>
+    //         viewers
+    //     </p>
+    // </div>`
+    // descElem.innerHTML = 
+    // `<p>${objArr[preIn].title}</p>`;
     //videoElem.setAttribute('src', videoArr[sliderIndex].videourl);
 
     console.log(preIn, postIn);
