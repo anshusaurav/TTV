@@ -56,10 +56,10 @@ body{
 
 .full-container{
     /* border:1px solid khaki; */
-    max-width: 800px;
-    min-width: 800px;
-    max-height: 720px;
-    min-height: 720px;
+    max-width: 1200px;
+    min-width: 1200px;
+    max-height: 460px;
+    min-height: 460px;
     margin: 0 auto;
     display:grid;
     justify-content: space-between;
@@ -70,10 +70,10 @@ body{
     background-image: url("assets/media/giphy.gif") center center no-repeat;
     background-repeat: none;
     object-fit: cover;
-    min-height: 180px;
-    min-width: 96px;
-    max-width: 96px;
-    max-height: 180px;
+    min-height: 90px;
+    min-width: 162px;
+    max-width: 162px;
+    max-height: 90px;
     /* //border: 1px solid indigo; */
     display: flex;
     justify-content: center;
@@ -88,28 +88,28 @@ body{
 .video-nav {
     /* border-radius: 8px; */
     /* margin: 0.75rem 0; */
-    max-height: 180px;
+    max-height: 90px;
     /* width: 100%; */
     object-fit: cover;
     /* border: 1px solid black; */
 }
 .container{
-    max-height: 700px;
-    min-height: 700px;
-    min-width: 400px;
+    max-height: 400px;
+    min-height: 400px;
+    min-width: 720px;
     margin: 0 auto;
-    max-width: 400px;
+    max-width: 720px;
     /* border: 1px solid black; */
 }
 .video-bg {
-    min-height: 700px;
+    min-height: 400px;
     position: absolute;
     /* top: 0;  */
     /* border-radius: 24px; */
     /* margin: 0.75rem 0; */
-    min-width: 400px;
-    max-width: 400px;
-    max-height: 700px;
+    min-width: 720px;
+    max-width: 720px;
+    max-height: 400px;
     object-fit: contain;
     display: block;
     z-index: -10;
@@ -121,10 +121,10 @@ body{
     /* width:100%; */
     /* border: 1px solid rgb(12, 137, 172); */
     /* border-radius: 24px; */
-    min-height: 700px;
-    min-width: 400px;
-    max-width: 400px;
-    max-height: 700px;
+    min-height: 400px;
+    min-width: 720px;
+    max-width: 720px;
+    max-height: 400px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -138,10 +138,10 @@ body{
 .gradient {
     /* border: 1px solid rgb(214, 187, 34); */
     background-image: linear-gradient(0deg,rgba(4, 3, 3, 0.8),transparent 320px);
-    min-width: 400px;
-    max-width: 400px;
-    max-height: 720px;
-    min-height: 720px;
+    min-width: 720px;
+    max-width: 720px;
+    max-height: 400px;
+    min-height: 400px;
     box-sizing: border-box;
     /* top: 0; */
     z-index: 2;
@@ -181,7 +181,6 @@ body{
     font-family: "Montserrat", serif;
 }
 .prev-content, .next-content{
-    height: ;
     cursor: pointer;
 }
 .pre-content p, .next-content p{
@@ -197,10 +196,10 @@ body{
     grid-template-areas: 't t t t t t t t'  
                          't t t t t t t t'  
                          'p . . . . . . n'
-                         '. . . . . . . a' 
-                         '. . . . . . . a'
-                         '. . . . . . . a'
-                         'b b b b b b b a'
+                         '. . . . . . . .' 
+                         '. . . . . . . .'
+                         '. . . . . . . .'
+                         'b b b b b b b b'
                          'c c c c c c c c';
     justify-content: space-between;
     
@@ -212,17 +211,7 @@ body{
     min-height: 400px;
     grid-area: t;
 }
-.side-buttons{
-    color: #fff;
-    grid-area: a;
-    display: grid;
-    grid-template-areas:'f'
-                        's'
-                        't';
-    justify-content: space-between;
-    grid-gap: 10px;
-    margin-right: 8px;
-}
+
 .intro-content{
     grid-area: b;
     display: grid;

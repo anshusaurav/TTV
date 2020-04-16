@@ -140,29 +140,29 @@ function loadNewSliders(sliderIndex){
     </div>
     </div>
     <div class='user-info-one'>
-        <h3 class='user-name'>${videoArr[sliderIndex].username}</h3>
+        <h3 class='user-name'>${objArr[preIn].user_id}</h3>
         <input class='follow-btn' type='button' value='follow'>
     </div>
     <div class='user-info-two'>
         <p class='game-info'> 
             Playing
             <span class='game-span'>
-                <a class='game-link'>${videoArr[sliderIndex].gamename}</a>
+                <a class='game-link'>${objArr[preIn].language}</a>
             </span> 
             at 
             <span class='game-span'>
-                <a class='arcade-link'>${videoArr[sliderIndex].parlorname}</a>
+                <a class='arcade-link'>${objArr[preIn].viewer_count}</a>
             </span>
         </p>
     </div>`
     descElem.innerHTML = 
-    `<p>${videoArr[sliderIndex].descone}</p>
-    <p>${videoArr[sliderIndex].desctwo}</p>  `;
-    videoElem.setAttribute('src', videoArr[sliderIndex].videourl);
+    `<p>${objArr[preIn].title}</p>
+    <p>${videoArr[sliderIndex].thumbnail_url}</p>  `;
+    //videoElem.setAttribute('src', videoArr[sliderIndex].videourl);
 
     console.log(preIn, postIn);
-    prevVidElem.setAttribute('src', videoArr[preIn].videourl );
-    nextVidElem.setAttribute('src', videoArr[postIn].videourl );
+    //prevVidElem.setAttribute('src', videoArr[preIn].videourl );
+    //nextVidElem.setAttribute('src', videoArr[postIn].videourl );
     new Twitch.Embed("twitch-embed1", {
         width: 162,
         height: 90,
