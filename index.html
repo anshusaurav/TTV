@@ -8,9 +8,108 @@
         <!-- <script src="https://kit.fontawesome.com/f4ce9ea80b.js" crossorigin="anonymous"></script> -->
         
         <title>TTV API</title>
+        
     </head>
-    <body>
-        <div id="twitch-embed"></div>
+    <!-- <body>
+        <div id="twitch-embed1"></div>
+        <div id="twitch-embed2"></div> -->
+        <div class='full-container'>
+            <div class='prev-video'>
+                <div class="prev-video-wrapper">
+                    <div id="twitch-embed1" preload autoplay muted controls class="video-nav video-prev" ></div>
+                    <!-- <video src="assets/media/clip-4.mp4" muted="muted" class="video-nav video-prev" type="video/mp4"></video> -->
+                </div>
+                <div class='prev-content'>
+                    <!-- <p>&#8592;</p> -->
+                    <a class='left-arrow'>&#8592;
+                    <!-- <i class="far fa-arrow-alt-circle-left"></i> -->
+                    </a>
+                </div>
+            </div>
+        <div class="container">
+            <div class="backgroundwrap">
+                <div class="gradient">
+                </div>
+                <div id="twitch-embed2" preload autoplay muted controls class="video-bg" >
+                </div>
+                
+
+            </div>
+            <div class="content">
+                <div class='inner-content'>
+                    <div class='topper'>
+                        <p class='hide'></p>
+                    </div>
+                    <a class='next-inside'>
+                        <!-- <p>&#8594;</p> -->
+                        <i class="far fa-arrow-alt-circle-right"></i>
+                    </a>
+                    <a class='prev-inside'>
+                        <i class="far fa-arrow-alt-circle-left"></i>
+                        <!-- <p>&#8592;</p> -->
+                    </a>
+                    <div class='side-buttons'>
+                        <div class ='first-btn'>
+                            <i class="fas fa-heart"></i>
+                            <!-- <span class="tooltiptext">Like</span> -->
+                        </div>
+                        
+                        <div class ='second-btn'>
+                            <i class="fas fa-share-alt"></i>
+                            <!-- <span class="tooltiptext">Share</span> -->
+                        </div>
+                        <div class ='third-btn'>
+                            <i class="fas fa-vr-cardboard"></i>
+                            <!-- <span class="tooltiptext">Book VR</span> -->
+                        </div>
+                    </div>
+                    <div class ='intro-content'>
+                        <div class='user-img-div'>
+                            <div class='img-circle'>
+                            <!-- <img class='user-img' src='assets\media\image-1.png'> -->
+                            </div>
+                        </div>
+                        <div class='user-info-one'>
+                            <h3 class='user-name'>Cartoon Penguin</h3>
+                            <input class='follow-btn' type='button' value='follow'>
+                        </div>
+                        <div class='user-info-two'>
+                            <p class='game-info'> 
+                                Playing
+                                <span class='game-span'>
+                                    <a class='game-link'>FireFly</a>
+                                </span> 
+                                at 
+                                <span class='game-span'>
+                                    <a class='arcade-link'>KopanVR</a>
+                                </span>
+                            </p>
+                        </div>
+                        <!-- <h1>Something Fun</h1> -->
+                    </div>
+                    <div class ='desc-content'>
+                        <p>Had a blast yesterday at KopanVR and scores 87</p>
+                        <p>Can you beat it? hahaha Follow for more...</p>  
+                    </div>  
+                </div>
+            </div>
+        </div>
+            <div class='next-video'>
+                <div class="next-video-wrapper">
+                    <div id="twitch-embed3" preload autoplay muted controls class="video-nav video-next" ></div>
+                    <!-- <video src="assets/media/clip-2.mp4" muted="muted" class="video-nav video-next" type="video/mp4"></video> -->
+                </div>
+                <div class='next-content'>
+                    <a class='right-arrow'>&#8594;
+                    <!-- <i class="far fa-arrow-alt-circle-right"></i> -->
+                    </a>
+                    <!-- <p>&#8594;</p> -->
+                </div>
+            </div>
+        </div>    
+
+
+
 
         <!-- Load the Twitch embed script -->
         <script src="https://embed.twitch.tv/embed/v1.js"></script>
