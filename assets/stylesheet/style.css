@@ -91,6 +91,7 @@ body{
     max-height: 90px;
     /* width: 100%; */
     object-fit: cover;
+    background-image: linear-gradient(0deg,rgba(4, 3, 3, 0.8),transparent 60%);
     /* border: 1px solid black; */
 }
 .container{
@@ -137,7 +138,7 @@ body{
 }
 .gradient {
     /* border: 1px solid rgb(214, 187, 34); */
-    background-image: linear-gradient(0deg,rgba(4, 3, 3, 0.8),transparent 320px);
+    background-image: linear-gradient(0deg,rgba(4, 3, 3, 0.8),transparent 60%);
     min-width: 720px;
     max-width: 720px;
     max-height: 400px;
