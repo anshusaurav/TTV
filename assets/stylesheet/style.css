@@ -65,21 +65,22 @@ body{
     justify-content: space-between;
     grid-template-columns: 2fr 4fr 2fr;
     align-items: center;
-    border: 4px ridge #9147FF;
+    /* border: 4px ridge #9147FF; */
 }
 .f-container{
     /* border:1px solid khaki; */
     max-width: 1400px;
     min-width: 1400px;
-    max-height: 960px;
-    min-height: 960px;
+    max-height: 100vh;
+    min-height: 100vh;
     margin: 0 auto;
    
-    border: 4px ridge #9147FF;
+    /* border: 4px ridge #9147FF; */
 }
 .games-grid{
     display: grid;
     grid-template-columns: repeat(6,1fr);
+    grid-gap: 16px;
     justify-content: space-between;
     margin: 16px;
 }
@@ -94,6 +95,15 @@ body{
     justify-content: center;
     align-items: center;
     grid-gap: 32px;
+    cursor: pointer;
+}
+.game-div:hover{
+    /* -webkit-box-shadow: -5px 5px 2px 0px rgba(145,71,255,1);
+-moz-box-shadow: -5px 5px 2px 0px rgba(145,71,255,1);
+box-shadow: -5px 5px 2px 0px rgba(145,71,255,1); */
+border-bottom: 6px groove rgba(145,71,255,1);
+border-left: 6px groove rgba(145,71,255,1);
+transition: all 0.5s;
 }
 .game-img{
     width: 100%;
@@ -136,11 +146,11 @@ body{
     background-image: url("/assets/media/giphy.gif") center center no-repeat;
 }
 .container{
-    max-height: 600px;
-    min-height: 600px;
-    min-width: 900px;
+    max-height: 400px;
+    min-height: 400px;
+    min-width: 760px;
     margin: 0 auto;
-    max-width: 900px;
+    max-width: 760px;
     border: 1px solid black;
     display: flex;
     justify-content: center;
@@ -148,14 +158,14 @@ body{
     box-shadow: inset 2px 2px 18px 10px rgb(41, 23, 23)(194, 148, 148);
 }
 .video-bg {
-    min-height: 600px;
+    min-height: 400px;
     position: absolute;
     /* top: 0;  */
     /* border-radius: 24px; */
     /* margin: 0.75rem 0; */
-    min-width: 900px;
-    max-width: 900px;
-    max-height: 600px;
+    min-width: 760px;
+    max-width: 760px;
+    max-height: 400px;
     object-fit: contain;
     display: block;
     z-index: 10;
@@ -167,10 +177,10 @@ body{
     /* width:100%; */
     /* border: 1px solid rgb(12, 137, 172); */
     /* border-radius: 24px; */
-    min-height: 600px;
-    min-width: 900px;
-    max-width: 900px;
-    max-height: 600px;
+    min-height: 400px;
+    min-width: 760px;
+    max-width: 760px;
+    max-height: 400px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -197,11 +207,11 @@ body{
 }
 
 .content {
-    min-height: 600px;
+    min-height: 400px;
     color: rgba(208, 204, 230, 0.822);
     padding: 0 16px 0 26px;
-    min-width: 900px;
-    max-width: 900px;
+    min-width: 760px;
+    max-width: 760px;
     font-family: "Montserrat", serif;
 }
 .prev-content, .next-content{

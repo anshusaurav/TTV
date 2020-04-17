@@ -4,6 +4,12 @@ let gameArr = []
 let sliderIndex;
 let preIn;
 let postIn ;
+let games = [{'name':'Volrant', 'game_id': '516575'},
+            {'name':'Pubg', 'game_id': '493057'},
+            {'name':'GTA', 'game_id': '32982'},
+            {'name':'Fortnite', 'game_id': '33214'},
+            {'name':'Fifa', 'game_id': '512804'},
+            {'name':'Dota', 'game_id': '29595'}]
 var embedOne, embedTwo, embedThree;
 async function showTopic() {
     let feeds,response;
@@ -42,9 +48,14 @@ async function showGame(gameId) {
     
     feeds = await response.json();
     console.log('game');
-    console.log(feeds);
-    gameArr.push(...feeds.data);
-    console.log(gameArr);
+    objArr = [];
+
+    objArr.push(...feeds.data);
+    console.log(objArr);
+    sliderIndex = 0;
+    preIn = objArr.length-1;
+    postIn = 1;
+    loadNewSliders(sliderIndex);
     
    
 }
@@ -71,7 +82,7 @@ let prevVidDiv = document.querySelector('.prev-video');
 let nextVidDiv = document.querySelector('.next-video');
 let pVidMainElem = document.querySelector('.prev-inside');
 let nVidMainElem = document.querySelector('.next-inside');
-
+let ggGridElem = document.querySelector('.games-grid');
 // }
 rightElem.addEventListener('click', next);
 leftElem.addEventListener('click', previous);
@@ -120,9 +131,9 @@ function loadNewSliders(sliderIndex) {
     nextVidElem.innerHTML = `<img src=${getImageThumb(objArr[postIn].thumbnail_url)} class='next-thumb'>`;
 
     embedTwo = new Twitch.Embed("twitch-embed2", {
-        width: 900,
-        height: 600,
-        layout: "video-with-chat",
+        width: 760,
+        height: 400,
+        layout: "video",
         channel: objArr[sliderIndex].user_name
     });
     
@@ -132,5 +143,12 @@ function getImageThumb(str){
     let res = str.substr(0, ind) + str.substr(ind+17);
     console.log(res);
     return res;
+}
+
+ggGridElem.addEventListener('click', switchGames);
+function switchGames(event){
+    let gameDivElem = event.target.closest('.game-div');
+    let x = (gameDivElem.dataset.gameid)
+    showGame(x) 
 }
 
