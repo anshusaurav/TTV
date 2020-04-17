@@ -102,9 +102,13 @@ body{
 -moz-box-shadow: -6px 6px 2px 0px rgba(145,71,255,1);
 box-shadow: -6px 6px 2px 0px rgba(145,71,255,1);
 
--webkit-border-radius: 10px;
--moz-border-radius: 10px;
-border-radius: 10px;
+-webkit-border-top-left-radius: 10px;
+-moz-border-top-left-radius: 10px;
+border-top-left-radius: 10px;
+
+-webkit-border-bottom-right-radius: 10px;
+-moz-border-bottom-right-radius: 10px;
+border-bottom-right-radius: 10px;
 transition: all 0.5s;
 }
 .game-img{
@@ -113,7 +117,7 @@ transition: all 0.5s;
     object-fit: fill;
 }
 .prev-video, .next-video{
-    /* background-image: url("assets/media/giphy.gif") center center no-repeat; */
+    
     background-repeat: none;
     object-fit: cover;
     min-height: 90px;
@@ -130,6 +134,11 @@ transition: all 0.5s;
 }
 .prev-video:hover, .next-video:hover{
     opacity: 0.95;
+    transition: opacity 0.5s;
+}
+.prev-thumb, .next-thumb{
+    background: url("assets/media/giphy.gif") center center no-repeat;
+    background-clip: border-box;
 }
 .video-nav {
     /* border-radius: 8px; */
@@ -142,10 +151,10 @@ transition: all 0.5s;
 }
 .prev-video-wrapper, .next-video-wrapper{
     
-    background-image: url("/assets/media/giphy.gif") center center no-repeat;
+    /* background-image: url("assets/media/giphy.gif") center center no-repeat; */
 }
 #twitch-embed2{
-    background-image: url("/assets/media/giphy.gif") center center no-repeat;
+    /* background-image: url("assets/media/giphy.gif") center center no-repeat; */
 }
 .container{
     max-height: 400px;

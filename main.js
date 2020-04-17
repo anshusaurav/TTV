@@ -87,7 +87,7 @@ let ggGridElem = document.querySelector('.games-grid');
 rightElem.addEventListener('click', next);
 leftElem.addEventListener('click', previous);
 
-function next(event) {
+async function next(event) {
 //event.preventDefault();
 
     console.log('dsdas');
@@ -101,9 +101,15 @@ function next(event) {
     postIn = sliderIndex + 1;
     if(postIn == objArr.length)
     postIn = 0;
+    try{
+
+    }
+    catch(error){
+        console.log(error);
+    }
     loadNewSliders(sliderIndex);
 }
-function previous(event) {
+async function previous(event) {
     //event.preventDefault();
     console.log('dsdas');
     postIn = sliderIndex;
@@ -116,6 +122,7 @@ function previous(event) {
     if(preIn == -1)
     preIn = objArr.length-1;
     loadNewSliders(sliderIndex);
+
 }
 function loadNewSliders(sliderIndex) {
     embedOne = null;
@@ -124,19 +131,52 @@ function loadNewSliders(sliderIndex) {
     while(videoElem.firstChild){
         videoElem.removeChild(videoElem.firstChild);
     }
-    
-
     console.log(preIn, postIn);
-    prevVidElem.innerHTML = `<img src=${getImageThumb(objArr[preIn].thumbnail_url)} class='prev-thumb'>`;
-    nextVidElem.innerHTML = `<img src=${getImageThumb(objArr[postIn].thumbnail_url)} class='next-thumb'>`;
-
     embedTwo = new Twitch.Embed("twitch-embed2", {
         width: 760,
         height: 400,
         layout: "video",
         channel: objArr[sliderIndex].user_name
     });
+    let pElem = document.querySelector('.prev-thumb');
     
+    let imgP = new Image();
+    imgP.onload = function(){
+        pElem.src = this.src;
+    };
+    imgP.src = getImageThumb(objArr[preIn].thumbnail_url);
+    //pElem.setAttribute('src', getImageThumb(objArr[preIn].thumbnail_url));
+    //  let timerID = setInterval( console.log, 200, 'Here', pElem.clientHeight, pElem.clientWidth);
+    
+    // while(pElem.clientHeight !=91){
+    //     console.log(pElem.clientHeight, pElem.clientWidth);
+    // }
+    //console.log('printed',pElem.clientHeight);
+    // pElem.style.display = 'inline-block';
+        
+    let nElem = document.querySelector('.next-thumb');
+    nElem.setAttribute('src', getImageThumb(objArr[postIn].thumbnail_url))
+    
+    // while(nElem.clientHeight < 5){
+    //     console.log(pElem.clientHeight, pElem.clientWidth);
+    // }
+    console.log(nElem.clientHeight);
+    // nElem.style.display = 'inline-block';
+    // prevVidElem.innerHTML = `<img src=${(getImageThumb(objArr[preIn].thumbnail_url))} class='prev-thumb'>`;
+    // nextVidElem.innerHTML = `<img src=${(getImageThumb(objArr[postIn].thumbnail_url))} class='next-thumb'>`;
+    
+        
+    
+    
+    
+    
+}
+function imgReplaceGif(){
+    let pElem = document.querySelector('.prev-thumb');
+    console.log(pElem.clientHeight, pElem.clientWidth);
+    pElem = document.querySelector('.next-thumb');
+    console.log(pElem.clientHeight, pElem.clientWidth);
+
 }
 function getImageThumb(str){
     let ind = str.indexOf('-{width}x{height}');
@@ -151,4 +191,5 @@ function switchGames(event){
     let x = (gameDivElem.dataset.gameid)
     showGame(x) 
 }
-
+setTimeout(imgReplaceGif, 20000);
+//https://static-cdn.jtvnw.net/previews-ttv/live_user_yassuo-400x400.jpg"
