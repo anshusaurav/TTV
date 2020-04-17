@@ -98,11 +98,13 @@ body{
     cursor: pointer;
 }
 .game-div:hover{
-    /* -webkit-box-shadow: -5px 5px 2px 0px rgba(145,71,255,1);
--moz-box-shadow: -5px 5px 2px 0px rgba(145,71,255,1);
-box-shadow: -5px 5px 2px 0px rgba(145,71,255,1); */
-border-bottom: 6px groove rgba(145,71,255,1);
-border-left: 6px groove rgba(145,71,255,1);
+    -webkit-box-shadow: -6px 6px 2px 0px rgba(145,71,255,1);
+-moz-box-shadow: -6px 6px 2px 0px rgba(145,71,255,1);
+box-shadow: -6px 6px 2px 0px rgba(145,71,255,1);
+
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+border-radius: 10px;
 transition: all 0.5s;
 }
 .game-img{
