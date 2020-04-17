@@ -83,6 +83,8 @@ let nextVidDiv = document.querySelector('.next-video');
 let pVidMainElem = document.querySelector('.prev-inside');
 let nVidMainElem = document.querySelector('.next-inside');
 let ggGridElem = document.querySelector('.games-grid');
+let pElem = document.querySelector('.prev-thumb');
+let nElem = document.querySelector('.next-thumb');
 // }
 rightElem.addEventListener('click', next);
 leftElem.addEventListener('click', previous);
@@ -138,15 +140,15 @@ function loadNewSliders(sliderIndex) {
         layout: "video",
         channel: objArr[sliderIndex].user_name
     });
-    let pElem = document.querySelector('.prev-thumb');
-    
+    pElem.src = 'assets/media/giphy.gif';
+    nElem.src = 'assets/media/giphy.gif';
     let imgP = new Image();
     imgP.onload = function(){
         pElem.src = this.src;
     };
     imgP.src = getImageThumb(objArr[preIn].thumbnail_url);
 
-    let nElem = document.querySelector('.next-thumb');
+    
     
     let imgN = new Image();
     imgN.onload = function(){
