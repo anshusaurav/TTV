@@ -99,17 +99,17 @@ body{
 }
 .game-div:hover{
     -webkit-box-shadow: -6px 6px 2px 0px rgba(145,71,255,1);
--moz-box-shadow: -6px 6px 2px 0px rgba(145,71,255,1);
-box-shadow: -6px 6px 2px 0px rgba(145,71,255,1);
+    -moz-box-shadow: -6px 6px 2px 0px rgba(145,71,255,1);
+    box-shadow: -6px 6px 2px 0px rgba(145,71,255,1);
 
--webkit-border-top-left-radius: 10px;
--moz-border-top-left-radius: 10px;
-border-top-left-radius: 10px;
+    -webkit-border-top-left-radius: 10px;
+    -moz-border-top-left-radius: 10px;
+    border-top-left-radius: 10px;
 
--webkit-border-bottom-right-radius: 10px;
--moz-border-bottom-right-radius: 10px;
-border-bottom-right-radius: 10px;
-transition: all 0.5s;
+    -webkit-border-bottom-right-radius: 10px;
+    -moz-border-bottom-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    transition: all 0.5s;
 }
 .game-img{
     width: 100%;
@@ -137,8 +137,7 @@ transition: all 0.5s;
     transition: opacity 0.5s;
 }
 .prev-thumb, .next-thumb{
-    background: url("assets/media/giphy.gif") center center no-repeat;
-    background-clip: border-box;
+    
 }
 .video-nav {
     /* border-radius: 8px; */
@@ -149,11 +148,10 @@ transition: all 0.5s;
     background-image: linear-gradient(0deg,rgba(4, 3, 3, 0.8),transparent 60%);
     /* border: 1px solid black; */
 }
-.prev-video-wrapper, .next-video-wrapper{
-    
-    /* background-image: url("assets/media/giphy.gif") center center no-repeat; */
-}
+
 #twitch-embed2{
+    background: url("assets/media/giphy.gif") center center no-repeat;
+
     /* background-image: url("assets/media/giphy.gif") center center no-repeat; */
 }
 .container{
@@ -205,10 +203,10 @@ transition: all 0.5s;
 
 .prev-content, .next-content{
     position: absolute;
-    min-height: 162px;
+    max-height: 90px;
     
     color: rgba(221, 221, 231, 0.95);
-    max-width: 96px;
+    max-width: 162px;
     font-family: "Montserrat", serif;
     font-size: 32px;
     font-weight: 700;
@@ -300,6 +298,8 @@ transition: all 0.5s;
 
 .next-thumb, .prev-thumb{
     width: 100%;
-    height: 100%;
     border-radius: 12px;
+    max-height: 90px;
+    background: url("assets/media/giphy.gif") center center no-repeat;
+    background-clip: border-box;
 }

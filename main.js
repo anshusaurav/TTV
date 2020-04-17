@@ -87,7 +87,7 @@ let ggGridElem = document.querySelector('.games-grid');
 rightElem.addEventListener('click', next);
 leftElem.addEventListener('click', previous);
 
-async function next(event) {
+function next(event) {
 //event.preventDefault();
 
     console.log('dsdas');
@@ -109,7 +109,7 @@ async function next(event) {
     }
     loadNewSliders(sliderIndex);
 }
-async function previous(event) {
+function previous(event) {
     //event.preventDefault();
     console.log('dsdas');
     postIn = sliderIndex;
@@ -145,30 +145,14 @@ function loadNewSliders(sliderIndex) {
         pElem.src = this.src;
     };
     imgP.src = getImageThumb(objArr[preIn].thumbnail_url);
-    //pElem.setAttribute('src', getImageThumb(objArr[preIn].thumbnail_url));
-    //  let timerID = setInterval( console.log, 200, 'Here', pElem.clientHeight, pElem.clientWidth);
-    
-    // while(pElem.clientHeight !=91){
-    //     console.log(pElem.clientHeight, pElem.clientWidth);
-    // }
-    //console.log('printed',pElem.clientHeight);
-    // pElem.style.display = 'inline-block';
-        
+
     let nElem = document.querySelector('.next-thumb');
-    nElem.setAttribute('src', getImageThumb(objArr[postIn].thumbnail_url))
     
-    // while(nElem.clientHeight < 5){
-    //     console.log(pElem.clientHeight, pElem.clientWidth);
-    // }
-    console.log(nElem.clientHeight);
-    // nElem.style.display = 'inline-block';
-    // prevVidElem.innerHTML = `<img src=${(getImageThumb(objArr[preIn].thumbnail_url))} class='prev-thumb'>`;
-    // nextVidElem.innerHTML = `<img src=${(getImageThumb(objArr[postIn].thumbnail_url))} class='next-thumb'>`;
-    
-        
-    
-    
-    
+    let imgN = new Image();
+    imgN.onload = function(){
+        nElem.src = this.src;
+    };
+    imgN.src = getImageThumb(objArr[postIn].thumbnail_url);
     
 }
 function imgReplaceGif(){
