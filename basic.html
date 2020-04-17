@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="assets/stylesheet/style.css">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+        <script src="langauge.js"></script>
+        
+        <title>TTV API</title>
+        
+    </head>
+     <body>
+         
+        <div class='full-container'>
+            <div class='prev-video'>
+                <div class="prev-video-wrapper">
+                    <div class="video-nav video-prev" >
+                        
+                    </div>
+                </div>
+                <div class='prev-content'>
+                    <a class='left-arrow'>&#8592;
+                    </a>
+                </div>
+            </div>
+            <div class="container">
+                <div class="backgroundwrap">
+                    <div id="twitch-embed2" class="video-bg" >
+                    </div>
+                </div>  
+                
+            </div>
+            <div class='next-video'>
+                <div class="next-video-wrapper">
+                    <div class="video-nav video-next" ></div>
+                </div>
+                <div class='next-content'>
+                    <a class='right-arrow'>&#8594;
+                    </a>
+                </div>
+            </div>
+        </div>    
+        <!-- Load the Twitch embed script -->
+        <script src="https://embed.twitch.tv/embed/v1.js"></script>
+        <!-- Create a Twitch.Embed object that will render within the "twitch-embed" root element. -->
+        <script src='main.js'></script>
+    </body>
+</html>
