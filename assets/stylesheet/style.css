@@ -87,7 +87,7 @@ body{
 .result-container{
     display:grid;
     justify-content: space-between;
-    grid-template-columns: 2fr 4fr 2fr;
+    grid-template-columns: 1fr 6fr 1fr;
     align-items: center;
 }
 .game-div{
@@ -155,11 +155,11 @@ body{
     /* background-image: url("assets/media/giphy.gif") center center no-repeat; */
 }
 .container{
-    max-height: 400px;
-    min-height: 400px;
-    min-width: 760px;
+    max-height: 420px;
+    min-height: 420px;
+    min-width: 880px;
     margin: 0 auto;
-    max-width: 760px;
+    max-width: 880px;
     border: 1px solid black;
     display: flex;
     justify-content: center;
@@ -167,14 +167,14 @@ body{
     box-shadow: inset 2px 2px 18px 10px rgb(41, 23, 23)(194, 148, 148);
 }
 .video-bg {
-    min-height: 400px;
+    min-height: 420px;
     position: absolute;
     /* top: 0;  */
     /* border-radius: 24px; */
     /* margin: 0.75rem 0; */
-    min-width: 760px;
-    max-width: 760px;
-    max-height: 400px;
+    min-width: 880px;
+    max-width: 880px;
+    max-height: 420px;
     object-fit: contain;
     display: block;
     z-index: 10;
@@ -186,10 +186,10 @@ body{
     /* width:100%; */
     /* border: 1px solid rgb(12, 137, 172); */
     /* border-radius: 24px; */
-    min-height: 400px;
-    min-width: 760px;
-    max-width: 760px;
-    max-height: 400px;
+    min-height: 420px;
+    min-width: 880px;
+    max-width: 880px;
+    max-height: 420px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -216,11 +216,11 @@ body{
 }
 
 .content {
-    min-height: 400px;
+    min-height: 420px;
     color: rgba(208, 204, 230, 0.822);
     padding: 0 16px 0 26px;
-    min-width: 760px;
-    max-width: 760px;
+    min-width: 880px;
+    max-width: 880px;
     font-family: "Montserrat", serif;
 }
 .prev-content, .next-content{

@@ -135,9 +135,9 @@ function loadNewSliders(sliderIndex) {
     }
     console.log(preIn, postIn);
     embedTwo = new Twitch.Embed("twitch-embed2", {
-        width: 760,
-        height: 400,
-        layout: "video",
+        width: 880,
+        height: 420,
+        layout: "video-with-chat",
         channel: objArr[sliderIndex].user_name
     });
     pElem.src = 'assets/media/giphy.gif';
