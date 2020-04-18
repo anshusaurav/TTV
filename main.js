@@ -86,7 +86,11 @@ let ggGridElem = document.querySelector('.wrapper');
 let pElem = document.querySelector('.prev-thumb');
 let nElem = document.querySelector('.next-thumb');
 let headerElem = document.querySelector('.header');
-// }
+let resultBigElem = document.querySelector('.result-container');
+let trendingButton = document.querySelector('.trending-tab');
+let categoriesButton = document.querySelector('.categores-tab');
+
+let gameNavElem = document.querySelector('.wrapper');
 rightElem.addEventListener('click', next);
 leftElem.addEventListener('click', previous);
 
@@ -96,6 +100,7 @@ let categoryCompList = document.querySelectorAll('.section-tab');
 
 console.log(categoryElemList);
 console.log(categorySupportList);
+gameNavElem.style.display = 'none';
 function placeSupport(){
     categorySupportList.forEach((elem, index) =>{
         elem.style.position = 'absolute';
@@ -106,18 +111,8 @@ function placeSupport(){
 }
 placeSupport();
 window.onresize = placeSupport;
-headerElem.addEventListener('mouseover', toggleLP);
-headerElem.addEventListener('mouseout', toggleLP);
 headerElem.addEventListener('click', toggleDP);
-function toggleLP(event){
-    let wholeElem = event.target.closest('.section-tab');
-        console.log(wholeElem);
-    if(wholeElem){
-        let supportElem = wholeElem.querySelector('.support-header');
-        supportElem.classList.toggle('make-bg-lp');
-        // supportElem.style.background = 'rgb(216, 190, 255)';
-    }
-}
+
 function toggleDP(event){
     
     let wholeElem = event.target.closest('.section-tab');
@@ -125,14 +120,33 @@ function toggleDP(event){
         
         categoryCompList.forEach(elem =>{
             let innElem = elem.querySelector('.support-header');
-            if(innElem.classList.)
+            if(Array.from(innElem.classList).indexOf('make-bg-dp')!=-1)
+                innElem.classList.toggle('make-bg-dp');
             //innElem.classList.toggle('make-bg-dp');
         });
 
         let supportElem = wholeElem.querySelector('.support-header');
         supportElem.classList.toggle('make-bg-dp');
+
+        categoryElemList.forEach(elem =>{
+            if(Array.from(elem.classList).indexOf('make-fg-dp')!=-1)
+                elem.classList.toggle('make-fg-dp');
+        });
+
+        let mainElem = wholeElem.querySelector('.section-header');
+        mainElem.classList.toggle('make-fg-dp');
         // supportElem.style.background = 'rgb(216, 190, 255)';
     }
+}
+trendingButton.addEventListener('click', showTrending);
+categoriesButton.addEventListener('click', showCategories);
+function showTrending(event){
+    gameNavElem.style.display = 'none';
+    resultBigElem.style.borderTop = '2px solid aliceblue';
+}
+function showCategories(event){
+    gameNavElem.style.display = 'grid';
+    resultBigElem.style.borderTop = 'none';
 }
 function next(event) {
 //event.preventDefault();
@@ -220,8 +234,10 @@ function getImageThumb(str){
 ggGridElem.addEventListener('click', switchGames);
 function switchGames(event){
     let gameDivElem = event.target.closest('.game-div');
-    let x = gameDivElem.dataset.gameid;
-    showGame(x) 
+    if(gameDivElem){
+        let x = gameDivElem.dataset.gameid;
+        showGame(x) 
+    }
 }
 function move(elem) {
     var left = 0

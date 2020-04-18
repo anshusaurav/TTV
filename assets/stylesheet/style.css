@@ -63,7 +63,7 @@ body{
 .header{
     display: grid;
     grid-gap: 1rem;
-    grid-template-columns: auto auto;
+    grid-template-columns: repeat(2, auto);
     justify-content: start;
     color: white;
     /* margin: 1.4rem; */
@@ -82,20 +82,17 @@ body{
     max-height: 0.25rem;
     background:white;
 }
-.section-tab:hover{
-    color: rgb(216, 190, 255);
-    transition: all 0.8s ease-out;
-    
-}
 
-.make-bg-lp{
-    background: rgb(175, 133, 238);
-    transition: all 0.8s ease-out;
-}
+
+
 .make-bg-dp{
     background: rgb(113, 18, 255);
-    transition: all 0.8s ease-out;
+    transition: all 0.4s ease-out;
 
+}
+.make-fg-dp{
+    color: rgb(113, 18, 255);
+    transition: all 0.4s ease-out;
 }
 .full-container{
     /* border:1px solid khaki; */
@@ -132,6 +129,9 @@ body{
     justify-content: space-between;
     grid-template-columns: 1fr 6fr 1fr;
     align-items: center;
+    margin: 1rem 0;
+    border-bottom: 2px solid aliceblue;
+    border-top: 2px solid aliceblue;
 }
 .game-div{
     display: flex;
