@@ -68,7 +68,8 @@ body{
     justify-content: space-between;
     align-items: center;
     /* gr   id-gap: 0.2rem; */
-    height: 3.4rem;
+    height: 2rem;
+    padding-bottom: 2rem;
     font-weight: 600;
 }
 .nav-logo{
@@ -106,6 +107,9 @@ body{
     display: inline;
     
 }
+.section-header:hover{
+    color: rgb(113, 18, 255);
+}
 .support-header{
     min-height: 0.25rem;
     max-height: 0.25rem;
@@ -118,12 +122,12 @@ body{
 
 .make-bg-dp{
     background: rgb(113, 18, 255);
-    transition: all 0.4s cubic-bezier(0,-0.67,1,1.71)
+    transition: all 0.4s cubic-bezier(0,-0.67,1,1.71);
 
 }
 .make-fg-dp{
     color: rgb(113, 18, 255);
-    transition: all 0.4s cubic-bezier(0,-0.67,1,1.71)
+    transition: all 0.4s cubic-bezier(0,-0.67,1,1.71);
 }
 .full-container{
     /* border:1px solid khaki; */

@@ -138,7 +138,9 @@ function placeSupport(){
         elem.style.position = 'absolute';
         elem.style.left = (categoryElemList[index].offsetLeft) + 'px';
         elem.style.width = (categoryElemList[index].offsetWidth*1.02 ) + 'px';
-        
+        if(index != 0){
+            elem.style.visibility ='hidden';
+        }
     });
 }
 placeSupport();
@@ -152,14 +154,16 @@ function toggleDP(event){
         
         categoryCompList.forEach(elem =>{
             let innElem = elem.querySelector('.support-header');
-            if(Array.from(innElem.classList).indexOf('make-bg-dp')!=-1)
+            if(Array.from(innElem.classList).indexOf('make-bg-dp')!=-1){
                 innElem.classList.toggle('make-bg-dp');
+                innElem.style.visibility ='hidden';
+            }
             //innElem.classList.toggle('make-bg-dp');
         });
 
         let supportElem = wholeElem.querySelector('.support-header');
         supportElem.classList.toggle('make-bg-dp');
-
+        supportElem.style.visibility ='visible';
         categoryElemList.forEach(elem =>{
             if(Array.from(elem.classList).indexOf('make-fg-dp')!=-1)
                 elem.classList.toggle('make-fg-dp');
