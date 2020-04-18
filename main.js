@@ -94,14 +94,17 @@ let categorySupportList = document.querySelectorAll('.support-header');
 
 console.log(categoryElemList);
 console.log(categorySupportList);
-categorySupportList.forEach((elem, index) =>{
-    // elem.offsetLeft = categoryElemList[index].offsetLeft + 'px';
-    // elem.offsetWidth =  categoryElemList[index].offsetWidth + 'px';
-    elem.style.position = 'absolute';
-    elem.style.left = (categoryElemList[index].offsetLeft) + 'px';
-    elem.style.width = (categoryElemList[index].offsetWidth + 8) + 'px';
-    
-});
+function placeSupport(){
+    categorySupportList.forEach((elem, index) =>{
+        elem.style.position = 'absolute';
+        elem.style.left = (categoryElemList[index].offsetLeft) + 'px';
+        elem.style.width = (categoryElemList[index].offsetWidth ) + 'px';
+        
+    });
+}
+placeSupport();
+window.onresize = placeSupport;
+
 function next(event) {
 //event.preventDefault();
 
