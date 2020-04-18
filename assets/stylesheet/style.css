@@ -52,8 +52,35 @@ body{
     font-size: 16px;
     margin: 0 auto;
     background-color: rgb(5, 5, 5);
+    font-family: 'Montserrat', sans-serif;
 }
 
+h-container{
+    max-width: 1400px;
+    min-width: 1400px;
+    margin: 0 auto;
+}
+.header{
+    display: grid;
+    grid-template-columns: 180px 180px;
+    justify-content: start;
+    color: white;
+    margin-bottom: 1rem;
+
+}
+.header h2{
+    font-size: 1.5rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    margin-left: 2rem;
+    display: inline;
+    
+}
+.support-header{
+    min-height: 0.4rem;
+    max-height: 0.4rem;
+    background:white;
+}
 .full-container{
     /* border:1px solid khaki; */
     max-width: 1280px;
@@ -303,23 +330,29 @@ body{
     max-height: 90px;
     background: url("assets/media/giphy.gif") center center no-repeat;
     background-clip: border-box;
+    min-width: 160px;
 }
 
 
 .wrapper {
     display: grid;
+    margin-top: 8px;
     grid-template-columns: repeat(3, 100%);
     overflow: hidden;
+    
     scroll-behavior: smooth;
     justify-content: space-between;
     min-height: 220px;
+    border-top: 2px solid rgb(240, 248, 255);
+    border-bottom: 2px solid aliceblue;
 }
 .wrapper section {
     width: 100%;
     position: relative;
     display: grid;
+    grid-gap: 12px;
     grid-template-columns: repeat(6, auto);
-    margin: 20px 0;
+    margin: 8px 0;
 }
 .wrapper section .item {
     padding: 0 2px;
@@ -328,7 +361,7 @@ body{
 
 .wrapper section a {
     position: absolute;
-    color: #fff;
+    color: rgb(240, 248, 255);
     text-decoration: none;
     font-size: 3rem;
     background: black;
@@ -370,7 +403,7 @@ body{
     height: 5rem;
 }
 .circle:hover{
-    border: 4px solid rgb(255, 255, 255);
+    border: 4px solid rgb(240, 248, 255);
     background-color: rgba(0,0,0,0.75);
     transition: all 0.2s;
 }

@@ -67,8 +67,8 @@ async function showGame(gameId) {
 //"32982" GTA
 //"512710" COD
 
-showGame('512804');
-console.log(objArr);  
+//showGame('512804');
+//console.log(objArr);  
 let mainContElem = document.querySelector('.full-container');
 let contElem = document.querySelector('.container');
 let rightElem = document.querySelector('.right-arrow');
@@ -89,6 +89,19 @@ let nElem = document.querySelector('.next-thumb');
 rightElem.addEventListener('click', next);
 leftElem.addEventListener('click', previous);
 
+let categoryElemList = document.querySelectorAll('.section-header');
+let categorySupportList = document.querySelectorAll('.support-header');
+
+console.log(categoryElemList);
+console.log(categorySupportList);
+categorySupportList.forEach((elem, index) =>{
+    // elem.offsetLeft = categoryElemList[index].offsetLeft + 'px';
+    // elem.offsetWidth =  categoryElemList[index].offsetWidth + 'px';
+    elem.style.position = 'absolute';
+    elem.style.left = (categoryElemList[index].offsetLeft) + 'px';
+    elem.style.width = (categoryElemList[index].offsetWidth + 8) + 'px';
+    
+});
 function next(event) {
 //event.preventDefault();
 
