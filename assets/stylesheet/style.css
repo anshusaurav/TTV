@@ -62,7 +62,8 @@ body{
 }
 .header{
     display: grid;
-    grid-template-columns: 180px 180px;
+    grid-gap: 1rem;
+    grid-template-columns: auto auto;
     justify-content: start;
     color: white;
     /* margin: 1.4rem; */
@@ -77,9 +78,24 @@ body{
     
 }
 .support-header{
-    min-height: 0.4rem;
-    max-height: 0.4rem;
+    min-height: 0.25rem;
+    max-height: 0.25rem;
     background:white;
+}
+.section-tab:hover{
+    color: rgb(216, 190, 255);
+    transition: all 0.8s ease-out;
+    
+}
+
+.make-bg-lp{
+    background: rgb(175, 133, 238);
+    transition: all 0.8s ease-out;
+}
+.make-bg-dp{
+    background: rgb(113, 18, 255);
+    transition: all 0.8s ease-out;
+
 }
 .full-container{
     /* border:1px solid khaki; */

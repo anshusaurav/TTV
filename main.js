@@ -85,12 +85,14 @@ let nVidMainElem = document.querySelector('.next-inside');
 let ggGridElem = document.querySelector('.wrapper');
 let pElem = document.querySelector('.prev-thumb');
 let nElem = document.querySelector('.next-thumb');
+let headerElem = document.querySelector('.header');
 // }
 rightElem.addEventListener('click', next);
 leftElem.addEventListener('click', previous);
 
 let categoryElemList = document.querySelectorAll('.section-header');
 let categorySupportList = document.querySelectorAll('.support-header');
+let categoryCompList = document.querySelectorAll('.section-tab');
 
 console.log(categoryElemList);
 console.log(categorySupportList);
@@ -98,13 +100,40 @@ function placeSupport(){
     categorySupportList.forEach((elem, index) =>{
         elem.style.position = 'absolute';
         elem.style.left = (categoryElemList[index].offsetLeft) + 'px';
-        elem.style.width = (categoryElemList[index].offsetWidth ) + 'px';
+        elem.style.width = (categoryElemList[index].offsetWidth*1.02 ) + 'px';
         
     });
 }
 placeSupport();
 window.onresize = placeSupport;
+headerElem.addEventListener('mouseover', toggleLP);
+headerElem.addEventListener('mouseout', toggleLP);
+headerElem.addEventListener('click', toggleDP);
+function toggleLP(event){
+    let wholeElem = event.target.closest('.section-tab');
+        console.log(wholeElem);
+    if(wholeElem){
+        let supportElem = wholeElem.querySelector('.support-header');
+        supportElem.classList.toggle('make-bg-lp');
+        // supportElem.style.background = 'rgb(216, 190, 255)';
+    }
+}
+function toggleDP(event){
+    
+    let wholeElem = event.target.closest('.section-tab');
+    if(wholeElem){
+        
+        categoryCompList.forEach(elem =>{
+            let innElem = elem.querySelector('.support-header');
+            if(innElem.classList.)
+            //innElem.classList.toggle('make-bg-dp');
+        });
 
+        let supportElem = wholeElem.querySelector('.support-header');
+        supportElem.classList.toggle('make-bg-dp');
+        // supportElem.style.background = 'rgb(216, 190, 255)';
+    }
+}
 function next(event) {
 //event.preventDefault();
 
