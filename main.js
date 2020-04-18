@@ -1,6 +1,6 @@
 
 let objArr = [];
-let gameArr = []
+let gameArr = [];
 let sliderIndex;
 let preIn;
 let postIn ;
@@ -82,7 +82,7 @@ let prevVidDiv = document.querySelector('.prev-video');
 let nextVidDiv = document.querySelector('.next-video');
 let pVidMainElem = document.querySelector('.prev-inside');
 let nVidMainElem = document.querySelector('.next-inside');
-let ggGridElem = document.querySelector('.games-grid');
+let ggGridElem = document.querySelector('.wrapper');
 let pElem = document.querySelector('.prev-thumb');
 let nElem = document.querySelector('.next-thumb');
 // }
@@ -133,6 +133,7 @@ function loadNewSliders(sliderIndex) {
     while(videoElem.firstChild){
         videoElem.removeChild(videoElem.firstChild);
     }
+    videoElem.style.background = 'url("assets/media/giphy.gif") center center no-repeat;';
     console.log(preIn, postIn);
     embedTwo = new Twitch.Embed("twitch-embed2", {
         width: 880,
@@ -174,8 +175,18 @@ function getImageThumb(str){
 ggGridElem.addEventListener('click', switchGames);
 function switchGames(event){
     let gameDivElem = event.target.closest('.game-div');
-    let x = (gameDivElem.dataset.gameid)
+    let x = gameDivElem.dataset.gameid;
     showGame(x) 
+}
+function move(elem) {
+    var left = 0
+    function frame() {
+        left++  // update parameters
+        elem.style.left = left + 'px' // show frame
+        if (left == 100)  // check finish condition
+            clearInterval(id)
+    }
+    var id = setInterval(frame, 10) // draw every 10ms
 }
 setTimeout(imgReplaceGif, 20000);
 //https://static-cdn.jtvnw.net/previews-ttv/live_user_yassuo-400x400.jpg"
