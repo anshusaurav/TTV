@@ -59,6 +59,23 @@ async function showGame(gameId) {
     
    
 }
+async function showTopGames(){
+    let feeds,response;
+    response = await fetch(`https://api.twitch.tv/helix/games/top`,{
+        method:'GET',
+        headers: {
+        'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
+        }
+    });
+    
+    feeds = await response.json();
+    console.log('top');
+    objArr.push(...feeds.data);
+    console.log(objArr);
+    
+    
+}
+showTopGames();
 //512804 fifa
 //29595 dota
 //"516575"volarant
@@ -69,6 +86,9 @@ async function showGame(gameId) {
 
 //showGame('512804');
 //console.log(objArr);  
+
+
+let logoImgElem = document.querySelector('.logo-img');
 let mainContElem = document.querySelector('.full-container');
 let contElem = document.querySelector('.container');
 let rightElem = document.querySelector('.right-arrow');
@@ -93,6 +113,18 @@ let categoriesButton = document.querySelector('.categores-tab');
 let gameNavElem = document.querySelector('.wrapper');
 rightElem.addEventListener('click', next);
 leftElem.addEventListener('click', previous);
+
+console.log('LOGOOOOOO' + logoImgElem)
+logoImgElem.addEventListener('mouseenter', replaceSrctoGif);
+logoImgElem.addEventListener('mouseleave', replaceSrctoPng);
+function replaceSrctoGif(event){
+    this.src = 'assets/media/logo.gif'
+}
+function replaceSrctoPng(event){
+    this.src = 'assets/media/logo-24.png'
+    
+}
+
 
 let categoryElemList = document.querySelectorAll('.section-header');
 let categorySupportList = document.querySelectorAll('.support-header');
@@ -250,4 +282,3 @@ function move(elem) {
     var id = setInterval(frame, 10) // draw every 10ms
 }
 setTimeout(imgReplaceGif, 20000);
-//https://static-cdn.jtvnw.net/previews-ttv/live_user_yassuo-400x400.jpg"

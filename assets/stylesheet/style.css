@@ -55,6 +55,35 @@ body{
     font-family: 'Montserrat', sans-serif;
 }
 
+.n-container{
+    max-width: 100%;
+    min-width: 100%;
+    margin: 0 auto;
+    background-color: blueviolet;
+}
+.nav-main{
+    width: 25%;
+    display: grid;
+    grid-template-columns: 0.5fr 1fr 1fr 1fr;
+    justify-content: space-between;
+    align-items: center;
+    /* gr   id-gap: 0.2rem; */
+    height: 3.4rem;
+    font-weight: 600;
+}
+.nav-logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    cursor: pointer;
+}
+.logo-img{
+    width: 75%;
+    height: 100%;
+    display: inline-block;
+    padding-bottom: 1rem;
+}
 .h-container{
     max-width: 1400px;
     min-width: 1400px;
@@ -82,17 +111,19 @@ body{
     max-height: 0.25rem;
     background:white;
 }
-
+.section-tab{
+    cursor: pointer;
+}
 
 
 .make-bg-dp{
     background: rgb(113, 18, 255);
-    transition: all 0.4s ease-out;
+    transition: all 0.4s cubic-bezier(0,-0.67,1,1.71)
 
 }
 .make-fg-dp{
     color: rgb(113, 18, 255);
-    transition: all 0.4s ease-out;
+    transition: all 0.4s cubic-bezier(0,-0.67,1,1.71)
 }
 .full-container{
     /* border:1px solid khaki; */
@@ -366,7 +397,8 @@ body{
     width: 100%;
     position: relative;
     display: grid;
-    grid-gap: 12px;
+    /* padding: 0 2rem; */
+    grid-gap: 0.5rem;
     grid-template-columns: repeat(6, auto);
     margin: 8px 0;
 }
@@ -381,7 +413,7 @@ body{
     text-decoration: none;
     font-size: 3rem;
     background: black;
-    width: 80px;
+    /* width: 80px; */
     padding: 20px;
     text-align: center;
     z-index: 1;
