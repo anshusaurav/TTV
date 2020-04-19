@@ -59,17 +59,21 @@ body{
     max-width: 100%;
     min-width: 100%;
     margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-content: space-between;
+    
     background-color: rgb(29, 28, 30);
 }
 .nav-main{
-    width: 35%;
+    width: 3%;
     display: grid;
-    grid-template-columns: 0.5fr 1fr 1fr 1fr 0.3fr;
-    justify-content: space-evenly;
+    grid-template-columns: 48px 120px 128px 108px auto;
+    justify-content: space-between;
     align-items: center;
     /* gr   id-gap: 0.2rem; */
     height: 2rem;
-    padding-bottom: 2rem;
+    padding-bottom: 1rem;
     
 }
 .nav-logo{
@@ -179,6 +183,13 @@ body{
 /* //DRopdown */
 
 
+
+
+.nav-search{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .h-container{
     max-width: 1400px;
