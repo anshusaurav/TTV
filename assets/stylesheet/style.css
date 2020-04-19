@@ -261,7 +261,6 @@ body{
 #twitch-embed2{
     background: url("assets/media/giphy.gif") center center no-repeat;
 
-    /* background-image: url("assets/media/giphy.gif") center center no-repeat; */
 }
 .container{
     max-height: 420px;

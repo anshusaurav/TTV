@@ -83,8 +83,6 @@ function replaceSrctoPng(event){
     this.src = 'assets/media/logo-24.png'
     
 }
-
-
 let categoryElemList = document.querySelectorAll('.section-header');
 let categorySupportList = document.querySelectorAll('.support-header');
 let categoryCompList = document.querySelectorAll('.section-tab');
@@ -195,7 +193,7 @@ function loadNewSliders(sliderIndex) {
     });
     pElem.src = 'assets/media/giphy.gif';
     nElem.src = 'assets/media/giphy.gif';
-    
+
     let imgP = new Image();
     imgP.onload = function(){
         pElem.src = this.src;
