@@ -4,22 +4,10 @@ let gameArr = [];
 let sliderIndex;
 let preIn;
 let postIn ;
-let games = [{'name':'Volrant', 'game_id': '516575'},
-            {'name':'Pubg', 'game_id': '493057'},
-            {'name':'GTA', 'game_id': '32982'},
-            {'name':'Fortnite', 'game_id': '33214'},
-            {'name':'Fifa', 'game_id': '512804'},
-            {'name':'Dota', 'game_id': '29595'}]
 var embedOne, embedTwo, embedThree;
 async function showTopic() {
     let feeds,response;
-    // response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gameId}`,{
-    //     method:'GET',
-    //     headers: {
-    //     'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
-    //     }
-    // });
-    response = await fetch(`https://api.twitch.tv/helix/streams/`,{
+    response = await fetch(`https://api.twitch.tv/helix/streams`,{
         method:'GET',
         headers: {
         'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
@@ -33,6 +21,7 @@ async function showTopic() {
     sliderIndex = 0;
     preIn = objArr.length-1;
     postIn = 1;
+    console.log()
     loadNewSliders(sliderIndex)
    
 }
@@ -59,35 +48,6 @@ async function showGame(gameId) {
     
    
 }
-async function showTopGames(){
-    let feeds,response;
-    response = await fetch(`https://api.twitch.tv/helix/games/top`,{
-        method:'GET',
-        headers: {
-        'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
-        }
-    });
-    
-    feeds = await response.json();
-    console.log('top');
-    objArr.push(...feeds.data);
-    console.log(objArr);
-    
-    
-}
-showTopGames();
-//512804 fifa
-//29595 dota
-//"516575"volarant
-// 33214 fortnite
-//493057  pubg PC
-//"32982" GTA
-//"512710" COD
-
-//showGame('512804');
-//console.log(objArr);  
-
-
 let logoImgElem = document.querySelector('.logo-img');
 let mainContElem = document.querySelector('.full-container');
 let contElem = document.querySelector('.container');
@@ -114,7 +74,6 @@ let gameNavElem = document.querySelector('.wrapper');
 rightElem.addEventListener('click', next);
 leftElem.addEventListener('click', previous);
 
-console.log('LOGOOOOOO' + logoImgElem)
 logoImgElem.addEventListener('mouseenter', replaceSrctoGif);
 logoImgElem.addEventListener('mouseleave', replaceSrctoPng);
 function replaceSrctoGif(event){
@@ -158,7 +117,6 @@ function toggleDP(event){
                 innElem.classList.toggle('make-bg-dp');
                 innElem.style.visibility ='hidden';
             }
-            //innElem.classList.toggle('make-bg-dp');
         });
 
         let supportElem = wholeElem.querySelector('.support-header');
@@ -171,21 +129,21 @@ function toggleDP(event){
 
         let mainElem = wholeElem.querySelector('.section-header');
         mainElem.classList.toggle('make-fg-dp');
-        // supportElem.style.background = 'rgb(216, 190, 255)';
     }
 }
+
 trendingButton.addEventListener('click', showTrending);
 categoriesButton.addEventListener('click', showCategories);
 function showTrending(event){
     gameNavElem.style.display = 'none';
     resultBigElem.style.borderTop = '2px solid aliceblue';
+    showTopic();
 }
 function showCategories(event){
     gameNavElem.style.display = 'grid';
     resultBigElem.style.borderTop = 'none';
 }
 function next(event) {
-//event.preventDefault();
 
     console.log('dsdas');
     preIn = sliderIndex;
@@ -207,7 +165,6 @@ function next(event) {
     loadNewSliders(sliderIndex);
 }
 function previous(event) {
-    //event.preventDefault();
     console.log('dsdas');
     postIn = sliderIndex;
     if(sliderIndex == 0)
@@ -275,14 +232,3 @@ function switchGames(event){
         showGame(x) 
     }
 }
-function move(elem) {
-    var left = 0
-    function frame() {
-        left++  // update parameters
-        elem.style.left = left + 'px' // show frame
-        if (left == 100)  // check finish condition
-            clearInterval(id)
-    }
-    var id = setInterval(frame, 10) // draw every 10ms
-}
-setTimeout(imgReplaceGif, 20000);
