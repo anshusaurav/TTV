@@ -71,6 +71,10 @@ let trendingButton = document.querySelector('.trending-tab');
 let categoriesButton = document.querySelector('.categores-tab');
 
 let gameNavElem = document.querySelector('.wrapper');
+
+let searchHelperElem = document.querySelector('.search-pop-help');
+let searchInputElem = document.querySelector('.search-div');
+
 rightElem.addEventListener('click', next);
 leftElem.addEventListener('click', previous);
 
@@ -83,6 +87,14 @@ function replaceSrctoPng(event){
     this.src = 'assets/media/logo-24.png'
     
 }
+document.addEventListener('click', function(event){
+    var isClickInside = searchInputElem.contains(event.target);
+    if (isClickInside) {
+        searchHelperElem.style.display='block';
+    } else {
+        searchHelperElem.style.display='none';
+    }
+});
 let categoryElemList = document.querySelectorAll('.section-header');
 let categorySupportList = document.querySelectorAll('.support-header');
 let categoryCompList = document.querySelectorAll('.section-tab');
