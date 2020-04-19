@@ -100,8 +100,16 @@ function placeSupport(){
         }
     });
 }
+function placeSupportLater(){
+    categorySupportList.forEach((elem, index) =>{
+        elem.style.position = 'absolute';
+        elem.style.left = (categoryElemList[index].offsetLeft) + 'px';
+        elem.style.width = (categoryElemList[index].offsetWidth*1.02 ) + 'px';
+        
+    });
+}
 placeSupport();
-window.onresize = placeSupport;
+window.onresize = placeSupportLater;
 headerElem.addEventListener('click', toggleDP);
 
 function toggleDP(event){
