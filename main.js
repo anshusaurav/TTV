@@ -196,7 +196,7 @@ function loadNewSliders(sliderIndex) {
     embedTwo = new Twitch.Embed("twitch-embed2", {
         width: 880,
         height: 420,
-        layout: "video-with-chat",
+        layout: "video",
         channel: objArr[sliderIndex].user_name
     });
     pElem.src = 'assets/media/giphy.gif';
