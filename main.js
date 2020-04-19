@@ -195,6 +195,7 @@ function loadNewSliders(sliderIndex) {
     });
     pElem.src = 'assets/media/giphy.gif';
     nElem.src = 'assets/media/giphy.gif';
+    
     let imgP = new Image();
     imgP.onload = function(){
         pElem.src = this.src;
