@@ -6,6 +6,8 @@
         <link rel="stylesheet" href="assets/stylesheet/style.css">
         <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/f4ce9ea80b.js" crossorigin="anonymous"></script>
+        
         <script src="langauge.js"></script>
         <link rel="shortcut icon" type="image/png" href="assets/media/favicon-16x16.png"/>
         <title>TTV API</title>
@@ -41,26 +43,32 @@
                  <div class='left-help-grid'>
                   <div class='left-help-grid-elem'>
                     <div>
-                      <span class='first-help-text'>[game-name]</span> <span class='second-help-text'>search within a game</span>
+                      <span class='first-help-text'>[game-name]</span> 
+                      <span class='second-help-text'>Search within a game</span>
                     </div>
                     <div>
-                      <span class='first-help-text'>user:1234</span> <span class='second-help-text'> search by streamer</span>
+                      <span class='first-help-text'>user:1234</span> 
+                      <span class='second-help-text'>Search by streamer</span>
                     </div>  
                     <div>
-                      <span class='first-help-text'>"words here"</span> <span class='second-help-text'>exact phrase</span>
+                      <span class='first-help-text'>"words here"</span> 
+                      <span class='second-help-text'>Exact phrase</span>
                     </div>
                   </div>
                  </div>
                  <div class='right-help-grid'>
                   <div>
                     <div>
-                      <span class='first-help-text'>answers:0</span> <span class='second-help-text'>unanswered questions</span>
+                      <span class='first-help-text'>viewer:1000</span> 
+                      <span class='second-help-text'>Streams with more than 1000 viewers</span>
                     </div>
                     <div>
-                      <span class='first-help-text'>score:3</span> <span class='second-help-text'>posts with a 3+ score</span>
+                      <span class='first-help-text'>lang:en</span> 
+                      <span class='second-help-text'>Streams in English langauge</span>
                     </div>
                     <div>
-                      <span class='first-help-text'>isaccepted:yes</span> <span class='second-help-text'>search within status</span>
+                      <span class='first-help-text'>isLive:yes</span> 
+                      <span class='second-help-text'>Streams which are Live now</span>
                     </div>
                   </div>
 
@@ -69,12 +77,28 @@
              </div>
            </div>
          </div>
-         <div class='nav-search'>
-          <div>
-            <!-- <input type="text"> -->
+         <div class='nav-user'>
+          <div class='notif-div' data-tooltip="Notifications">
+              <i class="far fa-bell"></i>
+          </div>
+          <div class='whisper-div' data-tooltip="Whispers">
+            <i class="far fa-comment-alt"></i>
+          </div>
+          <div class='gem-bit-flex'>
+           <div class='gem-bits-fa'>
+            <i class="far fa-gem"></i>
+           </div>
+           <div class='get-bits-div'>
+             <p>Get Bits</p>
+           </div>
+           </div>
+           <div class='usr-div'>
+             <div class='usr-img-div'>
+             <img src='assets\media\profile_image-70x70.png' class='usr-img'>
+            </div>
+            </div>
           </div>
         </div>
-       </div>
         <div class='h-container header'>
           <div class='section-tab trending-tab'>
             <h2 class='section-header make-fg-dp'>Trending</h2>
@@ -193,4 +217,4 @@
         <!-- Create a Twitch.Embed object that will render within the "twitch-embed" root element. -->
         <script src='main.js'></script>
     </body>
-</html>
+</html> 
