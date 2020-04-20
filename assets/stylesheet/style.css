@@ -242,6 +242,9 @@ body{
     background: rgb(7, 6, 6);
     
 }
+.right-help-elem, .left-help-elem{
+    margin-bottom: 0.5rem;
+}
 .left-help-grid{
     /* min-height: 5rem; */
     background: rgb(7, 6, 6);

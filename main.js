@@ -74,6 +74,65 @@ let gameNavElem = document.querySelector('.wrapper');
 
 let searchHelperElem = document.querySelector('.search-pop-help');
 let searchInputElem = document.querySelector('.search-div');
+let inputSElem = document.querySelector('.input-search');
+inputSElem.addEventListener('keyup', proceedWithSearch)
+
+function proceedWithSearch(event){
+    if(event.keyCode == 13) {
+        let str = this.value;
+        console.log(str);
+        if(matchesGameByGameId(str).res == true){
+            console.log('Game by ID Found');
+            if(getGameByGameId(matchesGameByGameId(str).result))
+                console.log('Game-Valid');
+        }
+    }
+}
+
+//  For game [game-id]
+//  https://api.twitch.tv/helix/streams?game_id=29595
+
+
+function matchesGameByGameId(gIdWithBraces) {
+    if(gIdWithBraces.trim().startsWith ('[') && gIdWithBraces.endsWith(']'))
+    {
+        let str = gIdWithBraces.trim();
+        let res = str.substr(1, str.length-2);
+        return {res: true, result: res};
+    }
+    return {res: false,result: null};
+}
+
+async function getGameByGameId(gId){
+    let feeds,response;
+    try{
+    response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}`,{
+        method:'GET',
+        headers: {
+        'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
+        }
+    });
+    
+    feeds = await response.json();
+    console.log(feeds);
+    return true;
+    }
+    catch(error){
+        console.log(error);
+        return false;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
 
 rightElem.addEventListener('click', next);
 leftElem.addEventListener('click', previous);
@@ -205,12 +264,12 @@ function loadNewSliders(sliderIndex) {
     }
     videoElem.style.background = 'url("assets/media/giphy.gif") center center no-repeat;';
     console.log(preIn, postIn);
-    // embedTwo = new Twitch.Embed("twitch-embed2", {
-    //     width: 880,
-    //     height: 420,
-    //     layout: "video",
-    //     channel: objArr[sliderIndex].user_name
-    // });
+    embedTwo = new Twitch.Embed("twitch-embed2", {
+        width: 880,
+        height: 420,
+        layout: "video",
+        channel: objArr[sliderIndex].user_name
+    });
     pElem.src = 'assets/media/giphy.gif';
     nElem.src = 'assets/media/giphy.gif';
 
