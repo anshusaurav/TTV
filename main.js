@@ -76,30 +76,116 @@ let searchHelperElem = document.querySelector('.search-pop-help');
 let searchInputElem = document.querySelector('.search-div');
 let inputSElem = document.querySelector('.input-search');
 inputSElem.addEventListener('keyup', proceedWithSearch)
-
-function proceedWithSearch(event){
+let searchFound = true;
+async function proceedWithSearch(event){
     if(event.keyCode == 13) {
         let str = this.value;
         console.log(str);
-        
-        if(matchesGameByGameId(str).res == true){
-            console.log('Valid format');
-            let gameID = matchesGameByGameId(str)
-            if(getGameByGameId(matchesGameByGameId(str).result) == true)
-                console.log('Game-ID-Valid');
-            else
-                console.log('Game-ID not a game')
+        let isDone = false;
+        if(isDone == false){
+            let obj = matchesGameByGameId(str);
+            //console.log(obj.stringify())
+            
+            if(obj.res == true){
+                console.log('Valid format for ' + str);
+                //console.log(getGameByGameId(obj.result) );
+                let bool = await getGameByGameId(obj.result);
+                if(bool)
+                    console.log('Game-ID-Valid');
+                else
+                    console.log('Game-ID not a game');
+                isDone = true;
+            }
+            else{
+                console.log('Invalid format')
+            }
         }
-        else{
-            console.log('Invalid format')
+
+        if(isDone == false){
+
         }
+
     }
 }
 
 //  For game [game-id]
 //  https://api.twitch.tv/helix/streams?game_id=29595
 
+//Check if game id is perfect in format i.e. inside '[', ']'
+function matchesGameByGameId(userNameWithUser) {
+    // if(gIdWithBraces.trim().startsWith ('[') && gIdWithBraces.endsWith(']'))
+    // {
+    //     let str = gIdWithBraces.trim();
+    //     let res = str.substr(1, str.length-2);
+    //     console.log('|'+res+'|');
+    //     //ccheck whether res shouldn't have non-numeric characters
+    //     let regEx = new RegExp(/^\d+$/);
+    //     const found = res.match(regEx);
+    //     if(found)
+    //         return {res: true, result: res};
+    //     return {res: false, result: null};
+    // }
+    // return {res: false,result: null};
+    let str = userNameWithUser.trim();
+    if(str.toLowerCase().startsWith('user:')){
+        let ret = str.slice(5);
+        if(ret.length > 0)
+            return {res: false, result: ret};
+        return {res:false, result: null};
+    }
+    else{
+        return {res:false, result: null};
+    }
+}
 
+//Check if a game exists with extracted correct formatted gameid
+async function getUserByUserName(uName){
+    console.log(gId);
+    let feeds,response;
+    searchFound = false;
+    try{
+    response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}`,{
+        method:'GET',
+        headers: {
+        'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
+        }
+    });
+    
+    feeds = await response.json();
+    console.log('Suny', feeds);
+    // let arr;
+    // arr.push = (feeds.data);
+
+    if(feeds.data.length > 0)
+        return true;
+    return false;
+    }   
+    catch(error){
+        console.log(error);
+        return false;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+//  For game [game-id]
+//https://api.twitch.tv/helix/users?login=gorgc if user exists take id
+//look with that id 
+//https://api.twitch.tv/helix/streams?user_id=108268890
+
+//  https://api.twitch.tv/helix/streams?game_id=29595
+
+//Check if game id is perfect in format i.e. inside '[', ']'
 function matchesGameByGameId(gIdWithBraces) {
     if(gIdWithBraces.trim().startsWith ('[') && gIdWithBraces.endsWith(']'))
     {
@@ -116,11 +202,11 @@ function matchesGameByGameId(gIdWithBraces) {
     return {res: false,result: null};
 }
 
-function isAllNumberPositive(str){
-    
-}
+//Check if a game exists with extracted correct formatted gameid
 async function getGameByGameId(gId){
+    console.log(gId);
     let feeds,response;
+    searchFound = false;
     try{
     response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}`,{
         method:'GET',
@@ -130,11 +216,14 @@ async function getGameByGameId(gId){
     });
     
     feeds = await response.json();
-    console.log(feeds.data.length);
+    console.log('Suny', feeds);
+    // let arr;
+    // arr.push = (feeds.data);
+
     if(feeds.data.length > 0)
         return true;
     return false;
-    }
+    }   
     catch(error){
         console.log(error);
         return false;
