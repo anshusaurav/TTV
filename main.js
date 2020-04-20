@@ -81,10 +81,17 @@ function proceedWithSearch(event){
     if(event.keyCode == 13) {
         let str = this.value;
         console.log(str);
+        
         if(matchesGameByGameId(str).res == true){
-            console.log('Game by ID Found');
-            if(getGameByGameId(matchesGameByGameId(str).result))
-                console.log('Game-Valid');
+            console.log('Valid format');
+            let gameID = matchesGameByGameId(str)
+            if(getGameByGameId(matchesGameByGameId(str).result) == true)
+                console.log('Game-ID-Valid');
+            else
+                console.log('Game-ID not a game')
+        }
+        else{
+            console.log('Invalid format')
         }
     }
 }
@@ -98,11 +105,20 @@ function matchesGameByGameId(gIdWithBraces) {
     {
         let str = gIdWithBraces.trim();
         let res = str.substr(1, str.length-2);
-        return {res: true, result: res};
+        console.log('|'+res+'|');
+        //ccheck whether res shouldn't have non-numeric characters
+        let regEx = new RegExp(/^\d+$/);
+        const found = res.match(regEx);
+        if(found)
+            return {res: true, result: res};
+        return {res: false, result: null};
     }
     return {res: false,result: null};
 }
 
+function isAllNumberPositive(str){
+    
+}
 async function getGameByGameId(gId){
     let feeds,response;
     try{
@@ -114,8 +130,10 @@ async function getGameByGameId(gId){
     });
     
     feeds = await response.json();
-    console.log(feeds);
-    return true;
+    console.log(feeds.data.length);
+    if(feeds.data.length > 0)
+        return true;
+    return false;
     }
     catch(error){
         console.log(error);
