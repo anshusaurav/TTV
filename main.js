@@ -87,7 +87,7 @@ async function proceedWithSearch(event){
             //console.log(obj.stringify())
             
             if(obj.res == true){
-                console.log('Valid format for ' + str);
+                console.log('Valid format for game ' + str);
                 //console.log(getGameByGameId(obj.result) );
                 let bool = await getGameByGameId(obj.result);
                 if(bool)
@@ -97,12 +97,31 @@ async function proceedWithSearch(event){
                 isDone = true;
             }
             else{
-                console.log('Invalid format')
+                console.log('Invalid format for game')
             }
         }
 
         if(isDone == false){
-
+            let obj = matchesUserByUserName(str);
+            //console.log(obj.stringify())
+            
+            if(obj.res == true){
+                console.log('Valid format for user ' + obj.result);
+                //console.log(getGameByGameId(obj.result) );
+                let qRes = await getStatusByUserName(obj.result);    //return object {user found, but not live or user found and live, user not found}
+                if(qRes.res){
+                    if(qRes.isLive)
+                        console.log(qRes.isLive  + ' Player is live');
+                    else
+                        console.log(qRes.isLive  + ' Player is not live');
+                }
+                else
+                    console.log(qRes.isLive + ' Player is live');
+                isDone = true;
+            }
+            else{
+                console.log('Invalid format for user')
+            }
         }
 
     }
@@ -142,7 +161,7 @@ async function getGameByGameId(gId){
     });
     
     feeds = await response.json();
-    console.log('Suny', feeds);
+    console.log('Sunygame', feeds);
     // let arr;
     // arr.push = (feeds.data);
 
@@ -194,7 +213,7 @@ function matchesUserByUserName(userNameWithUser) {
     if(str.toLowerCase().startsWith('user:')){
         let ret = str.slice(5);
         if(ret.length > 0)
-            return {res: false, result: ret};
+            return {res: true, result: ret};
         return {res:false, result: null};
     }
     else{
@@ -204,26 +223,39 @@ function matchesUserByUserName(userNameWithUser) {
 
 
 //Check if a game exists with extracted correct formatted gameid
-async function getStatusByUserName(gId){
-    console.log(gId);
-    let feeds,response;
+async function getStatusByUserName(userName){
+    console.log(userName);
+    let feedsOne, responseOne, feedsTwo, responseTwo;
     searchFound = false;
     try{
-    response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}`,{
-        method:'GET',
-        headers: {
-        'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
-        }
-    });
-    
-    feeds = await response.json();
-    console.log('Suny', feeds);
-    // let arr;
-    // arr.push = (feeds.data);
+        responseOne = await fetch(`https://api.twitch.tv/helix/users?login=${userName}`,{
+            method:'GET',
+            headers: {
+            'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
+            }
+        });
+        
+        feedsOne = await responseOne.json();
+        console.log('Sunyuser', feedsOne);
+        let player_id = feedsOne.data[0].id;
+        // let arr;
+        // arr.push = (feeds.data);
 
-    if(feeds.data.length > 0)
-        return true;
-    return false;
+        if(feedsOne.data.length > 0) {
+            responseTwo = await fetch(`https://api.twitch.tv/helix/streams?user_id=${player_id}`,{
+            method:'GET',
+            headers: {
+                'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
+                }
+            });
+            feedsTwo = await responseTwo.json();
+            console.log('Sunyuser', feedsTwo);
+            if(feedsTwo.data[0].type=='live')
+                return {res: true, isLive:true};
+            return {res:true, isLive:false};
+        }
+        else
+            return {res:false, result: null};
     }   
     catch(error){
         console.log(error);
