@@ -112,34 +112,24 @@ async function proceedWithSearch(event){
 //  https://api.twitch.tv/helix/streams?game_id=29595
 
 //Check if game id is perfect in format i.e. inside '[', ']'
-function matchesGameByGameId(userNameWithUser) {
-    // if(gIdWithBraces.trim().startsWith ('[') && gIdWithBraces.endsWith(']'))
-    // {
-    //     let str = gIdWithBraces.trim();
-    //     let res = str.substr(1, str.length-2);
-    //     console.log('|'+res+'|');
-    //     //ccheck whether res shouldn't have non-numeric characters
-    //     let regEx = new RegExp(/^\d+$/);
-    //     const found = res.match(regEx);
-    //     if(found)
-    //         return {res: true, result: res};
-    //     return {res: false, result: null};
-    // }
-    // return {res: false,result: null};
-    let str = userNameWithUser.trim();
-    if(str.toLowerCase().startsWith('user:')){
-        let ret = str.slice(5);
-        if(ret.length > 0)
-            return {res: false, result: ret};
-        return {res:false, result: null};
+function matchesGameByGameId(gIdWithBraces) {
+    if(gIdWithBraces.trim().startsWith ('[') && gIdWithBraces.endsWith(']'))
+    {
+        let str = gIdWithBraces.trim();
+        let res = str.substr(1, str.length-2);
+        console.log('|'+res+'|');
+        //ccheck whether res shouldn't have non-numeric characters
+        let regEx = new RegExp(/^\d+$/);
+        const found = res.match(regEx);
+        if(found)
+            return {res: true, result: res};
+        return {res: false, result: null};
     }
-    else{
-        return {res:false, result: null};
-    }
+    return {res: false,result: null};
 }
 
 //Check if a game exists with extracted correct formatted gameid
-async function getUserByUserName(uName){
+async function getGameByGameId(gId){
     console.log(gId);
     let feeds,response;
     searchFound = false;
@@ -185,25 +175,36 @@ async function getUserByUserName(uName){
 
 //  https://api.twitch.tv/helix/streams?game_id=29595
 
-//Check if game id is perfect in format i.e. inside '[', ']'
-function matchesGameByGameId(gIdWithBraces) {
-    if(gIdWithBraces.trim().startsWith ('[') && gIdWithBraces.endsWith(']'))
-    {
-        let str = gIdWithBraces.trim();
-        let res = str.substr(1, str.length-2);
-        console.log('|'+res+'|');
-        //ccheck whether res shouldn't have non-numeric characters
-        let regEx = new RegExp(/^\d+$/);
-        const found = res.match(regEx);
-        if(found)
-            return {res: true, result: res};
-        return {res: false, result: null};
+//Check if user name is present 'user:gorgc'
+function matchesUserByUserName(userNameWithUser) {
+    // if(gIdWithBraces.trim().startsWith ('[') && gIdWithBraces.endsWith(']'))
+    // {
+    //     let str = gIdWithBraces.trim();
+    //     let res = str.substr(1, str.length-2);
+    //     console.log('|'+res+'|');
+    //     //ccheck whether res shouldn't have non-numeric characters
+    //     let regEx = new RegExp(/^\d+$/);
+    //     const found = res.match(regEx);
+    //     if(found)
+    //         return {res: true, result: res};
+    //     return {res: false, result: null};
+    // }
+    // return {res: false,result: null};
+    let str = userNameWithUser.trim();
+    if(str.toLowerCase().startsWith('user:')){
+        let ret = str.slice(5);
+        if(ret.length > 0)
+            return {res: false, result: ret};
+        return {res:false, result: null};
     }
-    return {res: false,result: null};
+    else{
+        return {res:false, result: null};
+    }
 }
 
+
 //Check if a game exists with extracted correct formatted gameid
-async function getGameByGameId(gId){
+async function getStatusByUserName(gId){
     console.log(gId);
     let feeds,response;
     searchFound = false;
