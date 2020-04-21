@@ -129,19 +129,37 @@ async function proceedWithSearch(event){
             }
         }
         if(isDone == false){
-            let obj = matchesUserByUserName(str);
+            let obj = matchesStreamByGameIdAndLang(str);
             //console.log(obj.stringify())
             
             if(obj.res == true){
-                console.log('Valid format for user ' + obj.result);
+                console.log('Valid format for lang ' + obj.result);
                 //console.log(getGameByGameId(obj.result) );
-                let qRes = await getStreamByGameIdAndLang(29595,obj.result, 100);    //return object {user found, but not live or user found and live, user not found}
+                let qRes = await getStreamByGameIdAndLang(29595,obj.result, 100);   
                 if(qRes)
-                    console.log(qRes.isLive  + ' Language and game found');
+                    console.log(qRes  + ' Language and game found');
                 else
-                    console.log(qRes.isLive + ' Error with langauge');
+                    console.log(qRes + ' Error with langauge');
                 isDone = true;
-                isUser = true;
+                isGame = true;
+            }
+            else{
+                console.log('Invalid format for user')
+            }
+        }
+        if(isDone == false){
+            let obj = matchesStreamByGameIdAndViewerCount(str);
+            //console.log(obj.stringify())
+            
+            if(obj.res == true){
+                console.log('Valid format for lang ' + obj.result);
+                //console.log(getGameByGameId(obj.result) );
+                let qRes = await getStreamByGameIdAndViewerCount(29595,'en', 100, obj.result);    //return object {user found, but not live or user found and live, user not found}
+
+                console.log(qRes  + ' # streams with more than ' + obj.result +' viewers');
+                
+                isDone = true;
+                isGame = true;
             }
             else{
                 console.log('Invalid format for user')
@@ -261,9 +279,10 @@ async function getStatusByUserName(userName){
 //For viewer count appli filter on result for viewer_count	>1000
 //For live apply filter on result for type="live" or type=""
 function matchesStreamByGameIdAndLang(langStr) {
-    let str = userNameWithUser.trim();
+    let str = langStr.trim();
     if(str.toLowerCase().startsWith('lang:')){
         let ret = str.slice(5);
+        console.log('Language is' +ret);
         if(ret.length > 0)
             return {res: true, result: ret};
         return {res:false, result: null};
@@ -274,12 +293,12 @@ function matchesStreamByGameIdAndLang(langStr) {
 }
 
 //Check if a game exists with extracted correct formatted gameid
-async function getStreamByGameIdAndLang(gId, lang, count){
+async function getStreamByGameIdAndLang(gId, lang, countResult){
     console.log(gId);
     let feeds,response;
     searchFound = false;
     try{
-    response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}&first=${count}&language=${lang}`,{
+    response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}&first=${countResult}&language=${lang}`,{
         method:'GET',
         headers: {
         'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
@@ -300,7 +319,51 @@ async function getStreamByGameIdAndLang(gId, lang, count){
 }
 
 
+//https://api.twitch.tv/helix/streams?game_id=29595&first=100&language=pt
+//For viewer count appli filter on result for viewer_count	>1000
+function matchesStreamByGameIdAndViewerCount(viewerStr) {        //GameID could be optional here
+    let str = viewerStr.trim();
+    if(str.toLowerCase().startsWith('viewer:')||str.startsWith('viewers:')){
+        let ind = str.indexOf(':');
+        let ret = str.slice(ind+1);
+        console.log('Viewer count' +ret);
+        if(ret.length > 0)
+            return {res: true, result: ret};
+        return {res:false, result: null};
+    }
+    else{
+        return {res:false, result: null};
+    }
+}
 
+//Check if a game exists with extracted correct formatted gameid
+async function getStreamByGameIdAndViewerCount(gId, lang, countResult, viewerCount){
+    console.log(gId);
+    let feeds,response;
+    searchFound = false;
+    try{
+    response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}&first=${countResult}&language=${lang}`,{
+        method:'GET',
+        headers: {
+        'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
+        }
+    });
+    
+    feeds = await response.json();
+    console.log('Sunylang', feeds);
+    let cnt = 0;
+    feeds.data.forEach(elem =>{
+        if(elem.viewer_count > viewerCount) {
+            cnt++;
+        }
+    })
+    return cnt;
+    }   
+    catch(error){
+        console.log(error);
+        return false;
+    }
+}
 
 
 
@@ -438,12 +501,12 @@ function loadNewSliders(sliderIndex) {
     }
     videoElem.style.background = 'url("assets/media/giphy.gif") center center no-repeat;';
     console.log(preIn, postIn);
-    embedTwo = new Twitch.Embed("twitch-embed2", {
-        width: 880,
-        height: 420,
-        layout: "video",
-        channel: objArr[sliderIndex].user_name
-    });
+    // embedTwo = new Twitch.Embed("twitch-embed2", {
+    //     width: 880,
+    //     height: 420,
+    //     layout: "video",
+    //     channel: objArr[sliderIndex].user_name
+    // });
     pElem.src = 'assets/media/giphy.gif';
     nElem.src = 'assets/media/giphy.gif';
 
