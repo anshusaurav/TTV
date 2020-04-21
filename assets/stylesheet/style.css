@@ -469,7 +469,7 @@ body{
     grid-template-columns: repeat(6,1fr);
     grid-gap: 16px;
     justify-content: space-between;
-    padding: 1rem 0;
+    /* padding: 1rem 0; */
 }
 .result-container{
     display:grid;
@@ -479,6 +479,7 @@ body{
     margin: 1rem 0;
     border-bottom: 2px solid aliceblue;
     border-top: 2px solid aliceblue;
+    padding: 1rem 0;
 }
 .game-div{
     display: flex;
