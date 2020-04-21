@@ -83,6 +83,8 @@ async function proceedWithSearch(event){
         let str = this.value;
         console.log(str);
         let isDone = false;
+        let isGame = false;
+        let isUser = false;
         if(isDone == false){
             let obj = matchesGameByGameId(str);
             //console.log(obj.stringify())
@@ -96,6 +98,7 @@ async function proceedWithSearch(event){
                 else
                     console.log('Game-ID not a game');
                 isDone = true;
+                isGame = true;
             }
             else{
                 console.log('Invalid format for game')
@@ -119,6 +122,26 @@ async function proceedWithSearch(event){
                 else
                     console.log(qRes.isLive + ' Player is live');
                 isDone = true;
+                isUser = true;
+            }
+            else{
+                console.log('Invalid format for user')
+            }
+        }
+        if(isDone == false){
+            let obj = matchesUserByUserName(str);
+            //console.log(obj.stringify())
+            
+            if(obj.res == true){
+                console.log('Valid format for user ' + obj.result);
+                //console.log(getGameByGameId(obj.result) );
+                let qRes = await getStreamByGameIdAndLang(29595,obj.result, 100);    //return object {user found, but not live or user found and live, user not found}
+                if(qRes)
+                    console.log(qRes.isLive  + ' Language and game found');
+                else
+                    console.log(qRes.isLive + ' Error with langauge');
+                isDone = true;
+                isUser = true;
             }
             else{
                 console.log('Invalid format for user')
@@ -231,6 +254,54 @@ async function getStatusByUserName(userName){
         return false;
     }
 }
+
+//Search for language
+
+//https://api.twitch.tv/helix/streams?game_id=29595&first=100&language=pt
+//For viewer count appli filter on result for viewer_count	>1000
+//For live apply filter on result for type="live" or type=""
+function matchesStreamByGameIdAndLang(langStr) {
+    let str = userNameWithUser.trim();
+    if(str.toLowerCase().startsWith('lang:')){
+        let ret = str.slice(5);
+        if(ret.length > 0)
+            return {res: true, result: ret};
+        return {res:false, result: null};
+    }
+    else{
+        return {res:false, result: null};
+    }
+}
+
+//Check if a game exists with extracted correct formatted gameid
+async function getStreamByGameIdAndLang(gId, lang, count){
+    console.log(gId);
+    let feeds,response;
+    searchFound = false;
+    try{
+    response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}&first=${count}&language=${lang}`,{
+        method:'GET',
+        headers: {
+        'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
+        }
+    });
+    
+    feeds = await response.json();
+    console.log('Sunylang', feeds);
+
+    if(feeds.data.length > 0)
+        return true;
+    return false;
+    }   
+    catch(error){
+        console.log(error);
+        return false;
+    }
+}
+
+
+
+
 
 
 rightElem.addEventListener('click', next);
