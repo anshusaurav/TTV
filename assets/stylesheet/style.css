@@ -273,6 +273,22 @@ body{
 .hint-help-container{
     padding: 0.5rem;
 }
+.special-help-text{
+    font-family: 'Source Code Pro', monospace;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 1px;
+    /* color: rgb(71, 67, 67); */
+    /* margin-right: 1rem; */
+}
+.hint-help-text{
+    font-family: 'Source Code Pro', monospace;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.8px;
+    color: rgb(71, 67, 67);
+    /* margin-right: 1rem; */
+}
 .helper-grid{
     width: 100%;
     /* padding: 0.5rem; */
