@@ -166,9 +166,10 @@ async function proceedWithSearch(event){
             }
         }
         window.open(
-            'https://www.google.com',
+            'search.html',
             '_blank' // <- This is what makes it open in a new window.
           );
+          sessionStorage.setItem('searchedKey', str);  
     }
 }
 
