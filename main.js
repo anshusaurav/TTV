@@ -73,6 +73,7 @@ let categoriesButton = document.querySelector('.categores-tab');
 let gameNavElem = document.querySelector('.wrapper');
 
 let searchHelperElem = document.querySelector('.search-pop-help');
+let searchHelpArrow = document.querySelector('.search-help-arrow');
 let searchInputElem = document.querySelector('.search-div');
 let inputSElem = document.querySelector('.input-search');
 inputSElem.addEventListener('keyup', proceedWithSearch)
@@ -248,8 +249,10 @@ document.addEventListener('click', function(event){
     var isClickInside = searchInputElem.contains(event.target);
     if (isClickInside) {
         searchHelperElem.style.display='block';
+        searchHelpArrow.style.display='block';
     } else {
         searchHelperElem.style.display='none';
+        searchHelpArrow.style.display='none';
     }
 });
 let categoryElemList = document.querySelectorAll('.section-header');

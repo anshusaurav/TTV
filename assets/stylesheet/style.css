@@ -199,13 +199,45 @@ body{
 }
 .input-search{
     
-    max-width: 100% !important;
+    /* max-width: 34rem !important; */
     margin: 0;
     padding: .6em .7em;
     font-size: 0.75rem;
     border-radius: 3px;
     border: none;
+    max-width: 40rem !important;
     min-width: 32rem !important;
+    display: block;
+}
+.search-help-arrow{
+    display: none;
+    position: absolute;
+    margin-left: 4rem;
+    right: auto;
+    bottom: auto;
+    transform: translate3d(0, 0.05rem, 0);
+    max-width: 1rem !important;
+    min-width: 1rem !important;
+    max-height: 0.6rem !important;
+    min-height: 0.6rem !important;
+    z-index: 101;
+    /* border-radius: 3px; */
+    
+    /* width: 100%; */
+     box-sizing: border-box;
+     transform: rotate(180deg);
+    /* -webkit-box-shadow: 0px 1px 3px 0px rgba(255,255,255,0.75);
+    -moz-box-shadow: 0px 1px 3px 0px rgba(255,255,255,0.75);
+    box-shadow: 0px 1px 3px 0px rgba(255,255,255,0.75);
+    -webkit-box-shadow: 0px 2px 6px 0px rgba(255,255,255,0.75);
+    -moz-box-shadow: 0px 2px 6px 0px rgba(255,255,255,0.75);
+    box-shadow: 0px 2px 6px 0px rgba(255,255,255,0.75); 
+    */
+    border-top: 0.6rem solid rgb(113, 18, 255);
+    border-right: 0.6rem solid transparent;
+    border-left: 0.6rem solid transparent;
+    
+    content: " ";
 }
 .search-pop-help{
     display: none;
@@ -214,8 +246,9 @@ body{
     right: auto;
     bottom: auto;
     transform: translate3d(0, 0.5rem, 0);
-    /* max-width: 50% !important; */
-    min-width: 28rem !important;
+    max-width: 40rem !important;
+    min-width: 36rem !important;
+    
     z-index: 100;
     border-radius: 3px;
     
