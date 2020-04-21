@@ -165,7 +165,10 @@ async function proceedWithSearch(event){
                 console.log('Invalid format for user')
             }
         }
-
+        window.open(
+            'https://www.google.com',
+            '_blank' // <- This is what makes it open in a new window.
+          );
     }
 }
 
