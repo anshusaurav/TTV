@@ -239,7 +239,7 @@ body{
     
     content: " ";
 }
-.search-pop-help{
+.search-help-container{
     display: none;
     position: absolute;
     margin: 0px;
@@ -262,6 +262,16 @@ body{
     box-shadow: 0px 2px 6px 0px rgba(255,255,255,0.75); 
     */
     border: 2px solid rgb(113, 18, 255); 
+}
+.search-pop-help{
+    
+}
+.help-hint-div{
+    color: white;
+    background: rgb(7, 6, 6);
+}
+.hint-help-container{
+    padding: 0.5rem;
 }
 .helper-grid{
     width: 100%;

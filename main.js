@@ -72,7 +72,7 @@ let categoriesButton = document.querySelector('.categores-tab');
 
 let gameNavElem = document.querySelector('.wrapper');
 
-let searchHelperElem = document.querySelector('.search-pop-help');
+let searchHelperElem = document.querySelector('.search-help-container');
 let searchHelpArrow = document.querySelector('.search-help-arrow');
 let searchInputElem = document.querySelector('.search-div');
 let inputSElem = document.querySelector('.input-search');

@@ -39,43 +39,67 @@
            <div class='search-div'>
              <input class='input-search' type="text">
              <div class='search-help-arrow'></div>
-             <div class='search-pop-help'>
-               <div class='helper-grid'>
-                 <div class='left-help-grid'>
-                  <div class='left-help-grid-elem'>
-                    <div class='left-help-elem'>
-                      <span class='first-help-text'>[game-id]</span> 
-                      <span class='second-help-text'>Search by game id</span>
-                    </div>
-                    <div class='left-help-elem'>
-                      <span class='first-help-text'>user:gorgc</span> 
-                      <span class='second-help-text'>Search by streamer username</span>
-                    </div>  
-                    <div class='left-help-elem'>
-                      <span class='first-help-text'>"words here"</span> 
-                      <span class='second-help-text'>Exact phrase</span>
-                    </div>
-                  </div>
-                 </div>
-                 <div class='right-help-grid'>
-                  <div>
-                    <div class='right-help-elem'>
-                      <span class='first-help-text'>viewer:1000</span> 
-                      <span class='second-help-text'>Streams with more than 1000 viewers</span>
-                    </div>
-                    <div class='right-help-elem'>
-                      <span class='first-help-text'>lang:en</span> 
-                      <span class='second-help-text'>Streams in English langauge</span>
-                    </div>
-                    <div class='right-help-elem'>
-                      <span class='first-help-text'>isLive:yes</span> 
-                      <span class='second-help-text'>Streams which are Live now</span>
+             <div class='search-help-container'>
+              <div class='search-pop-help'>
+                <div class='helper-grid'>
+                  <div class='left-help-grid'>
+                    <div class='left-help-grid-elem'>
+                      <div class='left-help-elem'>
+                        <span class='first-help-text'>[game-id]</span> 
+                        <span class='second-help-text'>Search by game id</span>
+                      </div>
+                      <div class='left-help-elem'>
+                        <span class='first-help-text'>user:gorgc</span> 
+                        <span class='second-help-text'>Search by streamer username</span>
+                      </div>  
+                      <!-- <div class='left-help-elem'>
+                        <span class='first-help-text'>"words here"</span> 
+                        <span class='second-help-text'>Exact phrase</span>
+                      </div> -->
                     </div>
                   </div>
+                  <div class='right-help-grid'>
+                    <div>
+                      <div class='right-help-elem'>
+                        <span class='first-help-text'>viewer:1000</span> 
+                        <span class='second-help-text'>Streams with more than 1000 viewers</span>
+                      </div>
+                      <div class='right-help-elem'>
+                        <span class='first-help-text'>lang:en</span> 
+                        <span class='second-help-text'>Streams in English langauge</span>
+                      </div>
+                      <div class='right-help-elem'>
+                        <span class='first-help-text'>isLive:yes</span> 
+                        <span class='second-help-text'>Streams which are Live now</span>
+                      </div>
+                    </div>
 
+                  </div>
                 </div>
-               </div>
-             </div>
+              </div>
+              <div class=help-hint-div>
+                <div class='hint-help-container'>
+                  <p class='first-help-text'>
+                    game/user[, viewer[, isLive[, lang]]]
+                  </p>
+                  <p class='first-help-text'>
+                    Need to use any of game or user in above format
+                  </p>
+                  <br>
+                  <p class='first-help-text'>
+                    if user can be entered as <span class='special-help-text'>user:gorgc</span> where <span class='special-help-text'>gorgc</span> is username
+                  </p>
+                  <br>
+                  <p class='first-help-text'>
+                    otherwise <span class='special-help-text'></span>[29595]</span> where <span class='special-help-text'></span>29595</span> is gameId
+                  </p>
+                  <br>
+                  <p class='first-help-text'>
+                    other arguments are optional and their order can be changed. 
+                  </p>
+                </div>
+              </div>
+            </div>
            </div>
          </div>
          <div class='nav-user'>
