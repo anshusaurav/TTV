@@ -334,7 +334,7 @@ body{
 .header{
     display: grid;
     grid-gap: 1rem;
-    grid-template-columns: repeat(2, auto);
+    grid-template-columns: repeat(2, 120px);
     justify-content: start;
     color: white;
     margin-top: 0.5rem;
@@ -365,6 +365,7 @@ body{
     min-height: 0.25rem;
     max-height: 0.25rem;
     background:white;
+    visibility: hidden;
 }
 .section-tab{
     cursor: pointer;
@@ -636,7 +637,7 @@ body{
 
 
 .wrapper {
-    display: grid;
+    display: none;
     margin-top: 8px;
     grid-template-columns: repeat(3, 100%);
     overflow: hidden;

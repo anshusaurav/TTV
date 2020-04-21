@@ -129,7 +129,6 @@ async function proceedWithSearch(event){
 
 //  For game [game-id]
 //  https://api.twitch.tv/helix/streams?game_id=29595
-
 //Check if game id is perfect in format i.e. inside '[', ']'
 function matchesGameByGameId(gIdWithBraces) {
     if(gIdWithBraces.trim().startsWith ('[') && gIdWithBraces.endsWith(']'))
@@ -162,8 +161,6 @@ async function getGameByGameId(gId){
     
     feeds = await response.json();
     console.log('Sunygame', feeds);
-    // let arr;
-    // arr.push = (feeds.data);
 
     if(feeds.data.length > 0)
         return true;
@@ -175,40 +172,13 @@ async function getGameByGameId(gId){
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 //  For game [game-id]
 //https://api.twitch.tv/helix/users?login=gorgc if user exists take id
 //look with that id 
 //https://api.twitch.tv/helix/streams?user_id=108268890
-
-//  https://api.twitch.tv/helix/streams?game_id=29595
-
 //Check if user name is present 'user:gorgc'
 function matchesUserByUserName(userNameWithUser) {
-    // if(gIdWithBraces.trim().startsWith ('[') && gIdWithBraces.endsWith(']'))
-    // {
-    //     let str = gIdWithBraces.trim();
-    //     let res = str.substr(1, str.length-2);
-    //     console.log('|'+res+'|');
-    //     //ccheck whether res shouldn't have non-numeric characters
-    //     let regEx = new RegExp(/^\d+$/);
-    //     const found = res.match(regEx);
-    //     if(found)
-    //         return {res: true, result: res};
-    //     return {res: false, result: null};
-    // }
-    // return {res: false,result: null};
+    
     let str = userNameWithUser.trim();
     if(str.toLowerCase().startsWith('user:')){
         let ret = str.slice(5);
@@ -238,8 +208,6 @@ async function getStatusByUserName(userName){
         feedsOne = await responseOne.json();
         console.log('Sunyuser', feedsOne);
         let player_id = feedsOne.data[0].id;
-        // let arr;
-        // arr.push = (feeds.data);
 
         if(feedsOne.data.length > 0) {
             responseTwo = await fetch(`https://api.twitch.tv/helix/streams?user_id=${player_id}`,{
@@ -262,16 +230,6 @@ async function getStatusByUserName(userName){
         return false;
     }
 }
-
-
-
-
-
-
-
-
-
-
 
 
 rightElem.addEventListener('click', next);
@@ -300,14 +258,15 @@ let categoryCompList = document.querySelectorAll('.section-tab');
 
 console.log(categoryElemList);
 console.log(categorySupportList);
-gameNavElem.style.display = 'none';
+console.log(categoryCompList);
+// gameNavElem.style.display = 'none';
 function placeSupport(){
     categorySupportList.forEach((elem, index) =>{
         elem.style.position = 'absolute';
         elem.style.left = (categoryElemList[index].offsetLeft) + 'px';
-        elem.style.width = (categoryElemList[index].offsetWidth*1.02 ) + 'px';
-        if(index != 0){
-            elem.style.visibility ='hidden';
+        elem.style.width = (categoryElemList[index].offsetWidth*1.1 ) + 'px';
+        if(index == 0){
+            elem.style.visibility ='visible';
         }
     });
 }
@@ -315,7 +274,7 @@ function placeSupportLater(){
     categorySupportList.forEach((elem, index) =>{
         elem.style.position = 'absolute';
         elem.style.left = (categoryElemList[index].offsetLeft) + 'px';
-        elem.style.width = (categoryElemList[index].offsetWidth*1.02 ) + 'px';
+        elem.style.width = (categoryElemList[index].offsetWidth*1.1 ) + 'px';
         
     });
 }
@@ -348,7 +307,8 @@ function toggleDP(event){
         mainElem.classList.toggle('make-fg-dp');
     }
 }
-
+// let firstHeaderSupportElem = document.querySelector('.support-header');
+// firstHeaderSupportElem.style.visibility = 'visible';
 trendingButton.addEventListener('click', showTrending);
 categoriesButton.addEventListener('click', showCategories);
 function showTrending(event){
