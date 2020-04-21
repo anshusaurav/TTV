@@ -334,7 +334,7 @@ body{
 .header{
     display: grid;
     grid-gap: 1rem;
-    grid-template-columns: repeat(2, 120px);
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     justify-content: start;
     color: white;
     margin-top: 0.5rem;

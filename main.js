@@ -264,7 +264,7 @@ function placeSupport(){
     categorySupportList.forEach((elem, index) =>{
         elem.style.position = 'absolute';
         elem.style.left = (categoryElemList[index].offsetLeft) + 'px';
-        elem.style.width = (categoryElemList[index].offsetWidth*1.1 ) + 'px';
+        elem.style.width = (categoryElemList[index].offsetWidth ) + 'px';
         if(index == 0){
             elem.style.visibility ='visible';
         }
@@ -274,7 +274,7 @@ function placeSupportLater(){
     categorySupportList.forEach((elem, index) =>{
         elem.style.position = 'absolute';
         elem.style.left = (categoryElemList[index].offsetLeft) + 'px';
-        elem.style.width = (categoryElemList[index].offsetWidth*1.1 ) + 'px';
+        elem.style.width = (categoryElemList[index].offsetWidth ) + 'px';
         
     });
 }
