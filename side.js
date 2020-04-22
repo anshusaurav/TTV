@@ -1,4 +1,93 @@
 //https://api.twitch.tv/helix/videos?user_id=108268890 for videos
+class SearchMain{
+    constructor(str){
+
+        //this.user;
+        //this.game;
+        //this.flagLang;
+        //this.flagView;
+        this.user = '';
+        this.game = '';
+        this.flagLang = false;
+        this.flagView = false;
+        this.langList = [];
+        this.view = '';
+        this.numResult = 100;
+        this.query = '';
+        this.valid = false;
+        this.errorStr = '';
+        let testStr = str.trim();
+        
+        if(str.startsWith('{')) {
+            let tokens = testStr.match(/\S+/g);
+            let userStr = tokens[0];
+            if(userStr.endsWith('}')){
+                let mayBeStr = userStr(1, str.length-2);
+                if(mayBeStr.length > 0)
+                    this.user = mayBeStr;
+                else
+                this.errorStr = 'User Length must not be 0';
+            }
+            else
+            this.errorStr= 'No closing braces for user'
+        }
+        else if(str.startsWith('[')) {
+            let tokens = testStr.match(/\S+/g);
+            let gameStr = tokens[0];
+            if(gameStr.endsWith(']')){
+                let mayBeStr = gameStr(1, str.length-2);
+                if(mayBeStr.length > 0){
+                    this.game = mayBeStr;
+                    this.extractLanguage(str);
+                    this.extractViewers(str);
+                }
+                else
+                    this.errorStr = 'Game Length must not be 0';
+            }
+            else
+                this.errorStr= 'No closing braces for game'
+        }
+        else {
+            this.errorStr = "Doesn't start with a { or [";
+        }
+    }
+    extractLanguage(testStr){
+        let tokens = testStr.match(/\S+/g);
+        let arr = [];
+        for(let i = 1; i < tokens.length; i++) {
+            if(tokens[i].toLowerCase.startsWith('lang:')){
+                arr.push(tokens[i]);
+            }
+        }
+        arr.forEach(elem =>{
+            if(elem.slice(5).length == 2){
+                this.langList.push(elem.slice(5));
+                this.flagLang = true;
+            }
+            else
+                this.errorStr = 'Langauge code should be of two alphabets';
+        })
+    }
+    extractViewer(testStr){
+        let tokens = testStr.match(/\S+/g);
+        let arr = [];
+        for(let i = 1; i < tokens.length; i++) {
+            if(tokens[i].toLowerCase.startsWith('lang:')){
+                arr.push(tokens[i]);
+            }
+        }
+        arr.forEach(elem =>{
+            if(elem.slice(5).length == 2){
+                this.langList.push(elem.slice(5));
+                this.flagLang = true;
+            }
+            else
+                this.errorStr = 'Langauge code should be of two alphabets';
+        })
+    }
+}
+
+
 async function search(){
     let isDone = false;
     let isGame = false;
