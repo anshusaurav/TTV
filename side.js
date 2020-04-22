@@ -1,4 +1,8 @@
 //https://api.twitch.tv/helix/videos?user_id=108268890 for videos
+
+let gameNameIdMap = new Map();
+//gameNameIdMap.set()
+
 class SearchMain{
     constructor(str){
         this.user = '';
@@ -160,7 +164,7 @@ class SearchMain{
         let feeds,response;
         
         try{
-            response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}&first=${this.numResult}&lang=${this.lang}`,{
+            response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}&first=${this.numResult}&language=${this.lang}`,{
             method:'GET',
             headers: {
             'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
@@ -183,7 +187,7 @@ class SearchMain{
         let feeds,response;
         
         try{
-            response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}&first=${this.numResult}&lang=${this.lang}`,{
+            response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}&first=${this.numResult}&language=${this.lang}`,{
             method:'GET',
             headers: {
             'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
@@ -236,45 +240,55 @@ class SearchMain{
     }
 }
 
-function test(){
-
-    let arr = ['{gorgc}'];
-    arr.forEach(async(elem) =>{
-        let searchEx1 = new SearchMain(elem);
-        console.log(elem);
-        if(searchEx1.gFlag == 1){
-            let res = await searchEx1.getUserByName(searchEx1.user);
+async function test(){
+    let totalStr = sessionStorage.getItem('searchedKey');
+    let searchEx1 = new SearchMain(totalStr);
+    // console.log(elem);
+    if(searchEx1.gFlag == 1){
+        let res = await searchEx1.getUserByName(searchEx1.user);
+        console.log(res);
+    }
+    else if(searchEx1.gFlag == 2) {
+        if(searchEx1.flagLang && searchEx1.flagView){
+            let res = await searchEx1.getGameByGameIdAndLangAndViewer(searchEx1.game);
+            console.log('1');
             console.log(res);
         }
-        else if(searchEx1.gFlag == 2) {
-            if(searchEx1.flagLang && searchEx1.flagView){
-                let res = await searchEx1.getGameByGameIdAndLangAndViewer(searchEx1.game);
-                console.log(res);
-            }
-            else if(searchEx1.flagLang && !searchEx1.flagView){
-                let res = await searchEx1.getGameByGameIdAndLang(searchEx1.game);
-                console.log(res);
-            }
-            else if(!searchEx1.flagLang && searchEx1.flagView){
-                let res = await searchEx1.getGameByGameIdAndView(searchEx1.game);
-                console.log(res);
-            }
-            else {
-                let res = await searchEx1.getGameByGameId(searchEx1.game);
-                console.log(res);
-            }
+        else if(searchEx1.flagLang && !searchEx1.flagView){
+            let res = await searchEx1.getGameByGameIdAndLang(searchEx1.game);
+            console.log('2');
+            console.log(res);
+        }
+        else if(!searchEx1.flagLang && searchEx1.flagView){
+            let res = await searchEx1.getGameByGameIdAndView(searchEx1.game);
+            console.log('3');
+            console.log(res);
         }
         else {
-            console.log(searchEx1.user +' '+ searchEx1.game + ' ' +searchEx1.errorStr);
+            let res = await searchEx1.getGameByGameId(searchEx1.game);
+            console.log('4');
+            console.log(res);
         }
-    });
+    }
+    else {
+        console.log(searchEx1.user +' '+ searchEx1.game + ' ' +searchEx1.errorStr);
+    }
 }
 test();
 
 
-
-
-
+//https://api.twitch.tv/helix/games?id=29595
+/*
+{
+    "data": [
+        {
+            "id": "29595",
+            "name": "Dota 2",
+            "box_art_url": "https://static-cdn.jtvnw.net/ttv-boxart/Dota%202-{width}x{height}.jpg"
+        }
+    ]
+}
+*/
 
 
 // async function search(){
