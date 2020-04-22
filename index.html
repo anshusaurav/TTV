@@ -49,7 +49,7 @@
                         <span class='second-help-text'>Search by game id</span>
                       </div>
                       <div class='left-help-elem'>
-                        <span class='first-help-text'>user:gorgc</span> 
+                        <span class='first-help-text'>{gorgc}</span> 
                         <span class='second-help-text'>Search by streamer username</span>
                       </div>  
                       <!-- <div class='left-help-elem'>
@@ -68,10 +68,10 @@
                         <span class='first-help-text'>lang:en</span> 
                         <span class='second-help-text'>Streams in English langauge</span>
                       </div>
-                      <div class='right-help-elem'>
+                      <!-- <div class='right-help-elem'>
                         <span class='first-help-text'>isLive:yes</span> 
                         <span class='second-help-text'>Streams which are Live now</span>
-                      </div>
+                      </div> -->
                     </div>
 
                   </div>
@@ -80,14 +80,14 @@
               <div class=help-hint-div>
                 <div class='hint-help-container'>
                   <p class='special-help-text'>
-                    game/user[ viewer[ isLive[ lang]]]
+                    game/user[ viewer[ lang]]
                   </p>
                   <p class='hint-help-text'>
                     Need to use any of game or user in above format
                   </p>
                   <br>
                   <p class='hint-help-text'>
-                    if user can be entered as <span class='special-help-text'>user:gorgc</span> where <span class='special-help-text'>gorgc</span> is username
+                    if user can be entered as <span class='special-help-text'>{gorgc}</span> where <span class='special-help-text'>gorgc</span> is username
                   </p>
                   <p class='hint-help-text'>
                     otherwise <span class='special-help-text'>[29595]</span> where <span class='special-help-text'>29595</span> is gameid
@@ -97,11 +97,11 @@
                     Other three arguments are optional and their order is flexible. 
                   </p>
                   <p class='special-help-text'>
-                    [29595] lang:en viewer:1000 isLive:yes
+                    [29595] lang:en viewer:1000 
                     
                   </p>
                   <p class='special-help-text'>
-                    [29595] viewer:1000 isLive:yes lang:en 
+                    [29595] viewer:1000 lang:en 
                   </p>
                   <p class='hint-help-text'>
                     Returns the same result

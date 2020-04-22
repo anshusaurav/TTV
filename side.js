@@ -5,11 +5,14 @@ async function search(){
     let isUser = false;
     if(isDone == false){
         
-        let str = sessionStorage.getItem('searchedKey');
+        let totalStr = sessionStorage.getItem('searchedKey');
+        let arr = totalStr.match(/\S+/g);
+        console.log(arr);
+        let str = arr[0];
         let obj = matchesGameByGameId(str);
-        let h1 = document.createElement('h1');
-        h1.innerHTML = str;
-        document.body.append(h1);
+        // let h1 = document.createElement('h1');
+        // h1.innerHTML = str;
+        // document.body.append(h1);
         //console.log(obj.stringify())
         
         if(obj.res == true){
@@ -141,17 +144,17 @@ async function getGameByGameId(gId){
 //https://api.twitch.tv/helix/streams?user_id=108268890
 //Check if user name is present 'user:gorgc'
 function matchesUserByUserName(userNameWithUser) {
-    
-    let str = userNameWithUser.trim();
-    if(str.toLowerCase().startsWith('user:')){
-        let ret = str.slice(5);
-        if(ret.length > 0)
+    if(gIdWithBraces.trim().startsWith ('{') && gIdWithBraces.endsWith('}'))
+    {
+        let str = gIdWithBraces.trim();
+        let ret = str.substr(1, str.length-2);
+        console.log('|'+res+'|');
+        if(ret.length >= 1)
             return {res: true, result: ret};
-        return {res:false, result: null};
+        return {res: false, result: null};
     }
-    else{
-        return {res:false, result: null};
-    }
+    return {res: false,result: null};
+
 }
 
 
