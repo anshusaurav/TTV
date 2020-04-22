@@ -18,11 +18,11 @@ class SearchMain{
         this.errorStr = '';
         let testStr = str.trim();
         
-        if(str.startsWith('{')) {
+        if(testStr.startsWith('{')) {
             let tokens = testStr.match(/\S+/g);
             let userStr = tokens[0];
             if(userStr.endsWith('}')){
-                let mayBeStr = userStr(1, str.length-2);
+                let mayBeStr = userStr.substr(1, userStr.length-2);
                 if(mayBeStr.length > 0)
                     this.user = mayBeStr;
                 else
@@ -31,15 +31,26 @@ class SearchMain{
             else
             this.errorStr= 'No closing braces for user'
         }
-        else if(str.startsWith('[')) {
+        else if(testStr.startsWith('[')) {
             let tokens = testStr.match(/\S+/g);
+            console.log(tokens);
             let gameStr = tokens[0];
             if(gameStr.endsWith(']')){
-                let mayBeStr = gameStr(1, str.length-2);
+                console.log('|'+gameStr+'|'+gameStr.length)
+
+                let mayBeStr = gameStr.substr(1, gameStr.length-2);
+                console.log(mayBeStr);
                 if(mayBeStr.length > 0){
-                    this.game = mayBeStr;
-                    this.extractLanguage(str);
-                    this.extractViewers(str);
+                    let regEx = new RegExp(/^\d+$/);
+                    const found = mayBeStr.match(regEx);
+                    if(found){
+                        this.game = mayBeStr;
+                        this.extractLanguage(str);
+                        this.extractViewer(str);
+                    }
+                    else {
+                        this.errorStr = 'Only numeric characters for game id';
+                    }
                 }
                 else
                     this.errorStr = 'Game Length must not be 0';
@@ -55,7 +66,7 @@ class SearchMain{
         let tokens = testStr.match(/\S+/g);
         let arr = [];
         for(let i = 1; i < tokens.length; i++) {
-            if(tokens[i].toLowerCase.startsWith('lang:')){
+            if(tokens[i].toLowerCase().startsWith('lang:')){
                 arr.push(tokens[i]);
             }
         }
@@ -72,21 +83,46 @@ class SearchMain{
         let tokens = testStr.match(/\S+/g);
         let arr = [];
         for(let i = 1; i < tokens.length; i++) {
-            if(tokens[i].toLowerCase.startsWith('lang:')){
-                arr.push(tokens[i]);
+            if(tokens[i].toLowerCase.startsWith('viewer:')){
+                let mayBeStr = tokens[i].toLowerCase().slice(7);
+                let regEx = new RegExp(/^\d+$/);
+                const found = mayBeStr.match(regEx);
+                if(found){
+                    this.view = mayBeStr;
+                    this.flagView = true;
+                }
+                else{
+                    this.errorStr = 'Viewer should be numeric';
+                }
+            }
+            else if(tokens[i].toLowerCase.startsWith('viewers:')){
+                let mayBeStr = tokens[i].toLowerCase().slice(8);
+                let regEx = new RegExp(/^\d+$/);
+                const found = mayBeStr.match(regEx);
+                if(found){
+                    this.view = mayBeStr;
+                    this.flagView = true;
+                }
+                else{
+                    this.errorStr = 'Viewer should be numeric';
+                }
             }
         }
-        arr.forEach(elem =>{
-            if(elem.slice(5).length == 2){
-                this.langList.push(elem.slice(5));
-                this.flagLang = true;
-            }
-            else
-                this.errorStr = 'Langauge code should be of two alphabets';
-        })
+        
     }
 }
 
+let searchEx1 = new SearchMain('{gorgc}');
+console.log('First:' +searchEx1.errorStr);
+let searchEx2 = new SearchMain('[29595] lang:en viewer:677');
+console.log('Second: '+searchEx2.errorStr);
+console.log('Second: '+searchEx2.langList);
+console.log('Second: '+searchEx2.view);
+let searchEx3 = new SearchMain('[29dsd595]');// lang:en viewer:677 lang:pt');
+console.log('Third: ' + searchEx3.errorStr);
+let searchEx4 = new SearchMain('[29595]')// lang:en viewer:6g899 viewers: 2174');
+console.log('Forth: '+ searchEx4.errorStr);
+console.log('Done');
 
 async function search(){
     let isDone = false;
