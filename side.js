@@ -1,11 +1,6 @@
 //https://api.twitch.tv/helix/videos?user_id=108268890 for videos
 class SearchMain{
     constructor(str){
-
-        //this.user;
-        //this.game;
-        //this.flagLang;
-        //this.flagView;
         this.user = '';
         this.game = '';
         this.flagLang = false;
@@ -16,6 +11,7 @@ class SearchMain{
         this.query = '';
         this.valid = false;
         this.errorStr = '';
+        this.gFlag = 0;
         let testStr = str.trim();
         
         if(testStr.startsWith('{')) {
@@ -23,10 +19,12 @@ class SearchMain{
             let userStr = tokens[0];
             if(userStr.endsWith('}')){
                 let mayBeStr = userStr.substr(1, userStr.length-2);
-                if(mayBeStr.length > 0)
+                if(mayBeStr.length > 0){
                     this.user = mayBeStr;
+                    this.gFlag = 1;
+                }
                 else
-                this.errorStr = 'User Length must not be 0';
+                    this.errorStr = 'User Length must not be 0';
             }
             else
             this.errorStr= 'No closing braces for user'
@@ -41,6 +39,7 @@ class SearchMain{
                     const found = mayBeStr.match(regEx);
                     if(found){
                         this.game = mayBeStr;
+                        this.gFlag = 2;
                         this.extractLanguage(str);
                         this.extractViewer(str);
                     }
@@ -68,8 +67,10 @@ class SearchMain{
                     this.lang = mayBeStr;
                     this.flagLang = true;
                 }
-                else
+                else{
                     this.errorStr = 'Langauge code should be of two alphabets';
+                    this.gFlag = 0;
+                }
             }
         }
         
@@ -87,6 +88,7 @@ class SearchMain{
                     this.flagView = true;
                 }
                 else{
+                    this.gFlag = 0;
                     this.errorStr = 'Viewer should be numeric';
                 }
             }
@@ -99,6 +101,7 @@ class SearchMain{
                     this.flagView = true;
                 }
                 else{
+                    this.gFlag = 0;
                     this.errorStr = 'Viewer should be numeric';
                 }
             }
@@ -134,7 +137,7 @@ class SearchMain{
         searchFound = false;
         
         try{
-            response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}&first=${this.numResult}&lang=${this.lang}`,{
+            response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}&first=${this.numResult}`,{
             method:'GET',
             headers: {
             'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
@@ -143,15 +146,17 @@ class SearchMain{
         
         feeds = await response.json();
         console.log('Sunygame', feeds);
-    
+        let arr = [...feeds.data];
+        let newArr = arr.filter(elem => elem.viewer_count>this.view)
         if(feeds.data.length > 0)
-            return {isDone: true,result: feeds.data};
-        return {isDone: false,result: feeds.data};
+            return {isDone: true,result: newArr};
+        return {isDone: false,result: newArr};
         }   
         catch(error){
             console.log(error);
             return {isDone: false,result: null};
         }
+        
     }
     async getGameByGameIdAndLang(gId){
         console.log(gId);
@@ -204,19 +209,73 @@ class SearchMain{
             return {isDone: false,result: null};
         }
     }
+    async getUserByName(userName){
+        // console.log(userName);
+        let feedsOne, responseOne, feedsTwo, responseTwo;
+        searchFound = false;
+        try{
+            responseOne = await fetch(`https://api.twitch.tv/helix/users?login=${userName}`,{
+                method:'GET',
+                headers: {
+                'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
+                }
+            });
+            
+            feedsOne = await responseOne.json();
+            console.log('Sunyuser', feedsOne);
+            let player_id = feedsOne.data[0].id;
+    
+            if(feedsOne.data.length > 0) {
+                responseTwo = await fetch(`https://api.twitch.tv/helix/streams?user_id=${player_id}`,{
+                method:'GET',
+                headers: {
+                    'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
+                    }
+                });
+                feedsTwo = await responseTwo.json();
+                console.log('Sunyuser', feedsTwo);
+                return {isDone: true,result: feedsTwo.data};
+            }
+            else
+                return {isDone: false,result: null};
+        }   
+        catch(error){
+            console.log(error);
+            return  {isDone: false,result: null};
+        }
+    }
 }
 
-let searchEx1 = new SearchMain('{gorgc}');
-console.log('First:' +searchEx1.errorStr);
-let searchEx2 = new SearchMain('[29595] lang:en viewer:677');
-console.log('Second: '+searchEx2.errorStr);
-console.log('Second: '+searchEx2.lang);
-console.log('Second: '+searchEx2.view);
-let searchEx3 = new SearchMain('[29dsd595]');// lang:en viewer:677 lang:pt');
-console.log('Third: ' + searchEx3.errorStr);
-let searchEx4 = new SearchMain('[29595] lang: end')// lang:en viewer:6g899 viewers: 2174');
-console.log('Forth: '+ searchEx4.errorStr);
-console.log('Done');
+
+let arr = ['{gorgc}', '[29595] lang:en viewer:677', '[29dsd595]', '[29595]'];
+arr.forEach(elem =>{
+    let searchEx1 = new SearchMain(elem);
+    if(searchEx1.gFlag == 1){
+        let res = getUserByName(searchEx1.user);
+        console.log(res);
+    }
+    else if(searchEx1.gFlag == 2) {
+        if(searchEx1.flagLang && searchEx1.flagView){
+            let res = getGameByGameIdAndLangAndViewer(searchEx1.game);
+            console.log(res);
+        }
+        else if(searchEx1.flagLang && !searchEx1.flagView){
+            let res = getGameByGameIdAndLang(searchEx1.game);
+            console.log(res);
+        }
+        else if(!searchEx1.flagLang && searchEx1.flagView){
+            let res = getGameByGameIdAndView(searchEx1.game);
+            console.log(res);
+        }
+        else {
+            let res = getGameByGameId(searchEx1.game);
+            console.log(res);
+        }
+    }
+    else {
+        console.log(searchEx1.errorStr);
+    }
+});
 
 
 
@@ -317,196 +376,196 @@ async function search(){
 //  For game [game-id]
 //  https://api.twitch.tv/helix/streams?game_id=29595
 //Check if game id is perfect in format i.e. inside '[', ']'
-function matchesGameByGameId(gIdWithBraces) {
-    if(gIdWithBraces.trim().startsWith ('[') && gIdWithBraces.endsWith(']'))
-    {
-        let str = gIdWithBraces.trim();
-        let res = str.substr(1, str.length-2);
-        console.log('|'+res+'|');
-        //ccheck whether res shouldn't have non-numeric characters
-        let regEx = new RegExp(/^\d+$/);
-        const found = res.match(regEx);
-        if(found)
-            return {res: true, result: res};
-        return {res: false, result: null};
-    }
-    return {res: false,result: null};
-}
+// function matchesGameByGameId(gIdWithBraces) {
+//     if(gIdWithBraces.trim().startsWith ('[') && gIdWithBraces.endsWith(']'))
+//     {
+//         let str = gIdWithBraces.trim();
+//         let res = str.substr(1, str.length-2);
+//         console.log('|'+res+'|');
+//         //ccheck whether res shouldn't have non-numeric characters
+//         let regEx = new RegExp(/^\d+$/);
+//         const found = res.match(regEx);
+//         if(found)
+//             return {res: true, result: res};
+//         return {res: false, result: null};
+//     }
+//     return {res: false,result: null};
+// }
 
-//Check if a game exists with extracted correct formatted gameid
-async function getGameByGameId(gId){
-    console.log(gId);
-    let feeds,response;
-    searchFound = false;
-    try{
-    response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}`,{
-        method:'GET',
-        headers: {
-        'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
-        }
-    });
+// //Check if a game exists with extracted correct formatted gameid
+// async function getGameByGameId(gId){
+//     console.log(gId);
+//     let feeds,response;
+//     searchFound = false;
+//     try{
+//     response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}`,{
+//         method:'GET',
+//         headers: {
+//         'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
+//         }
+//     });
     
-    feeds = await response.json();
-    console.log('Sunygame', feeds);
+//     feeds = await response.json();
+//     console.log('Sunygame', feeds);
 
-    if(feeds.data.length > 0)
-        return true;
-    return false;
-    }   
-    catch(error){
-        console.log(error);
-        return false;
-    }
-}
+//     if(feeds.data.length > 0)
+//         return true;
+//     return false;
+//     }   
+//     catch(error){
+//         console.log(error);
+//         return false;
+//     }
+// }
 
-//  For game [game-id]
-//https://api.twitch.tv/helix/users?login=gorgc if user exists take id
-//look with that id 
-//https://api.twitch.tv/helix/streams?user_id=108268890
-//Check if user name is present 'user:gorgc'
-function matchesUserByUserName(userNameWithUser) {
-    if(gIdWithBraces.trim().startsWith ('{') && gIdWithBraces.endsWith('}'))
-    {
-        let str = gIdWithBraces.trim();
-        let ret = str.substr(1, str.length-2);
-        console.log('|'+res+'|');
-        if(ret.length >= 1)
-            return {res: true, result: ret};
-        return {res: false, result: null};
-    }
-    return {res: false,result: null};
+// //  For game [game-id]
+// //https://api.twitch.tv/helix/users?login=gorgc if user exists take id
+// //look with that id 
+// //https://api.twitch.tv/helix/streams?user_id=108268890
+// //Check if user name is present 'user:gorgc'
+// function matchesUserByUserName(userNameWithUser) {
+//     if(gIdWithBraces.trim().startsWith ('{') && gIdWithBraces.endsWith('}'))
+//     {
+//         let str = gIdWithBraces.trim();
+//         let ret = str.substr(1, str.length-2);
+//         console.log('|'+res+'|');
+//         if(ret.length >= 1)
+//             return {res: true, result: ret};
+//         return {res: false, result: null};
+//     }
+//     return {res: false,result: null};
 
-}
+// }
 
 
-//Check if a game exists with extracted correct formatted gameid
-async function getStatusByUserName(userName){
-    console.log(userName);
-    let feedsOne, responseOne, feedsTwo, responseTwo;
-    searchFound = false;
-    try{
-        responseOne = await fetch(`https://api.twitch.tv/helix/users?login=${userName}`,{
-            method:'GET',
-            headers: {
-            'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
-            }
-        });
+// //Check if a game exists with extracted correct formatted gameid
+// async function getStatusByUserName(userName){
+//     console.log(userName);
+//     let feedsOne, responseOne, feedsTwo, responseTwo;
+//     searchFound = false;
+//     try{
+//         responseOne = await fetch(`https://api.twitch.tv/helix/users?login=${userName}`,{
+//             method:'GET',
+//             headers: {
+//             'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
+//             }
+//         });
         
-        feedsOne = await responseOne.json();
-        console.log('Sunyuser', feedsOne);
-        let player_id = feedsOne.data[0].id;
+//         feedsOne = await responseOne.json();
+//         console.log('Sunyuser', feedsOne);
+//         let player_id = feedsOne.data[0].id;
 
-        if(feedsOne.data.length > 0) {
-            responseTwo = await fetch(`https://api.twitch.tv/helix/streams?user_id=${player_id}`,{
-            method:'GET',
-            headers: {
-                'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
-                }
-            });
-            feedsTwo = await responseTwo.json();
-            console.log('Sunyuser', feedsTwo);
-            if(feedsTwo.data[0].type=='live')
-                return {res: true, isLive:true};
-            return {res:true, isLive:false};
-        }
-        else
-            return {res:false, result: null};
-    }   
-    catch(error){
-        console.log(error);
-        return false;
-    }
-}
+//         if(feedsOne.data.length > 0) {
+//             responseTwo = await fetch(`https://api.twitch.tv/helix/streams?user_id=${player_id}`,{
+//             method:'GET',
+//             headers: {
+//                 'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
+//                 }
+//             });
+//             feedsTwo = await responseTwo.json();
+//             console.log('Sunyuser', feedsTwo);
+//             if(feedsTwo.data[0].type=='live')
+//                 return {res: true, isLive:true};
+//             return {res:true, isLive:false};
+//         }
+//         else
+//             return {res:false, result: null};
+//     }   
+//     catch(error){
+//         console.log(error);
+//         return false;
+//     }
+// }
 
-//Search for language
+// //Search for language
 
-//https://api.twitch.tv/helix/streams?game_id=29595&first=100&language=pt
-//For viewer count appli filter on result for viewer_count	>1000
-//For live apply filter on result for type="live" or type=""
-function matchesStreamByGameIdAndLang(langStr) {
-    let str = langStr.trim();
-    if(str.toLowerCase().startsWith('lang:')){
-        let ret = str.slice(5);
-        console.log('Language is' +ret);
-        if(ret.length > 0)
-            return {res: true, result: ret};
-        return {res:false, result: null};
-    }
-    else{
-        return {res:false, result: null};
-    }
-}
+// //https://api.twitch.tv/helix/streams?game_id=29595&first=100&language=pt
+// //For viewer count appli filter on result for viewer_count	>1000
+// //For live apply filter on result for type="live" or type=""
+// function matchesStreamByGameIdAndLang(langStr) {
+//     let str = langStr.trim();
+//     if(str.toLowerCase().startsWith('lang:')){
+//         let ret = str.slice(5);
+//         console.log('Language is' +ret);
+//         if(ret.length > 0)
+//             return {res: true, result: ret};
+//         return {res:false, result: null};
+//     }
+//     else{
+//         return {res:false, result: null};
+//     }
+// }
 
-//Check if a game exists with extracted correct formatted gameid
-async function getStreamByGameIdAndLang(gId, lang, countResult){
-    console.log(gId);
-    let feeds,response;
-    searchFound = false;
-    try{
-    response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}&first=${countResult}&language=${lang}`,{
-        method:'GET',
-        headers: {
-        'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
-        }
-    });
+// //Check if a game exists with extracted correct formatted gameid
+// async function getStreamByGameIdAndLang(gId, lang, countResult){
+//     console.log(gId);
+//     let feeds,response;
+//     searchFound = false;
+//     try{
+//     response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}&first=${countResult}&language=${lang}`,{
+//         method:'GET',
+//         headers: {
+//         'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
+//         }
+//     });
     
-    feeds = await response.json();
-    console.log('Sunylang', feeds);
+//     feeds = await response.json();
+//     console.log('Sunylang', feeds);
 
-    if(feeds.data.length > 0)
-        return true;
-    return false;
-    }   
-    catch(error){
-        console.log(error);
-        return false;
-    }
-}
+//     if(feeds.data.length > 0)
+//         return true;
+//     return false;
+//     }   
+//     catch(error){
+//         console.log(error);
+//         return false;
+//     }
+// }
 
 
-//https://api.twitch.tv/helix/streams?game_id=29595&first=100&language=pt
-//For viewer count appli filter on result for viewer_count	>1000
-function matchesStreamByGameIdAndViewerCount(viewerStr) {        //GameID could be optional here
-    let str = viewerStr.trim();
-    if(str.toLowerCase().startsWith('viewer:')||str.startsWith('viewers:')){
-        let ind = str.indexOf(':');
-        let ret = str.slice(ind+1);
-        console.log('Viewer count' +ret);
-        if(ret.length > 0)
-            return {res: true, result: ret};
-        return {res:false, result: null};
-    }
-    else{
-        return {res:false, result: null};
-    }
-}
+// //https://api.twitch.tv/helix/streams?game_id=29595&first=100&language=pt
+// //For viewer count appli filter on result for viewer_count	>1000
+// function matchesStreamByGameIdAndViewerCount(viewerStr) {        //GameID could be optional here
+//     let str = viewerStr.trim();
+//     if(str.toLowerCase().startsWith('viewer:')||str.startsWith('viewers:')){
+//         let ind = str.indexOf(':');
+//         let ret = str.slice(ind+1);
+//         console.log('Viewer count' +ret);
+//         if(ret.length > 0)
+//             return {res: true, result: ret};
+//         return {res:false, result: null};
+//     }
+//     else{
+//         return {res:false, result: null};
+//     }
+// }
 
-//Check if a game exists with extracted correct formatted gameid
-async function getStreamByGameIdAndViewerCount(gId, lang, countResult, viewerCount){
-    console.log(gId);
-    let feeds,response;
-    searchFound = false;
-    try{
-    response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}&first=${countResult}&language=${lang}`,{
-        method:'GET',
-        headers: {
-        'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
-        }
-    });
+// //Check if a game exists with extracted correct formatted gameid
+// async function getStreamByGameIdAndViewerCount(gId, lang, countResult, viewerCount){
+//     console.log(gId);
+//     let feeds,response;
+//     searchFound = false;
+//     try{
+//     response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}&first=${countResult}&language=${lang}`,{
+//         method:'GET',
+//         headers: {
+//         'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
+//         }
+//     });
     
-    feeds = await response.json();
-    console.log('Sunylang', feeds);
-    let cnt = 0;
-    feeds.data.forEach(elem =>{
-        if(elem.viewer_count > viewerCount) {
-            cnt++;
-        }
-    })
-    return cnt;
-    }   
-    catch(error){
-        console.log(error);
-        return false;
-    }
-}
-search();
+//     feeds = await response.json();
+//     console.log('Sunylang', feeds);
+//     let cnt = 0;
+//     feeds.data.forEach(elem =>{
+//         if(elem.viewer_count > viewerCount) {
+//             cnt++;
+//         }
+//     })
+//     return cnt;
+//     }   
+//     catch(error){
+//         console.log(error);
+//         return false;
+//     }
+// }
+// search();
