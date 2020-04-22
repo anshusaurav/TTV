@@ -10,7 +10,7 @@ class SearchMain{
         this.game = '';
         this.flagLang = false;
         this.flagView = false;
-        this.langList = [];
+        this.lang = '';
         this.view = '';
         this.numResult = 100;
         this.query = '';
@@ -33,13 +33,9 @@ class SearchMain{
         }
         else if(testStr.startsWith('[')) {
             let tokens = testStr.match(/\S+/g);
-            console.log(tokens);
             let gameStr = tokens[0];
             if(gameStr.endsWith(']')){
-                console.log('|'+gameStr+'|'+gameStr.length)
-
                 let mayBeStr = gameStr.substr(1, gameStr.length-2);
-                console.log(mayBeStr);
                 if(mayBeStr.length > 0){
                     let regEx = new RegExp(/^\d+$/);
                     const found = mayBeStr.match(regEx);
@@ -67,23 +63,22 @@ class SearchMain{
         let arr = [];
         for(let i = 1; i < tokens.length; i++) {
             if(tokens[i].toLowerCase().startsWith('lang:')){
-                arr.push(tokens[i]);
+                let mayBeStr = tokens[i].toLowerCase().slice(5);
+                if(mayBeStr.length == 2){
+                    this.lang = mayBeStr;
+                    this.flagLang = true;
+                }
+                else
+                    this.errorStr = 'Langauge code should be of two alphabets';
             }
         }
-        arr.forEach(elem =>{
-            if(elem.slice(5).length == 2){
-                this.langList.push(elem.slice(5));
-                this.flagLang = true;
-            }
-            else
-                this.errorStr = 'Langauge code should be of two alphabets';
-        })
+        
     }
     extractViewer(testStr){
         let tokens = testStr.match(/\S+/g);
         let arr = [];
         for(let i = 1; i < tokens.length; i++) {
-            if(tokens[i].toLowerCase.startsWith('viewer:')){
+            if(tokens[i].toLowerCase().startsWith('viewer:')){
                 let mayBeStr = tokens[i].toLowerCase().slice(7);
                 let regEx = new RegExp(/^\d+$/);
                 const found = mayBeStr.match(regEx);
@@ -95,7 +90,7 @@ class SearchMain{
                     this.errorStr = 'Viewer should be numeric';
                 }
             }
-            else if(tokens[i].toLowerCase.startsWith('viewers:')){
+            else if(tokens[i].toLowerCase().startsWith('viewers:')){
                 let mayBeStr = tokens[i].toLowerCase().slice(8);
                 let regEx = new RegExp(/^\d+$/);
                 const found = mayBeStr.match(regEx);
@@ -107,8 +102,107 @@ class SearchMain{
                     this.errorStr = 'Viewer should be numeric';
                 }
             }
-        }
+        }   
+    }
+    async getGameByGameId(gId){
+        //console.log(gId);
+        let feeds,response;
+        searchFound = false;
+        try{
+        response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}&first=${this.numResult}`,{
+            method:'GET',
+            headers: {
+            'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
+            }
+        });
         
+        feeds = await response.json();
+        console.log('Sunygame', feeds);
+    
+        if(feeds.data.length > 0)
+            return {isDone: true,result: feeds.data};
+        return {isDone: false,result: feeds.data};
+        }   
+        catch(error){
+            console.log(error);
+            return {isDone: false,result: null};
+        }
+    }
+    async getGameByGameIdAndView(gId){
+        console.log(gId);
+        let feeds,response;
+        searchFound = false;
+        
+        try{
+            response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}&first=${this.numResult}&lang=${this.lang}`,{
+            method:'GET',
+            headers: {
+            'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
+            }
+        });
+        
+        feeds = await response.json();
+        console.log('Sunygame', feeds);
+    
+        if(feeds.data.length > 0)
+            return {isDone: true,result: feeds.data};
+        return {isDone: false,result: feeds.data};
+        }   
+        catch(error){
+            console.log(error);
+            return {isDone: false,result: null};
+        }
+    }
+    async getGameByGameIdAndLang(gId){
+        console.log(gId);
+        let feeds,response;
+        searchFound = false;
+        
+        try{
+            response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}&first=${this.numResult}&lang=${this.lang}`,{
+            method:'GET',
+            headers: {
+            'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
+            }
+        });
+        
+        feeds = await response.json();
+        console.log('Sunygame', feeds);
+    
+        if(feeds.data.length > 0)
+            return {isDone: true,result: feeds.data};
+        return {isDone: false,result: feeds.data};
+        }   
+        catch(error){
+            console.log(error);
+            return {isDone: false,result: null};
+        }
+    }
+    async getGameByGameIdAndLangAndViewer(gId){
+        console.log(gId);
+        let feeds,response;
+        searchFound = false;
+        
+        try{
+            response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}&first=${this.numResult}&lang=${this.lang}`,{
+            method:'GET',
+            headers: {
+            'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
+            }
+        });
+        
+        feeds = await response.json();
+        console.log('Sunygame', feeds);
+        let arr = [...feeds.data];
+        let newArr = arr.filter(elem => elem.viewer_count>this.view)
+        if(feeds.data.length > 0)
+            return {isDone: true,result: newArr};
+        return {isDone: false,result: newArr};
+        }   
+        catch(error){
+            console.log(error);
+            return {isDone: false,result: null};
+        }
     }
 }
 
@@ -116,13 +210,15 @@ let searchEx1 = new SearchMain('{gorgc}');
 console.log('First:' +searchEx1.errorStr);
 let searchEx2 = new SearchMain('[29595] lang:en viewer:677');
 console.log('Second: '+searchEx2.errorStr);
-console.log('Second: '+searchEx2.langList);
+console.log('Second: '+searchEx2.lang);
 console.log('Second: '+searchEx2.view);
 let searchEx3 = new SearchMain('[29dsd595]');// lang:en viewer:677 lang:pt');
 console.log('Third: ' + searchEx3.errorStr);
-let searchEx4 = new SearchMain('[29595]')// lang:en viewer:6g899 viewers: 2174');
+let searchEx4 = new SearchMain('[29595] lang: end')// lang:en viewer:6g899 viewers: 2174');
 console.log('Forth: '+ searchEx4.errorStr);
 console.log('Done');
+
+
 
 async function search(){
     let isDone = false;
