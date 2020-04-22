@@ -110,7 +110,6 @@ class SearchMain{
     async getGameByGameId(gId){
         //console.log(gId);
         let feeds,response;
-        searchFound = false;
         try{
         response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}&first=${this.numResult}`,{
             method:'GET',
@@ -134,7 +133,6 @@ class SearchMain{
     async getGameByGameIdAndView(gId){
         console.log(gId);
         let feeds,response;
-        searchFound = false;
         
         try{
             response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}&first=${this.numResult}`,{
@@ -145,7 +143,6 @@ class SearchMain{
         });
         
         feeds = await response.json();
-        console.log('Sunygame', feeds);
         let arr = [...feeds.data];
         let newArr = arr.filter(elem => elem.viewer_count>this.view)
         if(feeds.data.length > 0)
@@ -161,7 +158,6 @@ class SearchMain{
     async getGameByGameIdAndLang(gId){
         console.log(gId);
         let feeds,response;
-        searchFound = false;
         
         try{
             response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}&first=${this.numResult}&lang=${this.lang}`,{
@@ -172,7 +168,6 @@ class SearchMain{
         });
         
         feeds = await response.json();
-        console.log('Sunygame', feeds);
     
         if(feeds.data.length > 0)
             return {isDone: true,result: feeds.data};
@@ -186,7 +181,6 @@ class SearchMain{
     async getGameByGameIdAndLangAndViewer(gId){
         console.log(gId);
         let feeds,response;
-        searchFound = false;
         
         try{
             response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}&first=${this.numResult}&lang=${this.lang}`,{
@@ -197,7 +191,6 @@ class SearchMain{
         });
         
         feeds = await response.json();
-        console.log('Sunygame', feeds);
         let arr = [...feeds.data];
         let newArr = arr.filter(elem => elem.viewer_count>this.view)
         if(feeds.data.length > 0)
@@ -212,7 +205,6 @@ class SearchMain{
     async getUserByName(userName){
         // console.log(userName);
         let feedsOne, responseOne, feedsTwo, responseTwo;
-        searchFound = false;
         try{
             responseOne = await fetch(`https://api.twitch.tv/helix/users?login=${userName}`,{
                 method:'GET',
@@ -222,7 +214,6 @@ class SearchMain{
             });
             
             feedsOne = await responseOne.json();
-            console.log('Sunyuser', feedsOne);
             let player_id = feedsOne.data[0].id;
     
             if(feedsOne.data.length > 0) {
@@ -233,7 +224,6 @@ class SearchMain{
                     }
                 });
                 feedsTwo = await responseTwo.json();
-                console.log('Sunyuser', feedsTwo);
                 return {isDone: true,result: feedsTwo.data};
             }
             else
@@ -246,132 +236,140 @@ class SearchMain{
     }
 }
 
+function test(){
 
-let arr = ['{gorgc}', '[29595] lang:en viewer:677', '[29dsd595]', '[29595]'];
-arr.forEach(elem =>{
-    let searchEx1 = new SearchMain(elem);
-    if(searchEx1.gFlag == 1){
-        let res = getUserByName(searchEx1.user);
-        console.log(res);
-    }
-    else if(searchEx1.gFlag == 2) {
-        if(searchEx1.flagLang && searchEx1.flagView){
-            let res = getGameByGameIdAndLangAndViewer(searchEx1.game);
+    let arr = ['{gorgc}'];
+    arr.forEach(async(elem) =>{
+        let searchEx1 = new SearchMain(elem);
+        console.log(elem);
+        if(searchEx1.gFlag == 1){
+            let res = await searchEx1.getUserByName(searchEx1.user);
             console.log(res);
         }
-        else if(searchEx1.flagLang && !searchEx1.flagView){
-            let res = getGameByGameIdAndLang(searchEx1.game);
-            console.log(res);
-        }
-        else if(!searchEx1.flagLang && searchEx1.flagView){
-            let res = getGameByGameIdAndView(searchEx1.game);
-            console.log(res);
+        else if(searchEx1.gFlag == 2) {
+            if(searchEx1.flagLang && searchEx1.flagView){
+                let res = await searchEx1.getGameByGameIdAndLangAndViewer(searchEx1.game);
+                console.log(res);
+            }
+            else if(searchEx1.flagLang && !searchEx1.flagView){
+                let res = await searchEx1.getGameByGameIdAndLang(searchEx1.game);
+                console.log(res);
+            }
+            else if(!searchEx1.flagLang && searchEx1.flagView){
+                let res = await searchEx1.getGameByGameIdAndView(searchEx1.game);
+                console.log(res);
+            }
+            else {
+                let res = await searchEx1.getGameByGameId(searchEx1.game);
+                console.log(res);
+            }
         }
         else {
-            let res = getGameByGameId(searchEx1.game);
-            console.log(res);
+            console.log(searchEx1.user +' '+ searchEx1.game + ' ' +searchEx1.errorStr);
         }
-    }
-    else {
-        console.log(searchEx1.errorStr);
-    }
-});
-
-
-
-async function search(){
-    let isDone = false;
-    let isGame = false;
-    let isUser = false;
-    if(isDone == false){
-        
-        let totalStr = sessionStorage.getItem('searchedKey');
-        let arr = totalStr.match(/\S+/g);
-        console.log(arr);
-        let str = arr[0];
-        let obj = matchesGameByGameId(str);
-        // let h1 = document.createElement('h1');
-        // h1.innerHTML = str;
-        // document.body.append(h1);
-        //console.log(obj.stringify())
-        
-        if(obj.res == true){
-            console.log('Valid format for game ' + str);
-            //console.log(getGameByGameId(obj.result) );
-            let bool = await getGameByGameId(obj.result);
-            if(bool)
-                console.log('Game-ID-Valid');
-            else
-                console.log('Game-ID not a game');
-            isDone = true;
-            isGame = true;
-        }
-        else{
-            console.log('Invalid format for game')
-        }
-    }
-
-    if(isDone == false){
-        let obj = matchesUserByUserName(str);
-        //console.log(obj.stringify())
-        
-        if(obj.res == true){
-            console.log('Valid format for user ' + obj.result);
-            //console.log(getGameByGameId(obj.result) );
-            let qRes = await getStatusByUserName(obj.result);    //return object {user found, but not live or user found and live, user not found}
-            if(qRes.res){
-                if(qRes.isLive)
-                    console.log(qRes.isLive  + ' Player is live');
-                else
-                    console.log(qRes.isLive  + ' Player is not live');
-            }
-            else
-                console.log(qRes.isLive + ' Player is live');
-            isDone = true;
-            isUser = true;
-        }
-        else{
-            console.log('Invalid format for user')
-        }
-    }
-    if(isDone == false){
-        let obj = matchesStreamByGameIdAndLang(str);
-        //console.log(obj.stringify())
-        
-        if(obj.res == true){
-            console.log('Valid format for lang ' + obj.result);
-            //console.log(getGameByGameId(obj.result) );
-            let qRes = await getStreamByGameIdAndLang(29595,obj.result, 100);   
-            if(qRes)
-                console.log(qRes  + ' Language and game found');
-            else
-                console.log(qRes + ' Error with langauge');
-            isDone = true;
-            isGame = true;
-        }
-        else{
-            console.log('Invalid format for user')
-        }
-    }
-    if(isDone == false){
-        let obj = matchesStreamByGameIdAndViewerCount(str);
-        //console.log(obj.stringify())
-        
-        if(obj.res == true){
-            console.log('Valid format for lang ' + obj.result);
-            //console.log(getGameByGameId(obj.result) );
-            let qRes = await getStreamByGameIdAndViewerCount(29595,'en', 100, obj.result);    //return object {user found, but not live or user found and live, user not found}
-
-            console.log(qRes  + ' # streams with more than ' + obj.result +' viewers');
-            
-            isDone = true;
-            isGame = true;
-        }
-        else{
-            console.log('Invalid format for user')
-        }
-    }
+    });
 }
+test();
+
+
+
+
+
+
+
+// async function search(){
+//     let isDone = false;
+//     let isGame = false;
+//     let isUser = false;
+//     if(isDone == false){
+        
+//         let totalStr = sessionStorage.getItem('searchedKey');
+//         let arr = totalStr.match(/\S+/g);
+//         console.log(arr);
+//         let str = arr[0];
+//         let obj = matchesGameByGameId(str);
+//         // let h1 = document.createElement('h1');
+//         // h1.innerHTML = str;
+//         // document.body.append(h1);
+//         //console.log(obj.stringify())
+        
+//         if(obj.res == true){
+//             console.log('Valid format for game ' + str);
+//             //console.log(getGameByGameId(obj.result) );
+//             let bool = await getGameByGameId(obj.result);
+//             if(bool)
+//                 console.log('Game-ID-Valid');
+//             else
+//                 console.log('Game-ID not a game');
+//             isDone = true;
+//             isGame = true;
+//         }
+//         else{
+//             console.log('Invalid format for game')
+//         }
+//     }
+
+//     if(isDone == false){
+//         let obj = matchesUserByUserName(str);
+//         //console.log(obj.stringify())
+        
+//         if(obj.res == true){
+//             console.log('Valid format for user ' + obj.result);
+//             //console.log(getGameByGameId(obj.result) );
+//             let qRes = await getStatusByUserName(obj.result);    //return object {user found, but not live or user found and live, user not found}
+//             if(qRes.res){
+//                 if(qRes.isLive)
+//                     console.log(qRes.isLive  + ' Player is live');
+//                 else
+//                     console.log(qRes.isLive  + ' Player is not live');
+//             }
+//             else
+//                 console.log(qRes.isLive + ' Player is live');
+//             isDone = true;
+//             isUser = true;
+//         }
+//         else{
+//             console.log('Invalid format for user')
+//         }
+//     }
+//     if(isDone == false){
+//         let obj = matchesStreamByGameIdAndLang(str);
+//         //console.log(obj.stringify())
+        
+//         if(obj.res == true){
+//             console.log('Valid format for lang ' + obj.result);
+//             //console.log(getGameByGameId(obj.result) );
+//             let qRes = await getStreamByGameIdAndLang(29595,obj.result, 100);   
+//             if(qRes)
+//                 console.log(qRes  + ' Language and game found');
+//             else
+//                 console.log(qRes + ' Error with langauge');
+//             isDone = true;
+//             isGame = true;
+//         }
+//         else{
+//             console.log('Invalid format for user')
+//         }
+//     }
+//     if(isDone == false){
+//         let obj = matchesStreamByGameIdAndViewerCount(str);
+//         //console.log(obj.stringify())
+        
+//         if(obj.res == true){
+//             console.log('Valid format for lang ' + obj.result);
+//             //console.log(getGameByGameId(obj.result) );
+//             let qRes = await getStreamByGameIdAndViewerCount(29595,'en', 100, obj.result);    //return object {user found, but not live or user found and live, user not found}
+
+//             console.log(qRes  + ' # streams with more than ' + obj.result +' viewers');
+            
+//             isDone = true;
+//             isGame = true;
+//         }
+//         else{
+//             console.log('Invalid format for user')
+//         }
+//     }
+// }
 
 //  For game [game-id]
 //  https://api.twitch.tv/helix/streams?game_id=29595
