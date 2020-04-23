@@ -1,11 +1,13 @@
 .search-container{
     width: 1400px;
     margin: 0 auto;
-    color: white;
+    background-attachment: rgb(5, 5, 5);;
+    color: rgb(222, 222, 227);
     /* background: white; */
 }
 .padding{
     padding: 1rem;
+    padding-left: 2rem;
 }
 .streams-list-div{
     display: grid;
@@ -44,24 +46,30 @@
 }
 .streamer-details-div h3{
     font-family: 'Montserrat', "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: 700;
-    font-size: 1.4rem;
+    font-weight: 600;
+    font-size: 1.2rem;
 }
 .streamer-details-div h4{
     font-family: 'Montserrat', "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 500;
-    font-size: 1.25rem;
+    font-size: 1.1rem;
 }
 .streamer-details-div h4{
     font-family: 'Montserrat', "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 400;
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 .search-container h2{
     font-family: 'Montserrat', "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: 700;
-    font-size: 1.3rem;
+    font-weight: 600;
+    font-size: 1.15rem;
 }
-.streams-div{
+/* .streams-div{
     margin-left: 2rem;
+} */
+.hr-style{
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));
+    margin: 2rem 0;
 }
