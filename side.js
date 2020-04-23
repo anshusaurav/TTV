@@ -68,6 +68,9 @@ class SearchMain{
             this.errorStr = "Doesn't start with a { or [";
         }
     }
+    set ErrorStr(str){
+        this.errorStr = str;
+    }
     extractLanguage(testStr){
         let tokens = testStr.match(/\S+/g);
         let arr = [];
@@ -267,7 +270,7 @@ class SearchMain{
         if(feeds.data.length){
             this.gameName = feeds.data[0].name;
             loaderElem.style.visibility = 'hidden';
-            console.log(val,"jhhjjhj")
+            // console.log(val,"jhhjjhj")
             return ;
         }
         return false;
@@ -291,6 +294,7 @@ async function loadChannels() {
     let totalStr = sessionStorage.getItem('searchedKey');
     let searchEx1 = new SearchMain(totalStr);
     titleElem.innerHTML = 'Search results for ' + totalStr; 
+    let flag = false;
     // console.log(elem);
 
     if(searchEx1.gFlag == 1){
@@ -340,11 +344,13 @@ async function loadChannels() {
         }
         channelMainElem.innerHTML = str;
         headerElem.style.display = 'block';
-
+        return true;
+        // paintLiveChannel();
     }
     else if(searchEx1.gFlag == 2) {
         let res;
         let gameN = await searchEx1.getGameName();
+        
         if(searchEx1.flagLang && searchEx1.flagView){
             res = await searchEx1.getGameByGameIdAndLangAndViewer();
             
@@ -360,43 +366,69 @@ async function loadChannels() {
             res = await searchEx1.getGameByGameId();
         }
         let str = '';
-        let arr = res.result;
-        console.log('HERE');
-        console.log(arr);
-        arr.forEach(elem =>{
-            str += `<div class='streams-list-elem'>
-            <div class='streams-elem-grid'>
-                <div class='streamer-img-div'>
-                    <img src =${getImageThumb(elem.thumbnail_url)} class='online-img streamer-img'>
+        console.log('Done: ' + res.isDone);
+        if(res.isDone){
+            let arr = res.result;
+            
+            // console.log('HERE');
+            console.log(arr.length);
+            if(arr.length == 0) {
+                searchEx1.ErrorStr = 'No results found';
+            }
+            // console.log(gameN.res);
+            arr.forEach(elem =>{
+                str += `<div class='streams-list-elem'>
+                <div class='streams-elem-grid'>
+                    <div class='streamer-img-div'>
+                        <img src =${getImageThumb(elem.thumbnail_url)} class='online-img streamer-img'>
 
+                    </div>
+                    <div class='streamer-details-div'>
+                        <a href='https://www.twitch.tv/${elem.user_name}'><h3 class='streamer-name'>${elem.user_name}</h3></a>
+                        <h4 class='stream-game-name'>${searchEx1.gameName}</h4>
+                        <h4 class='stream-view-count'>${getCounts(elem.viewer_count)} viewers</h4>
+                        <h4 class='stream-title-name'>${elem.title}</h4>
+                        <h5 class='Language'>${elem.language}</h5>
+                    </div>
                 </div>
-                <div class='streamer-details-div'>
-                    <a href='https://www.twitch.tv/${elem.user_name}'><h3 class='streamer-name'>${elem.user_name}</h3></a>
-                    <h4 class='stream-game-name'>${searchEx1.gameName}</h4>
-                    <h4 class='stream-view-count'>${getCounts(elem.viewer_count)} viewers</h4>
-                    <h4 class='stream-title-name'>${elem.title}</h4>
-                    <h5 class='Language'>${elem.language}</h5>
-                </div>
-            </div>
-        </div>`;
-        });
-        channelMainElem.innerHTML = str;
-        headerElem.style.display = 'block';
-
-
+            </div>`;
+            });
+            channelMainElem.innerHTML = str;
+            headerElem.style.display = 'block';
+        }
+        else{
+            console.log(searchEx1.user +' '+ searchEx1.game + ' ' +searchEx1.errorStr);
+            headerElem.innerHTML = "No matches found";
+            headerElem.style.display = 'block';
+            loaderElem.style.visibility = 'hidden';
+            flag = true
+            return false;
+        }
+        return true;
 
     }
     else {
         console.log(searchEx1.user +' '+ searchEx1.game + ' ' +searchEx1.errorStr);
         headerElem.innerHTML = searchEx1.errorStr;
         headerElem.style.display = 'block';
+        loaderElem.style.visibility = 'hidden';
+        flag = true
+        return false;
+    }
+    if(searchEx1.errorStr && flag){
+        console.log(searchEx1.user +' '+ searchEx1.game + ' ' +searchEx1.errorStr);
+        headerElem.innerHTML = searchEx1.errorStr;
+        headerElem.style.display = 'block';
+        loaderElem.style.visibility = 'hidden';
+        flag = true
+        return false;
     }
 }
 function getImageThumb(str){
     let ind = str.indexOf('-{width}x{height}');
-    // let res1 = str.replace('{width}', '400');
-    // let res = res1.replace('{height}', '300');
-    let res = str.substr(0, ind) + str.substr(ind+17);
+    let res1 = str.replace('{width}', '412');
+    let res = res1.replace('{height}', '230');
+    // let res = str.substr(0, ind) + str.substr(ind+17);
     console.log(res);
     return res;
 }
@@ -412,10 +444,19 @@ function getCounts(cnt) {
 
 }
 // test();
-function paintLiveChannel(){
-    
-}
 loadChannels();
+// async function paintLiveChannel(){
+//     let res = await loadChannels();
+//     console.log(res);
+//     let allImageElem = document.querySelectorAll('online-img');
+//     console.log(allImageElem.length);
+//     allImageElem.forEach(elem =>{
+//         let divElem = elem.closest('.streamer-img-div');
+//         console.log(divElem);
+//     })
+// }
+
+// paintLiveChannel();
 
 //https://api.twitch.tv/helix/games?id=29595
 /*
