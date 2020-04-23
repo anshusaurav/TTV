@@ -111,11 +111,10 @@ class SearchMain{
             }
         }   
     }
-    async getGameByGameId(gId){
-        //console.log(gId);
+    async getGameByGameId(){
         let feeds,response;
         try{
-        response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}&first=${this.numResult}`,{
+        response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${this.game}&first=${this.numResult}`,{
             method:'GET',
             headers: {
             'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
@@ -134,12 +133,11 @@ class SearchMain{
             return {isDone: false,result: null};
         }
     }
-    async getGameByGameIdAndView(gId){
-        console.log(gId);
+    async getGameByGameIdAndView(){
         let feeds,response;
         
         try{
-            response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}&first=${this.numResult}`,{
+            response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${this.game}&first=${this.numResult}`,{
             method:'GET',
             headers: {
             'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
@@ -159,12 +157,11 @@ class SearchMain{
         }
         
     }
-    async getGameByGameIdAndLang(gId){
-        console.log(gId);
+    async getGameByGameIdAndLang(){
         let feeds,response;
         
         try{
-            response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}&first=${this.numResult}&language=${this.lang}`,{
+            response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${this.game}&first=${this.numResult}&language=${this.lang}`,{
             method:'GET',
             headers: {
             'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
@@ -182,12 +179,11 @@ class SearchMain{
             return {isDone: false,result: null};
         }
     }
-    async getGameByGameIdAndLangAndViewer(gId){
-        console.log(gId);
+    async getGameByGameIdAndLangAndViewer(){
         let feeds,response;
         
         try{
-            response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${gId}&first=${this.numResult}&language=${this.lang}`,{
+            response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${this.game}&first=${this.numResult}&language=${this.lang}`,{
             method:'GET',
             headers: {
             'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
@@ -206,11 +202,11 @@ class SearchMain{
             return {isDone: false,result: null};
         }
     }
-    async getUserByName(userName){
+    async getUserByName(){
         // console.log(userName);
         let feedsOne, responseOne, feedsTwo, responseTwo;
         try{
-            responseOne = await fetch(`https://api.twitch.tv/helix/users?login=${userName}`,{
+            responseOne = await fetch(`https://api.twitch.tv/helix/users?login=${this.user}`,{
                 method:'GET',
                 headers: {
                 'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
@@ -218,8 +214,13 @@ class SearchMain{
             });
             
             feedsOne = await responseOne.json();
-            let player_id = feedsOne.data[0].id;
-    
+            let player_id;
+            if(feedsOne.data[0].id){
+                player_id = feedsOne.data[0].id;
+                return {isDone:false, result:null};
+            }
+            console.log(feedsOne);
+            console.log(player_id);
             if(feedsOne.data.length > 0) {
                 responseTwo = await fetch(`https://api.twitch.tv/helix/streams?user_id=${player_id}`,{
                 method:'GET',
@@ -228,6 +229,7 @@ class SearchMain{
                     }
                 });
                 feedsTwo = await responseTwo.json();
+                console.log(feedsTwo);
                 return {isDone: true,result: feedsTwo.data};
             }
             else
@@ -283,24 +285,24 @@ async function loadChannels() {
     let searchEx1 = new SearchMain(totalStr);
     // console.log(elem);
     if(searchEx1.gFlag == 1){
-        let res = await searchEx1.getUserByName(searchEx1.user);
+        let res = await searchEx1.getUserByName();
         console.log(res);
     }
     else if(searchEx1.gFlag == 2) {
         let res;
         if(searchEx1.flagLang && searchEx1.flagView){
-            res = await searchEx1.getGameByGameIdAndLangAndViewer(searchEx1.game);
+            res = await searchEx1.getGameByGameIdAndLangAndViewer();
             
         }
         else if(searchEx1.flagLang && !searchEx1.flagView){
-            res = await searchEx1.getGameByGameIdAndLang(searchEx1.game);
+            res = await searchEx1.getGameByGameIdAndLang();
             
         }
         else if(!searchEx1.flagLang && searchEx1.flagView){
-            res = await searchEx1.getGameByGameIdAndView(searchEx1.game);
+            res = await searchEx1.getGameByGameIdAndView();
         }
         else {
-            res = await searchEx1.getGameByGameId(searchEx1.game);
+            res = await searchEx1.getGameByGameId();
         }
         let str = '';
         let arr = res.result;
@@ -325,6 +327,9 @@ async function loadChannels() {
         });
         channelMainElem.innerHTML = str;
         headerElemArr.forEach(elem => elem.style.display = 'block');
+
+
+
     }
     else {
         console.log(searchEx1.user +' '+ searchEx1.game + ' ' +searchEx1.errorStr);

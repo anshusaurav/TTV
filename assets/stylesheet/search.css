@@ -12,7 +12,7 @@
 .streams-list-div{
     display: grid;
     width: 60%;
-    grid-gap: 1rem;
+    grid-gap: 1.5rem;
     /* grid-auto-rows: 160px; */
     grid-template-columns: 1fr;
 }
