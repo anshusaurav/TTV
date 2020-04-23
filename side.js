@@ -215,12 +215,14 @@ class SearchMain{
             
             feedsOne = await responseOne.json();
             let player_id;
-            if(feedsOne.data[0].id){
-                player_id = feedsOne.data[0].id;
-                return {isDone:false, result:null};
+            if(!feedsOne.data){
+               return {isDone:false, result:null, isLive: false};
             }
-            console.log(feedsOne);
-            console.log(player_id);
+            else
+                player_id = feedsOne.data[0].id;
+            // console.log(feedsOne);
+            //console.log(player_id);
+            // console.log(feedsOne.data.length);
             if(feedsOne.data.length > 0) {
                 responseTwo = await fetch(`https://api.twitch.tv/helix/streams?user_id=${player_id}`,{
                 method:'GET',
@@ -229,8 +231,11 @@ class SearchMain{
                     }
                 });
                 feedsTwo = await responseTwo.json();
-                console.log(feedsTwo);
-                return {isDone: true,result: feedsTwo.data};
+                // console.log(feedsTwo);
+                if(feedsTwo.data.length > 0)
+                    return {isDone: true,result: feedsTwo.data, isLive: true};
+                else
+                    return {isDone: true,result: feedsOne.data, isLive: false};
             }
             else
                 return {isDone: false,result: null};
@@ -286,7 +291,52 @@ async function loadChannels() {
     // console.log(elem);
     if(searchEx1.gFlag == 1){
         let res = await searchEx1.getUserByName();
-        console.log(res);
+        // console.log(res);
+        console.log(res.result);
+        let arr =  res.result;
+        let str = '';
+
+        if(res.isLive){
+            
+            arr.forEach(elem =>{
+                str += `<div class='streams-list-elem'>
+                <div class='streams-elem-grid'>
+                    <div class='streamer-img-div'>
+                        <img src =${getImageThumb(elem.thumbnail_url)} class='online-img streamer-img'>
+    
+                    </div>
+                    <div class='streamer-details-div'>
+                        <a href='https://www.twitch.tv/${elem.user_name}'><h3 class='streamer-name'>${elem.user_name}</h3></a>
+                        <h4 class='stream-game-name'>${elem.game_id}</h4>
+                        <h4 class='stream-view-count'>${getCounts(elem.viewer_count)} viewers</h4>
+                        <h4 class='stream-title-name'>${elem.title}</h4>
+                        <h5 class='Language'>${elem.language}</h5>
+                    </div>
+                </div>
+            </div>`;
+            });
+        }
+        else{
+            arr.forEach(elem =>{
+                str += `<div class='streams-list-elem'>
+                <div class='streams-elem-grid'>
+                    <div class='streamer-img-div'>
+                        <img src =${elem.profile_image_url} class='offline-img streamer-img'>
+    
+                    </div>
+                    <div class='streamer-details-div'>
+                        <a href='https://www.twitch.tv/${elem.login}'><h3 class='streamer-name'>${elem.display_name}</h3></a>
+                        
+                        <h4 class='stream-view-count'>View Count: ${getCounts(elem.view_count)} </h4>
+                        
+                    </div>
+                </div>
+            </div>`;
+            });
+        }
+        channelMainElem.innerHTML = str;
+        headerElemArr.forEach(elem => elem.style.display = 'block');
+
     }
     else if(searchEx1.gFlag == 2) {
         let res;
