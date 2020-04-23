@@ -102,7 +102,7 @@ function replaceSrctoGif(event){
     this.src = 'assets/media/logo.gif'
 }
 function replaceSrctoPng(event){
-    this.src = 'assets/media/logo-24.png'
+    this.src = 'assets/media/favicon-32x32.png'
     
 }
 document.addEventListener('click', function(event){

@@ -282,9 +282,8 @@ class SearchMain{
 //     }
 // }
 let channelMainElem = document.querySelector('.streams-list-div');
-let headerAllElem = document.querySelector('h2');
-let headerElemArr = Array.from(headerAllElem);
-headerElemArr.forEach(elem => elem.style.display = 'none');
+let headerElem = document.querySelector('h2');
+headerElem.style.display = 'none';
 async function loadChannels() {
     let totalStr = sessionStorage.getItem('searchedKey');
     let searchEx1 = new SearchMain(totalStr);
@@ -335,7 +334,7 @@ async function loadChannels() {
             });
         }
         channelMainElem.innerHTML = str;
-        headerElemArr.forEach(elem => elem.style.display = 'block');
+        headerElem.style.display = 'block';
 
     }
     else if(searchEx1.gFlag == 2) {
@@ -376,13 +375,15 @@ async function loadChannels() {
         </div>`;
         });
         channelMainElem.innerHTML = str;
-        headerElemArr.forEach(elem => elem.style.display = 'block');
+        headerElem.style.display = 'block';
 
 
 
     }
     else {
         console.log(searchEx1.user +' '+ searchEx1.game + ' ' +searchEx1.errorStr);
+        headerElem.innerHTML = searchEx1.errorStr;
+        headerElem.style.display = 'block';
     }
 }
 function getImageThumb(str){
