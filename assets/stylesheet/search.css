@@ -29,6 +29,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background: radial-gradient(ellipse at top, rgba(113, 18, 255,0.4), transparent),            radial-gradient(ellipse at bottom, rgba(113, 18, 255,0.9), transparent);
 }
 .online-img{
     width: 100%;
@@ -79,3 +80,80 @@
     background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));
     margin: 2rem 0;
 }
+
+
+.search-fail-div{
+    /* visibility: hidden; */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    display: flex;
+    /* place-items: center; */
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s;
+}
+.loader1 {
+    display:inline-block;
+    font-size:0px;
+    padding:0px;
+ }
+ .loader1 span {
+    vertical-align:middle;
+    border-radius:100%;
+    
+    display:inline-block;
+    width:40px;
+    height:40px;
+    margin:3px 2px;
+    -webkit-animation:loader1 0.8s linear infinite alternate;
+    animation:loader1 0.8s linear infinite alternate;
+ }
+ .loader1 span:nth-child(1) {
+    -webkit-animation-delay:-1s;
+    animation-delay:-1s;
+   background:rgba(113, 18, 255,0.4);
+ }
+ .loader1 span:nth-child(2) {
+    -webkit-animation-delay:-0.8s;
+    animation-delay:-0.8s;
+   background:rgba(113, 18, 255,0.6);
+ }
+ .loader1 span:nth-child(3) {
+    -webkit-animation-delay:-0.26666s;
+    animation-delay:-0.26666s;
+   background:rgba(113, 18, 255,0.8);
+ }
+ .loader1 span:nth-child(4) {
+    -webkit-animation-delay:-0.8s;
+    animation-delay:-0.8s;
+   background:rgba(113, 18, 255,1.0);
+   
+ }
+ .loader1 span:nth-child(5) {
+    -webkit-animation-delay:-1s;
+    animation-delay:-1s;
+   background:rgba(113, 18, 255,0.8);
+ }
+ .loader1 span:nth-child(6) {
+    -webkit-animation-delay:-1s;
+    animation-delay:-1s;
+   background:rgba(113, 18, 255,0.6);
+ }
+ .loader1 span:nth-child(7) {
+    -webkit-animation-delay:-1s;
+    animation-delay:-1s;
+   background:rgba(113, 18, 255,0.4);
+ }
+ 
+ @keyframes loader1 {
+    from {transform: scale(0, 0);}
+    to {transform: scale(1, 1);}
+ }
+ @-webkit-keyframes loader1 {
+    from {-webkit-transform: scale(0, 0);}
+    to {-webkit-transform: scale(1, 1);}
+ }
