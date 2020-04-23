@@ -5,7 +5,7 @@
     /* background: white; */
 }
 .padding{
-    padding: 1rem 0;
+    padding: 1rem;
 }
 .streams-list-div{
     display: grid;
@@ -56,4 +56,12 @@
     font-family: 'Montserrat', "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 400;
     font-size: 1.1rem;
+}
+.search-container h2{
+    font-family: 'Montserrat', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+.streams-div{
+    margin-left: 2rem;
 }
