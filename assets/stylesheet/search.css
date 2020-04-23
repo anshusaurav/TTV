@@ -9,7 +9,7 @@
     padding: 1rem;
     padding-left: 2rem;
 }
-.streams-list-div{
+.streams-list-div, .videos-list-div{
     display: grid;
     width: 60%;
     grid-gap: 1.5rem;

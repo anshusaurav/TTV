@@ -3,6 +3,7 @@
 
 
 let channelMainElem = document.querySelector('.streams-list-div');
+let videosMainElem = document.querySelector('.videos-list-div');
 let loaderElem = document.querySelector('.search-fail-div');
 let headerElem = document.querySelector('h2');
 let titleElem = document.querySelector('title');
@@ -12,6 +13,7 @@ let titleElem = document.querySelector('title');
 class SearchMain{
     constructor(str){
         this.user = '';
+        this.user_id = '';
         this.game = '';
         this.gameName = '';
         this.flagLang = false;
@@ -228,8 +230,10 @@ class SearchMain{
             if(!feedsOne.data){
                return {isDone:false, result:null, isLive: false};
             }
-            else
+            else{
                 player_id = feedsOne.data[0].id;
+                this.user_id = player_id;
+            }
             // console.log(feedsOne);
             //console.log(player_id);
             // console.log(feedsOne.data.length);
@@ -277,6 +281,28 @@ class SearchMain{
         }
         catch(error){
             console.log(error);
+        }
+    }
+    async getVideosByUser(){
+        let feeds,response;
+        try{
+        response = await fetch(`https://api.twitch.tv/helix/videos?user_id=108268890`,{
+            method:'GET',
+            headers: {
+            'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
+            }
+        });
+        
+        feeds = await response.json();
+        // console.log('Sunygame', feeds);
+    
+        if(feeds.data.length > 0)
+            return {isDone: true,result: feeds.data};
+        return {isDone: false,result: feeds.data};
+        }   
+        catch(error){
+            console.log(error);
+            return {isDone: false,result: null};
         }
     }
 
@@ -343,7 +369,42 @@ async function loadChannels() {
                 });
             }
             channelMainElem.innerHTML = str;
+            let allImg = document.querySelectorAll('.streamer-img-div');
+            allImg.forEach(elem =>{
+                let imgElem = elem.querySelector('.streamer-img');
+                if(imgElem.classList.contains('online-img')){
+                    let elemLive = document.createElement('p');
+                    elemLive.classList.add('live-elem')
+                    elemLive.innerHTML = 'LIVE';
+                    elem.prepend(elemLive);
+                }
+            });
             headerElem.style.display = 'block';
+
+            let resVid = await searchEx1.getVideosByUser();
+            let arrVid = resVid.result;
+            let vidStr = '';
+//             arrVid.forEach(elem => {
+//                 vidStr += `<div class='streams-list-elem'>
+//                 <div class='streams-elem-grid'>
+//                     <div class='streamer-img-div'>
+//                         <img src =${getImageThumb(elem.thumbnail_url)} class='online-img streamer-img'>
+    
+//                     </div>
+//                     <div class='streamer-details-div'>
+//                         <a href=${elem.url}><h3 class='streamer-name'>${elem.user_name}</h3></a>
+//                         <h4 class='stream-game-name'>${elem.duration}</h4>
+//                         <h4 class='stream-view-count'>${getCounts(elem.viewer_count)} viewers</h4>
+//                         <h4 class='stream-title-name'>${elem.title}</h4>
+//                         <h5 class='Language'>${elem.language}</h5>
+//                     </div>
+//                 </div>
+//             </div>`;
+//             });
+
+// //https://static-cdn.jtvnw.net/cf_vods/d2nvs31859zcd8/d62baf5b9966672aa9a8_gorgc_1278993105_79997912/thumb/thumb0.jpg
+//             videosMainElem.innerHTML = vidStr;
+            console.log(arrVid);
             return true;
         }
         else{
