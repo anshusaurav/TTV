@@ -240,42 +240,44 @@ class SearchMain{
     }
 }
 
-async function test(){
-    let totalStr = sessionStorage.getItem('searchedKey');
-    let searchEx1 = new SearchMain(totalStr);
-    // console.log(elem);
-    if(searchEx1.gFlag == 1){
-        let res = await searchEx1.getUserByName(searchEx1.user);
-        console.log(res);
-    }
-    else if(searchEx1.gFlag == 2) {
-        if(searchEx1.flagLang && searchEx1.flagView){
-            let res = await searchEx1.getGameByGameIdAndLangAndViewer(searchEx1.game);
-            console.log('1');
-            console.log(res);
-        }
-        else if(searchEx1.flagLang && !searchEx1.flagView){
-            let res = await searchEx1.getGameByGameIdAndLang(searchEx1.game);
-            console.log('2');
-            console.log(res);
-        }
-        else if(!searchEx1.flagLang && searchEx1.flagView){
-            let res = await searchEx1.getGameByGameIdAndView(searchEx1.game);
-            console.log('3');
-            console.log(res);
-        }
-        else {
-            let res = await searchEx1.getGameByGameId(searchEx1.game);
-            console.log('4');
-            console.log(res);
-        }
-    }
-    else {
-        console.log(searchEx1.user +' '+ searchEx1.game + ' ' +searchEx1.errorStr);
-    }
-}
+// async function test(){
+//     let totalStr = sessionStorage.getItem('searchedKey');
+//     let searchEx1 = new SearchMain(totalStr);
+//     // console.log(elem);
+//     if(searchEx1.gFlag == 1){
+//         let res = await searchEx1.getUserByName(searchEx1.user);
+//         console.log(res);
+//     }
+//     else if(searchEx1.gFlag == 2) {
+//         if(searchEx1.flagLang && searchEx1.flagView){
+//             let res = await searchEx1.getGameByGameIdAndLangAndViewer(searchEx1.game);
+//             console.log('1');
+//             console.log(res);
+//         }
+//         else if(searchEx1.flagLang && !searchEx1.flagView){
+//             let res = await searchEx1.getGameByGameIdAndLang(searchEx1.game);
+//             console.log('2');
+//             console.log(res);
+//         }
+//         else if(!searchEx1.flagLang && searchEx1.flagView){
+//             let res = await searchEx1.getGameByGameIdAndView(searchEx1.game);
+//             console.log('3');
+//             console.log(res);
+//         }
+//         else {
+//             let res = await searchEx1.getGameByGameId(searchEx1.game);
+//             console.log('4');
+//             console.log(res);
+//         }
+//     }
+//     else {
+//         console.log(searchEx1.user +' '+ searchEx1.game + ' ' +searchEx1.errorStr);
+//     }
+// }
 let channelMainElem = document.querySelector('.streams-list-div');
-
+let headerAllElem = document.querySelector('h2');
+let headerElemArr = Array.from(headerAllElem);
+headerElemArr.forEach(elem => elem.style.display = 'none');
 async function loadChannels() {
     let totalStr = sessionStorage.getItem('searchedKey');
     let searchEx1 = new SearchMain(totalStr);
@@ -312,9 +314,9 @@ async function loadChannels() {
 
                 </div>
                 <div class='streamer-details-div'>
-                    <h3 class='streamer-name'>${elem.user_name}</h3>
+                    <a href='https://www.twitch.tv/${elem.user_name}'><h3 class='streamer-name'>${elem.user_name}</h3></a>
                     <h4 class='stream-game-name'>${elem.game_id}</h4>
-                    <h4 class='stream-view-count'>${elem.viewer_count}</h4>
+                    <h4 class='stream-view-count'>${getCounts(elem.viewer_count)} viewers</h4>
                     <h4 class='stream-title-name'>${elem.title}</h4>
                     <h5 class='Language'>${elem.language}</h5>
                 </div>
@@ -322,21 +324,34 @@ async function loadChannels() {
         </div>`;
         });
         channelMainElem.innerHTML = str;
+        headerElemArr.forEach(elem => elem.style.display = 'block');
     }
     else {
         console.log(searchEx1.user +' '+ searchEx1.game + ' ' +searchEx1.errorStr);
     }
 }
-test();
-loadChannels();
 function getImageThumb(str){
     let ind = str.indexOf('-{width}x{height}');
-    let res1 = str.replace('{width}', '400');
-    let res = res1.replace('{height}', '300');
-    //let res = str.substr(0, ind) + str.substr(ind+17);
+    // let res1 = str.replace('{width}', '400');
+    // let res = res1.replace('{height}', '300');
+    let res = str.substr(0, ind) + str.substr(ind+17);
     console.log(res);
     return res;
 }
+function getCounts(cnt) {
+    let res;
+    if(cnt >= 1000)
+    {    
+        res = cnt/1000;
+        return res.toFixed(1)+'K';
+    }
+    return cnt;
+    
+
+}
+// test();
+loadChannels();
+
 //https://api.twitch.tv/helix/games?id=29595
 /*
 {

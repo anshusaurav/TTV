@@ -50,17 +50,20 @@
     font-family: 'Montserrat', "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 600;
     font-size: 1.2rem;
+    letter-spacing: 0.8px;
 }
-.streamer-details-div h4{
-    font-family: 'Montserrat', "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: 500;
-    font-size: 1.1rem;
+.streamer-details-div a{
+    text-decoration: none;
+    color: rgb(222, 222, 227);
+
 }
-.streamer-details-div h4{
+.streamer-details-div h4, h5{
     font-family: 'Montserrat', "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 400;
-    font-size: 1rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
 }
+
 .search-container h2{
     font-family: 'Montserrat', "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 600;
