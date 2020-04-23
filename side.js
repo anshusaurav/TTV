@@ -303,48 +303,57 @@ async function loadChannels() {
         console.log(res.result);
         let arr =  res.result;
         let str = '';
-
-        if(res.isLive){
-            
-            arr.forEach(elem =>{
-                str += `<div class='streams-list-elem'>
-                <div class='streams-elem-grid'>
-                    <div class='streamer-img-div'>
-                        <img src =${getImageThumb(elem.thumbnail_url)} class='online-img streamer-img'>
-    
+        if(res.isDone){
+            if(res.isLive){
+                
+                arr.forEach(elem =>{
+                    str += `<div class='streams-list-elem'>
+                    <div class='streams-elem-grid'>
+                        <div class='streamer-img-div'>
+                            <img src =${getImageThumb(elem.thumbnail_url)} class='online-img streamer-img'>
+        
+                        </div>
+                        <div class='streamer-details-div'>
+                            <a href='https://www.twitch.tv/${elem.user_name}'><h3 class='streamer-name'>${elem.user_name}</h3></a>
+                            <h4 class='stream-game-name'>${elem.game_id}</h4>
+                            <h4 class='stream-view-count'>${getCounts(elem.viewer_count)} viewers</h4>
+                            <h4 class='stream-title-name'>${elem.title}</h4>
+                            <h5 class='Language'>${elem.language}</h5>
+                        </div>
                     </div>
-                    <div class='streamer-details-div'>
-                        <a href='https://www.twitch.tv/${elem.user_name}'><h3 class='streamer-name'>${elem.user_name}</h3></a>
-                        <h4 class='stream-game-name'>${elem.game_id}</h4>
-                        <h4 class='stream-view-count'>${getCounts(elem.viewer_count)} viewers</h4>
-                        <h4 class='stream-title-name'>${elem.title}</h4>
-                        <h5 class='Language'>${elem.language}</h5>
+                </div>`;
+                });
+            }
+            else{
+                arr.forEach(elem =>{
+                    str += `<div class='streams-list-elem'>
+                    <div class='streams-elem-grid'>
+                        <div class='streamer-img-div'>
+                            <img src =${elem.profile_image_url} class='offline-img streamer-img'>
+        
+                        </div>
+                        <div class='streamer-details-div'>
+                            <a href='https://www.twitch.tv/${elem.login}'><h3 class='streamer-name'>${elem.display_name}</h3></a>
+                            
+                            <h4 class='stream-view-count'>View Count: ${getCounts(elem.view_count)} </h4>
+                            
+                        </div>
                     </div>
-                </div>
-            </div>`;
-            });
+                </div>`;
+                });
+            }
+            channelMainElem.innerHTML = str;
+            headerElem.style.display = 'block';
+            return true;
         }
         else{
-            arr.forEach(elem =>{
-                str += `<div class='streams-list-elem'>
-                <div class='streams-elem-grid'>
-                    <div class='streamer-img-div'>
-                        <img src =${elem.profile_image_url} class='offline-img streamer-img'>
-    
-                    </div>
-                    <div class='streamer-details-div'>
-                        <a href='https://www.twitch.tv/${elem.login}'><h3 class='streamer-name'>${elem.display_name}</h3></a>
-                        
-                        <h4 class='stream-view-count'>View Count: ${getCounts(elem.view_count)} </h4>
-                        
-                    </div>
-                </div>
-            </div>`;
-            });
+            console.log(searchEx1.user +' '+ searchEx1.game + ' ' +searchEx1.errorStr);
+            headerElem.innerHTML = "No matches found";
+            headerElem.style.display = 'block';
+            loaderElem.style.visibility = 'hidden';
+            flag = true
+            return false;
         }
-        channelMainElem.innerHTML = str;
-        headerElem.style.display = 'block';
-        return true;
         // paintLiveChannel();
     }
     else if(searchEx1.gFlag == 2) {
@@ -394,6 +403,16 @@ async function loadChannels() {
             </div>`;
             });
             channelMainElem.innerHTML = str;
+            let allImg = document.querySelectorAll('.streamer-img-div');
+            allImg.forEach(elem =>{
+                let imgElem = elem.querySelector('.streamer-img');
+                if(imgElem.classList.contains('online-img')){
+                    let elemLive = document.createElement('p');
+                    elemLive.classList.add('live-elem')
+                    elemLive.innerHTML = 'LIVE';
+                    elem.prepend(elemLive);
+                }
+            });
             headerElem.style.display = 'block';
         }
         else{
@@ -415,14 +434,7 @@ async function loadChannels() {
         flag = true
         return false;
     }
-    if(searchEx1.errorStr && flag){
-        console.log(searchEx1.user +' '+ searchEx1.game + ' ' +searchEx1.errorStr);
-        headerElem.innerHTML = searchEx1.errorStr;
-        headerElem.style.display = 'block';
-        loaderElem.style.visibility = 'hidden';
-        flag = true
-        return false;
-    }
+    
 }
 function getImageThumb(str){
     let ind = str.indexOf('-{width}x{height}');
