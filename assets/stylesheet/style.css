@@ -717,6 +717,7 @@ body{
     grid-gap: 0.5rem;
     grid-template-columns: repeat(6, auto);
     margin: 8px 0;
+    transition: all 0.325s;
 }
 .wrapper section .item {
     padding: 0 2px;

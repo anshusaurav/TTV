@@ -49,7 +49,7 @@ input {
     
     /* object-fit: cover; */
     font-size: 0;
-    background: transparent;
+    background: rgb(15,15,15);
 }
 .streamer-details-div h3{
     font-family: 'Montserrat', "Helvetica Neue", Helvetica, Arial, sans-serif;

@@ -378,6 +378,9 @@ async function loadChannels() {
                     elemLive.innerHTML = 'LIVE';
                     elem.prepend(elemLive);
                 }
+                else{
+                    elem.style.background='rgb(5, 5, 5)';
+                }
             });
             headerElem.style.display = 'block';
 
@@ -473,6 +476,7 @@ async function loadChannels() {
                     elemLive.innerHTML = 'LIVE';
                     elem.prepend(elemLive);
                 }
+                
             });
             headerElem.style.display = 'block';
         }
