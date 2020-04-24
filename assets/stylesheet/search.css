@@ -1,3 +1,6 @@
+input {
+    pointer-events: none;
+ }
 .search-container{
     width: 1400px;
     margin: 0 auto;

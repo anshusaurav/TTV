@@ -5,7 +5,7 @@
 let channelMainElem = document.querySelector('.streams-list-div');
 let videosMainElem = document.querySelector('.videos-list-div');
 let loaderElem = document.querySelector('.search-fail-div');
-let headerElem = document.querySelector('h2');
+let headerElem = document.querySelector('.search-res-headers');
 let titleElem = document.querySelector('title');
 
 //gameNameIdMap.set()

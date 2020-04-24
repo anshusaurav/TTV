@@ -13,6 +13,126 @@
         </script>
     </head>
     <body>
+        <div class='n-container '>
+            <div class='nav-main'>
+              <div class='nav-logo'>
+                <img class ='logo-img' src="assets/media/favicon-32x32.png">
+                
+              </div>
+              <div class='nav-elem-div'>
+                <a class='nav-links'>Discover</a>
+              </div>
+              <div class='nav-elem-div'>
+               <a class='nav-links'>Following</a>
+             </div>
+             <div class='nav-elem-div'>
+               <a class='nav-links'>Browse</a>
+             </div>
+             <div >
+               <div class='nav-extra-div' data-tooltip="More">
+                 <a class='nav-extra'>...</a>
+               </div>
+             </div>
+            </div>
+            <div class='nav-search'>
+              <div class='search-div'>
+                <input class='input-search' type="text">
+                <div class='search-help-arrow'></div>
+                <div class='search-help-container'>
+                 <div class='search-pop-help'>
+                   <div class='helper-grid'>
+                     <div class='left-help-grid'>
+                       <div class='left-help-grid-elem'>
+                         <div class='left-help-elem'>
+                           <span class='first-help-text'>[game-id]</span> 
+                           <span class='second-help-text'>Search by game id</span>
+                         </div>
+                         <div class='left-help-elem'>
+                           <span class='first-help-text'>{gorgc}</span> 
+                           <span class='second-help-text'>Search by streamer username</span>
+                         </div>  
+                         <!-- <div class='left-help-elem'>
+                           <span class='first-help-text'>"words here"</span> 
+                           <span class='second-help-text'>Exact phrase</span>
+                         </div> -->
+                       </div>
+                     </div>
+                     <div class='right-help-grid'>
+                       <div>
+                         <div class='right-help-elem'>
+                           <span class='first-help-text'>viewer:1000</span> 
+                           <span class='second-help-text'>Streams with more than 1000 viewers</span>
+                         </div>
+                         <div class='right-help-elem'>
+                           <span class='first-help-text'>lang:en</span> 
+                           <span class='second-help-text'>Streams in English langauge</span>
+                         </div>
+                         <!-- <div class='right-help-elem'>
+                           <span class='first-help-text'>isLive:yes</span> 
+                           <span class='second-help-text'>Streams which are Live now</span>
+                         </div> -->
+                       </div>
+   
+                     </div>
+                   </div>
+                 </div>
+                 <div class=help-hint-div>
+                   <div class='hint-help-container'>
+                     <p class='special-help-text'>
+                       game/user[ viewer[ lang]]
+                     </p>
+                     <p class='hint-help-text'>
+                       Need to use any of game or user in above format
+                     </p>
+                     <br>
+                     <p class='hint-help-text'>
+                       if user can be entered as <span class='special-help-text'>{gorgc}</span> where <span class='special-help-text'>gorgc</span> is username
+                     </p>
+                     <p class='hint-help-text'>
+                       otherwise <span class='special-help-text'>[29595]</span> where <span class='special-help-text'>29595</span> is gameid
+                     </p>
+                     <br>
+                     <p class='hint-help-text'>
+                       Other three arguments are optional and their order is flexible. 
+                     </p>
+                     <p class='special-help-text'>
+                       [29595] lang:en viewer:1000 
+                       
+                     </p>
+                     <p class='special-help-text'>
+                       [29595] viewer:1000 lang:en 
+                     </p>
+                     <p class='hint-help-text'>
+                       Returns the same result
+                     </p>
+   
+                   </div>
+                 </div>
+               </div>
+              </div>
+            </div>
+            <div class='nav-user'>
+             <div class='notif-div' data-tooltip="Notifications">
+                 <i class="far fa-bell"></i>
+             </div>
+             <div class='whisper-div' data-tooltip="Whispers">
+               <i class="far fa-comment-alt"></i>
+             </div>
+             <div class='gem-bit-flex'>
+              <div class='gem-bits-fa'>
+               <i class="far fa-gem"></i>
+              </div>
+              <div class='get-bits-div'>
+                <p>Get Bits</p>
+              </div>
+              </div>
+              <div class='usr-div'>
+                <div class='usr-img-div'>
+                <img src='assets\media\profile_image-70x70.png' class='usr-img'>
+               </div>
+               </div>
+             </div>
+           </div>
         <div class= 'search-fail-div'>
             <div class="loader1">
                 <span></span>
@@ -26,7 +146,7 @@
         </div>
         </div>
         <div class='search-container padding'>
-            <h2>Channels</h2>
+            <h2 class='search-res-headers'>Channels</h2>
             <div class='search-streams-div'>
                 <div class='streams-list-div'>
                     
@@ -41,6 +161,8 @@
             </div>
             <hr class='hr-style'>  -->
         </div>
+        
+        <!-- <script src='main.js'></script> -->
         <script src='side.js'></script>
     </body>
 </html>
