@@ -703,7 +703,7 @@ body{
     margin-top: 8px;
     grid-template-columns: repeat(3, 100%);
     overflow: hidden;
-    
+    /* width: 300%; */
     scroll-behavior: smooth;
     justify-content: space-between;
     min-height: 220px;
@@ -712,6 +712,7 @@ body{
 }
 .wrapper section {
     width: 100%;
+    /* object-fit: contain; */
     position: relative;
     display: grid;
     /* padding: 0 2rem; */
@@ -778,4 +779,3 @@ body{
         display: none;
     }
 }
-  

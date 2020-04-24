@@ -51,6 +51,20 @@ input {
     font-size: 0;
     background: rgb(15,15,15);
 }
+.streamer-img-div:hover{
+    -webkit-box-shadow: -6px 6px 2px 0px rgba(145,71,255,1);
+    -moz-box-shadow: -6px 6px 2px 0px rgba(145,71,255,1);
+    box-shadow: -6px 6px 2px 0px rgba(145,71,255,1);
+
+    -webkit-border-top-left-radius: 10px;
+    -moz-border-top-left-radius: 10px;
+    border-top-left-radius: 10px;
+
+    -webkit-border-bottom-right-radius: 10px;
+    -moz-border-bottom-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    transition: all 0.5s;
+}
 .streamer-details-div h3{
     font-family: 'Montserrat', "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 600;
