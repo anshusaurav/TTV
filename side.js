@@ -142,7 +142,10 @@ class SearchMain{
         }   
         catch(error){
             console.log(error);
-            return {isDone: false,result: null};
+            if(error.message ==='Failed to fetch')
+                return  {isDone: false,result: null,isInternet: 1};
+            else
+                return {isDone: false,result: null,isInternet: 2};
         }
     }
     async getGameByGameIdAndView(){
@@ -165,7 +168,10 @@ class SearchMain{
         }   
         catch(error){
             console.log(error);
-            return {isDone: false,result: null};
+            if(error.message ==='Failed to fetch')
+                return  {isDone: false,result: null,isInternet: 1};
+            else
+                return {isDone: false,result: null,isInternet: 2};
         }
         
     }
@@ -188,7 +194,10 @@ class SearchMain{
         }   
         catch(error){
             console.log(error);
-            return {isDone: false,result: null};
+            if(error.message ==='Failed to fetch')
+                return  {isDone: false,result: null,isInternet: 1};
+            else
+                return {isDone: false,result: null,isInternet: 2};
         }
     }
     async getGameByGameIdAndLangAndViewer(){
@@ -211,7 +220,10 @@ class SearchMain{
         }   
         catch(error){
             console.log(error);
-            return {isDone: false,result: null};
+            if(error.message ==='Failed to fetch')
+                return  {isDone: false,result: null,isInternet: 1};
+            else
+                return {isDone: false,result: null,isInternet: 2};
         }
     }
     async getUserByName(){
@@ -226,9 +238,11 @@ class SearchMain{
             });
             
             feedsOne = await responseOne.json();
+            
+            console.log(feedsOne);  
             let player_id;
             if(!feedsOne.data){
-               return {isDone:false, result:null, isLive: false};
+               return {isDone:false, result:null, isLive: false, isInternet: 2};
             }
             else{
                 player_id = feedsOne.data[0].id;
@@ -256,9 +270,11 @@ class SearchMain{
                 return {isDone: false,result: null};
         }   
         catch(error){
-            console.log(error);
-            return  {isDone: false,result: null};
-        }
+            if(error.message ==='Failed to fetch')
+                return  {isDone: false,result: null,isInternet: 1};
+            else
+                return {isDone: false,result: null,isInternet: 2};
+        }   
     }
     async getGameName(){
         let feeds,response;
@@ -286,7 +302,7 @@ class SearchMain{
     async getVideosByUser(){
         let feeds,response;
         try{
-        response = await fetch(`https://api.twitch.tv/helix/videos?user_id=108268890`,{
+        response = await fetch(`https://api.twitch.tv/helix/videos?user_id=${this.user_id}`,{
             method:'GET',
             headers: {
             'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
@@ -412,7 +428,12 @@ async function loadChannels() {
         }
         else{
             console.log(searchEx1.user +' '+ searchEx1.game + ' ' +searchEx1.errorStr);
-            headerElem.innerHTML = "No matches found";
+            // if()
+            console.log(res.isInternet);
+            if(res.isInternet === 1)    
+                headerElem.innerHTML = "No Internet";
+            else if(res.isInternet === 2)    
+                headerElem.innerHTML = "No matches found"
             headerElem.style.display = 'block';
             loaderElem.style.visibility = 'hidden';
             flag = true
@@ -482,7 +503,11 @@ async function loadChannels() {
         }
         else{
             console.log(searchEx1.user +' '+ searchEx1.game + ' ' +searchEx1.errorStr);
-            headerElem.innerHTML = "No matches found";
+            console.log(res.isInternet);
+            if(res.isInternet === 1)    
+                headerElem.innerHTML = "No Internet";
+            else if(res.isInternet === 2)    
+                headerElem.innerHTML = "No matches found"
             headerElem.style.display = 'block';
             loaderElem.style.visibility = 'hidden';
             flag = true
