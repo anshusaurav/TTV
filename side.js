@@ -596,6 +596,30 @@ async function loadChannels() {
     }
     
 }
+function getDuration(str){
+    let indOne = str.indexOf('h');
+    let indTwo = str.indexOf('m');
+    let indThree = str.indexOf('s');
+    let h = 0;
+    h= +str.substr(0, indOne);
+    let m = 0;
+    m = +str.substr(indOne+1, indTwo);
+    let s = 0;
+    s = +str.substr(indTwo+1);
+    let res = '';
+
+        res += h;
+        res +='h';
+
+        res += m;
+        res +='m';
+
+
+        res += s;
+        res +='s';
+
+    return res;
+}
 function getImageThumb(str){
     let ind = str.indexOf('-{width}x{height}');
     let res1 = str.replace('{width}', '412');
@@ -623,31 +647,6 @@ function getCounts(cnt) {
     
 
 }
-// test();
 loadChannels();
-// async function paintLiveChannel(){
-//     let res = await loadChannels();
-//     console.log(res);
-//     let allImageElem = document.querySelectorAll('online-img');
-//     console.log(allImageElem.length);
-//     allImageElem.forEach(elem =>{
-//         let divElem = elem.closest('.streamer-img-div');
-//         console.log(divElem);
-//     })
-// }
 
-// paintLiveChannel();
-
-//https://api.twitch.tv/helix/games?id=29595
-/*
-{
-    "data": [
-        {
-            "id": "29595",
-            "name": "Dota 2",
-            "box_art_url": "https://static-cdn.jtvnw.net/ttv-boxart/Dota%202-{width}x{height}.jpg"
-        }
-    ]
-}
-*/
 
