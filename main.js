@@ -227,12 +227,14 @@ function loadNewSliders(sliderIndex) {
     }
     videoElem.style.background = 'url("assets/media/giphy.gif") center center no-repeat;';
     console.log(preIn, postIn);
-    // embedTwo = new Twitch.Embed("twitch-embed2", {
-    //     width: 880,
-    //     height: 420,
-    //     layout: "video",
-    //     channel: objArr[sliderIndex].user_name
-    // });
+    videoElem.style.opacity = 0;
+    embedTwo = new Twitch.Embed("twitch-embed2", {
+        width: 880,
+        height: 420,
+        layout: "video",
+        channel: objArr[sliderIndex].user_name
+    });
+    videoElem.style.opacity = 1;
     pElem.src = 'assets/media/giphy.gif';
     nElem.src = 'assets/media/giphy.gif';
 

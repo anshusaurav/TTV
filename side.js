@@ -5,7 +5,8 @@
 let channelMainElem = document.querySelector('.streams-list-div');
 let videosMainElem = document.querySelector('.videos-list-div');
 let loaderElem = document.querySelector('.search-fail-div');
-let headerElem = document.querySelector('.search-res-headers');
+let headerElems = document.querySelectorAll('.search-res-headers');
+let allHrElems = document.querySelectorAll('hr');
 let titleElem = document.querySelector('title');
 
 //gameNameIdMap.set()
@@ -291,12 +292,16 @@ class SearchMain{
             this.gameName = feeds.data[0].name;
             loaderElem.style.visibility = 'hidden';
             // console.log(val,"jhhjjhj")
-            return ;
+            return {isDone: true,result: feeds.data[0], isInternet: 2};;
         }
-        return false;
+        return {isDone: false,result: null, isInternet: 2};
         }
         catch(error){
             console.log(error);
+            if(error.message ==='Failed to fetch')
+                return  {isDone: false,result: null,isInternet: 1};
+            else
+                return {isDone: false,result: null,isInternet: 2};
         }
     }
     async getVideosByUser(){
@@ -318,10 +323,37 @@ class SearchMain{
         }   
         catch(error){
             console.log(error);
-            return {isDone: false,result: null};
+            if(error.message ==='Failed to fetch')
+            return  {isDone: false,result: null,isInternet: 1};
+        else
+            return {isDone: false,result: null,isInternet: 2};
         }
     }
-
+    async getVideosByGame(){
+        let feeds,response;
+        try{
+        response = await fetch(`https://api.twitch.tv/helix/videos?game_id=${this.game}`,{
+            method:'GET',
+            headers: {
+            'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
+            }
+        });
+        
+        feeds = await response.json();
+        // console.log('Sunygame', feeds);
+    
+        if(feeds.data.length > 0)
+            return {isDone: true,result: feeds.data};
+        return {isDone: false,result: feeds.data};
+        }   
+        catch(error){
+            console.log(error);
+            if(error.message ==='Failed to fetch')
+            return  {isDone: false,result: null,isInternet: 1};
+        else
+            return {isDone: false,result: null,isInternet: 2};
+        }
+    }
 }
 
 
@@ -331,7 +363,8 @@ class SearchMain{
 // getGameName(29595)
 
 
-headerElem.style.display = 'none';
+headerElems.forEach(elem =>elem.style.display = 'none');
+allHrElems.forEach(elem =>elem.style.display = 'none');
 async function loadChannels() {
     let totalStr = sessionStorage.getItem('searchedKey');
     let searchEx1 = new SearchMain(totalStr);
@@ -398,31 +431,34 @@ async function loadChannels() {
                     elem.style.background='rgb(5, 5, 5)';
                 }
             });
-            headerElem.style.display = 'block';
+            headerElems.forEach(elem =>elem.style.display = 'block');
+            allHrElems.forEach(elem =>elem.style.display = 'block');
+            // headerElem.style.display = 'block';
 
             let resVid = await searchEx1.getVideosByUser();
             let arrVid = resVid.result;
             let vidStr = '';
-//             arrVid.forEach(elem => {
-//                 vidStr += `<div class='streams-list-elem'>
-//                 <div class='streams-elem-grid'>
-//                     <div class='streamer-img-div'>
-//                         <img src =${getImageThumb(elem.thumbnail_url)} class='online-img streamer-img'>
+            console.log(arrVid)
+            arrVid.forEach(elem => {
+                vidStr += `<div class='streams-list-elem'>
+                <div class='streams-elem-grid'>
+                    <div class='streamer-img-div'>
+                        <img src =${getImageThumb2(elem.thumbnail_url)} class='online-img streamer-img'>
     
-//                     </div>
-//                     <div class='streamer-details-div'>
-//                         <a href=${elem.url}><h3 class='streamer-name'>${elem.user_name}</h3></a>
-//                         <h4 class='stream-game-name'>${elem.duration}</h4>
-//                         <h4 class='stream-view-count'>${getCounts(elem.viewer_count)} viewers</h4>
-//                         <h4 class='stream-title-name'>${elem.title}</h4>
-//                         <h5 class='Language'>${elem.language}</h5>
-//                     </div>
-//                 </div>
-//             </div>`;
-//             });
+                    </div>
+                    <div class='streamer-details-div'>
+                        <a href=${elem.url}><h3 class='streamer-name'>${elem.user_name}</h3></a>
+                        <h4 class='stream-game-name'>${elem.duration}</h4>
+                        <h4 class='stream-view-count'>${getCounts(elem.view_count)} views</h4>
+                        <h4 class='stream-title-name'>${elem.title}</h4>
+                        <h5 class='Language'>${elem.language}</h5>
+                    </div>
+                </div>
+            </div>`;
+            });
 
 // //https://static-cdn.jtvnw.net/cf_vods/d2nvs31859zcd8/d62baf5b9966672aa9a8_gorgc_1278993105_79997912/thumb/thumb0.jpg
-//             videosMainElem.innerHTML = vidStr;
+            videosMainElem.innerHTML = vidStr;
             console.log(arrVid);
             return true;
         }
@@ -430,11 +466,16 @@ async function loadChannels() {
             console.log(searchEx1.user +' '+ searchEx1.game + ' ' +searchEx1.errorStr);
             // if()
             console.log(res.isInternet);
-            if(res.isInternet === 1)    
-                headerElem.innerHTML = "No Internet";
-            else if(res.isInternet === 2)    
-                headerElem.innerHTML = "No matches found"
-            headerElem.style.display = 'block';
+            if(res.isInternet === 1)  {
+                headerElems[0].innerHTML = "No Internet";
+                // allHrElems[0].style.display = 'block';
+            }
+            else if(res.isInternet === 2) {
+                headerElems[0].innerHTML = "No matches found"
+                // allHrElems[0].style.display = 'block';
+            }
+            headerElems[0].style.display = 'block';
+            allHrElems[0].style.display = 'block';
             loaderElem.style.visibility = 'hidden';
             flag = true
             return false;
@@ -499,16 +540,45 @@ async function loadChannels() {
                 }
                 
             });
-            headerElem.style.display = 'block';
+            headerElems.forEach(elem =>elem.style.display = 'block');
+            allHrElems.forEach(elem =>elem.style.display = 'block');
+            // headerElem.style.display = 'block';
+
+            let resVid = await searchEx1.getVideosByGame();
+            let arrVid = resVid.result;
+            let vidStr = '';
+            console.log(arrVid)
+            arrVid.forEach(elem => {
+                vidStr += `<div class='streams-list-elem'>
+                <div class='streams-elem-grid'>
+                    <div class='streamer-img-div'>
+                        <img src =${getImageThumb2(elem.thumbnail_url)} class='online-img streamer-img'>
+    
+                    </div>
+                    <div class='streamer-details-div'>
+                        <a href=${elem.url}><h3 class='streamer-name'>${elem.user_name}</h3></a>
+                        <h4 class='stream-game-name'>${elem.duration}</h4>
+                        <h4 class='stream-view-count'>${getCounts(elem.view_count)} views</h4>
+                        <h4 class='stream-title-name'>${elem.title}</h4>
+                        <h5 class='Language'>${elem.language}</h5>
+                    </div>
+                </div>
+            </div>`;
+            });
+
+// //https://static-cdn.jtvnw.net/cf_vods/d2nvs31859zcd8/d62baf5b9966672aa9a8_gorgc_1278993105_79997912/thumb/thumb0.jpg
+            videosMainElem.innerHTML = vidStr;
+            console.log(arrVid);
+            return true;
         }
         else{
             console.log(searchEx1.user +' '+ searchEx1.game + ' ' +searchEx1.errorStr);
             console.log(res.isInternet);
             if(res.isInternet === 1)    
-                headerElem.innerHTML = "No Internet";
+                headerElem[0].innerHTML = "No Internet";
             else if(res.isInternet === 2)    
-                headerElem.innerHTML = "No matches found"
-            headerElem.style.display = 'block';
+                headerElem[0].innerHTML = "No matches found"
+            headerElem[0].style.display = 'block';
             loaderElem.style.visibility = 'hidden';
             flag = true
             return false;
@@ -518,8 +588,8 @@ async function loadChannels() {
     }
     else {
         console.log(searchEx1.user +' '+ searchEx1.game + ' ' +searchEx1.errorStr);
-        headerElem.innerHTML = searchEx1.errorStr;
-        headerElem.style.display = 'block';
+        headerElem[0].innerHTML = searchEx1.errorStr;
+        headerElem[0].style.display = 'block';
         loaderElem.style.visibility = 'hidden';
         flag = true
         return false;
@@ -530,6 +600,14 @@ function getImageThumb(str){
     let ind = str.indexOf('-{width}x{height}');
     let res1 = str.replace('{width}', '412');
     let res = res1.replace('{height}', '230');
+    // let res = str.substr(0, ind) + str.substr(ind+17);
+    console.log(res);
+    return res;
+}
+function getImageThumb2(str){
+    let ind = str.indexOf('-%{width}x%{height}');
+    let res1 = str.replace('%{width}', '412');
+    let res = res1.replace('%{height}', '230');
     // let res = str.substr(0, ind) + str.substr(ind+17);
     console.log(res);
     return res;
