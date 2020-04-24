@@ -426,7 +426,15 @@ async function loadChannels() {
                     elemLive.classList.add('live-elem')
                     elemLive.innerHTML = 'LIVE';
                     elem.prepend(elemLive);
-                    
+                    elem.addEventListener('mouseover', (event)=>{
+                        elem.style.transform = 'translate3d(0.25rem, -0.25rem, 0)';
+                        let color = Math.floor(Math.random()*16777215).toString(16);
+                        elem.style.boxShadow = `-6px 6px 2px 0px #${color}`;
+                    });
+                    elem.addEventListener('mouseleave', (event)=>{
+                        elem.style.transform = 'translate3d(-0.25rem, 0.25rem, 0)';
+                        elem.style.boxShadow = '';
+                    });
                 }
                 else{
                     elem.style.background='rgb(5, 5, 5)';
@@ -540,14 +548,14 @@ async function loadChannels() {
                     elem.prepend(elemLive);
                     elem.addEventListener('mouseover', (event)=>{
                         elem.style.transform = 'translate3d(0.25rem, -0.25rem, 0)';
+                        let color = Math.floor(Math.random()*16777215).toString(16);
                         elem.style.boxShadow = `-6px 6px 2px 0px #${color}`;
                     });
                     elem.addEventListener('mouseleave', (event)=>{
                         elem.style.transform = 'translate3d(-0.25rem, 0.25rem, 0)';
                         elem.style.boxShadow = '';
                     });
-                    let color = Math.floor(Math.random()*16777215).toString(16);
-                    console.log(color);
+                    
                     
                 }
                 
