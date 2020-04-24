@@ -426,6 +426,7 @@ async function loadChannels() {
                     elemLive.classList.add('live-elem')
                     elemLive.innerHTML = 'LIVE';
                     elem.prepend(elemLive);
+                    
                 }
                 else{
                     elem.style.background='rgb(5, 5, 5)';
@@ -537,6 +538,17 @@ async function loadChannels() {
                     elemLive.classList.add('live-elem')
                     elemLive.innerHTML = 'LIVE';
                     elem.prepend(elemLive);
+                    elem.addEventListener('mouseover', (event)=>{
+                        elem.style.transform = 'translate3d(0.25rem, -0.25rem, 0)';
+                        elem.style.boxShadow = `-6px 6px 2px 0px #${color}`;
+                    });
+                    elem.addEventListener('mouseleave', (event)=>{
+                        elem.style.transform = 'translate3d(-0.25rem, 0.25rem, 0)';
+                        elem.style.boxShadow = '';
+                    });
+                    let color = Math.floor(Math.random()*16777215).toString(16);
+                    console.log(color);
+                    
                 }
                 
             });
@@ -552,7 +564,7 @@ async function loadChannels() {
                 vidStr += `<div class='streams-list-elem'>
                 <div class='streams-elem-grid'>
                     <div class='streamer-img-div'>
-                        <img src =${getImageThumb2(elem.thumbnail_url)} class='online-img streamer-img'>
+                        <img src=${getImageThumb2(elem.thumbnail_url)} class='online-img streamer-img'>
     
                     </div>
                     <div class='streamer-details-div'>
@@ -646,6 +658,9 @@ function getCounts(cnt) {
     return cnt;
     
 
+}
+function loadComplete(){
+    
 }
 loadChannels();
 
