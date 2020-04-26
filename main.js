@@ -3,7 +3,9 @@ let objArr = [];
 let gameArr = [];
 let sliderIndex;
 let preIn;
-let postIn ;
+let postIn;
+let preInPre;
+let postInPost;
 var embedOne, embedTwo, embedThree;
 async function showTopic() {
     let feeds,response;
@@ -21,6 +23,8 @@ async function showTopic() {
     sliderIndex = 0;
     preIn = objArr.length-1;
     postIn = 1;
+    postInPost = 2;
+    preInPre = objArr.length-2;
     console.log()
     loadNewSliders(sliderIndex)
    
@@ -44,6 +48,8 @@ async function showGame(gameId) {
     sliderIndex = 0;
     preIn = objArr.length-1;
     postIn = 1;
+    postInPost = 2;
+    preInPre = objArr.length-2;
     loadNewSliders(sliderIndex);
     
    
@@ -186,35 +192,32 @@ function showCategories(event){
 function next(event) {
 
     console.log('dsdas');
+    preInPre = preIn;
     preIn = sliderIndex;
     sliderIndex++;
     if(sliderIndex == objArr.length)
     sliderIndex = 0;
 
     console.log(sliderIndex);
-
+    postInPost = postIn;
     postIn = sliderIndex + 1;
     if(postIn == objArr.length)
-    postIn = 0;
-    try{
-
-    }
-    catch(error){
-        console.log(error);
-    }
+        postIn = 0;
+    
     loadNewSliders(sliderIndex);
 }
 function previous(event) {
     console.log('dsdas');
+    
     postIn = sliderIndex;
     if(sliderIndex == 0)
-    sliderIndex =objArr.length-1;
+        sliderIndex = objArr.length-1;
     else
-    sliderIndex--;
+        sliderIndex--;
     console.log(sliderIndex);
     preIn = sliderIndex - 1;
     if(preIn == -1)
-    preIn = objArr.length-1;
+        preIn = objArr.length-1;
     loadNewSliders(sliderIndex);
 
 }
@@ -227,14 +230,14 @@ function loadNewSliders(sliderIndex) {
     }
     videoElem.style.background = 'url("assets/media/giphy.gif") center center no-repeat;';
     console.log(preIn, postIn);
-    videoElem.style.opacity = 0;
+    videoElem.style.background = '#300A66';
     embedTwo = new Twitch.Embed("twitch-embed2", {
         width: 880,
         height: 420,
         layout: "video",
         channel: objArr[sliderIndex].user_name
     });
-    videoElem.style.opacity = 1;
+    // videoElem.style.background = 'black';
     pElem.src = 'assets/media/giphy.gif';
     nElem.src = 'assets/media/giphy.gif';
 

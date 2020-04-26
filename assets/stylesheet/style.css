@@ -557,7 +557,7 @@ body{
     box-shadow: inset 2px 2px 18px 10px rgb(41, 23, 23)(194, 148, 148);
 }
 .video-bg {
-    background: url("assets/media/giphy.gif") center center no-repeat;
+    background: #300A66;
     min-height: 420px;
     position: absolute;
     /* top: 0;  */
@@ -571,7 +571,7 @@ body{
     z-index: 10;
     /* border: 1px solid rgb(199, 37, 177); */
     box-sizing: border-box;
-    transition: opacity .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); */
 }
 
 .backgroundwrap {
