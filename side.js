@@ -26,6 +26,7 @@ class SearchMain{
         this.valid = false;
         this.errorStr = '';
         this.gFlag = 0;
+        this.tagsMap = new Map();
         let testStr = str.trim();
         
         if(testStr.startsWith('{')) {
@@ -136,7 +137,7 @@ class SearchMain{
         
         feeds = await response.json();
         // console.log('Sunygame', feeds);
-    
+        console.log(feeds);
         if(feeds.data.length > 0)
             return {isDone: true,result: feeds.data};
         return {isDone: false,result: feeds.data};
@@ -341,7 +342,7 @@ class SearchMain{
         
         feeds = await response.json();
         // console.log('Sunygame', feeds);
-    
+        console.log(feeds);
         if(feeds.data.length > 0)
             return {isDone: true,result: feeds.data};
         return {isDone: false,result: feeds.data};
@@ -352,6 +353,25 @@ class SearchMain{
             return  {isDone: false,result: null,isInternet: 1};
         else
             return {isDone: false,result: null,isInternet: 2};
+        }
+    }
+    async getTagByGame(tag_id){
+        //https://api.twitch.tv/helix/tags/streams?tag_id=0569b171-2a2b-476e-a596-5bdfb45a1327
+        let feeds,response;
+        try{
+        response = await fetch(`https://api.twitch.tv/helix/tags/streams?tag_id=${tag_id}`,{
+            method:'GET',
+            headers: {
+            'Client-ID': 'iswx80n6way6l4cvuecpmtz3gw75vd'
+            }
+        });
+        
+        feeds = await response.json();
+        this.tagsMap.set(tag_id, feeds.data[0].localization_names["en-us"]);
+        }   
+        catch(error){
+            console.log(error);
+           
         }
     }
 }
@@ -491,7 +511,7 @@ async function loadChannels() {
         }
         // paintLiveChannel();
     }
-    else if(searchEx1.gFlag == 2) {
+    else if(searchEx1.gFlag == 2) {                 
         let res;
         let gameN = await searchEx1.getGameName();
         
@@ -538,6 +558,8 @@ async function loadChannels() {
             </div>`;
             });
             channelMainElem.innerHTML = str;
+
+            //let allStreams = document
             let allImg = document.querySelectorAll('.streamer-img-div');
             allImg.forEach(elem =>{
                 let imgElem = elem.querySelector('.streamer-img');
@@ -645,7 +667,7 @@ function getImageThumb(str){
     let res1 = str.replace('{width}', '412');
     let res = res1.replace('{height}', '230');
     // let res = str.substr(0, ind) + str.substr(ind+17);
-    console.log(res);
+    // console.log(res);
     return res;
 }
 function getImageThumb2(str){
@@ -653,7 +675,7 @@ function getImageThumb2(str){
     let res1 = str.replace('%{width}', '412');
     let res = res1.replace('%{height}', '230');
     // let res = str.substr(0, ind) + str.substr(ind+17);
-    console.log(res);
+    // console.log(res);
     return res;
 }
 function getCounts(cnt) {
@@ -673,3 +695,74 @@ function loadComplete(){
 loadChannels();
 
 
+//Add tags https://api.twitch.tv/helix/tags/streams?tag_id=0569b171-2a2b-476e-a596-5bdfb45a1327
+
+// {
+//     "data": [
+//         {
+//             "tag_id": "0569b171-2a2b-476e-a596-5bdfb45a1327",
+//             "is_auto": true,
+//             "localization_names": {
+//                 "bg-bg": "руски",
+//                 "cs-cz": "Ruština",
+//                 "da-dk": "Russisk",
+//                 "de-de": "Russisch",
+//                 "el-gr": "Ρωσικά",
+//                 "en-us": "Russian",
+//                 "es-es": "Ruso",
+//                 "es-mx": "Ruso",
+//                 "fi-fi": "venäjä",
+//                 "fr-fr": "Russe",
+//                 "hu-hu": "Orosz",
+//                 "it-it": "Russo",
+//                 "ja-jp": "ロシア語",
+//                 "ko-kr": "러시아어",
+//                 "nl-nl": "Russisch",
+//                 "no-no": "Russisk",
+//                 "pl-pl": "rosyjski",
+//                 "pt-br": "Russo",
+//                 "pt-pt": "Russo",
+//                 "ro-ro": "Rusă",
+//                 "ru-ru": "Русский",
+//                 "sk-sk": "Ruština",
+//                 "sv-se": "Ryska",
+//                 "th-th": "รัสเซีย",
+//                 "tr-tr": "Rusça",
+//                 "vi-vn": "Tiếng Nga",
+//                 "zh-cn": "俄文",
+//                 "zh-tw": "俄文"
+//             },
+//             "localization_descriptions": {
+//                 "bg-bg": "За потоци с използване на руски",
+//                 "cs-cz": "Pro vysílání obsahující ruštinu.",
+//                 "da-dk": "Til streams, hvori der indgår russisk",
+//                 "de-de": "Für Streams auf Russisch.",
+//                 "el-gr": "Για μεταδόσεις που περιλαμβάνουν τη χρήση Ρωσικών",
+//                 "en-us": "For streams featuring the use of Russian",
+//                 "es-es": "Para transmisiones en ruso.",
+//                 "es-mx": "Para streams que incluyen el uso del ruso.",
+//                 "fi-fi": "Lähetyksille, joissa puhutaan venäjää.",
+//                 "fr-fr": "Pour les streams dont tout ou une partie est en russe",
+//                 "hu-hu": "Orosz nyelvű közvetítések",
+//                 "it-it": "Per gli streaming in lingua russa",
+//                 "ja-jp": "ロシア語を使用する配信に使われます",
+//                 "ko-kr": "러시아어를 사용하는 방송",
+//                 "nl-nl": "Voor streams waarin Russisch wordt gesproken",
+//                 "no-no": "For kringkastinger som er på russisk",
+//                 "pl-pl": "Dla streamów, podczas których używany jest język rosyjski",
+//                 "pt-br": "Para transmissões que utilizam o idioma russo.",
+//                 "pt-pt": "Para transmissões em russo.",
+//                 "ro-ro": "Pentru redări în flux care presupun folosirea limbii ruse",
+//                 "ru-ru": "Трансляции на русском языке",
+//                 "sk-sk": "Pre streamy, ktoré obsahujú ruštinu",
+//                 "sv-se": "För streamar som innehåller användning av ryska",
+//                 "th-th": "สำหรับสตรีมที่มีการใช้ภาษารัสเซีย",
+//                 "tr-tr": "Rusça konuşulan yayınlar için",
+//                 "vi-vn": "Dành cho chương trình truyền trực tiếp có nội dung sử dụng tiếng Nga",
+//                 "zh-cn": "直播内容使用俄文",
+//                 "zh-tw": "使用俄文的實況"
+//             }
+//         }
+//     ],
+//     "pagination": {}
+// }
