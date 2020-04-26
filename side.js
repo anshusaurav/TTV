@@ -21,7 +21,7 @@ class SearchMain{
         this.flagView = false;
         this.lang = '';
         this.view = '';
-        this.numResult = 10;
+        this.numResult = 20;
         this.query = '';
         this.valid = false;
         this.errorStr = '';
@@ -557,15 +557,15 @@ async function loadChannels() {
                         <h4 class='stream-title-name'>${elem.title}</h4>
                         <h5 class='Language'>${elem.language}</h5>`;
                     
-            if(elem.tag_ids){
-                str += `<div class="tags-container">`;
-                elem.tag_ids.forEach(async(e) =>{
-                    await searchEx1.getTagByGame(e);
-                    console.log(searchEx1.tagsMap.get(e));
-                    str +=`<p class="tags-elem">${searchEx1.tagsMap.get(e)} </p>`;
-                })
-                str += '</div>';
-            }
+            // if(elem.tag_ids){
+            //     str += `<div class="tags-container">`;
+            //     elem.tag_ids.forEach(async(e) =>{
+            //         await searchEx1.getTagByGame(e);
+            //         console.log(searchEx1.tagsMap.get(e));
+            //         str +=`<p class="tags-elem">${searchEx1.tagsMap.get(e)} </p>`;
+            //     })
+            //     str += '</div>';
+            // }
             str +=`</div>
                 </div>
             </div>`;

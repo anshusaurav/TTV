@@ -88,7 +88,8 @@ input {
     background-color: #313133;
     color: #B3B3B4;
     border-radius: 3px;
-
+    font-weight: 500;
+    font-size: 0.75rem;
 }
 /* .streams-div{
     margin-left: 2rem;
