@@ -77,6 +77,19 @@ input {
     font-size: 1.15rem;
     margin: 0.5rem 0;
 }
+
+.tags-container{
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    justify-content: start;
+}
+.tags-elem{
+    background-color: #313133;
+    color: #B3B3B4;
+    border-radius: 3px;
+
+}
 /* .streams-div{
     margin-left: 2rem;
 } */

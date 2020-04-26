@@ -21,7 +21,7 @@ class SearchMain{
         this.flagView = false;
         this.lang = '';
         this.view = '';
-        this.numResult = 100;
+        this.numResult = 10;
         this.query = '';
         this.valid = false;
         this.errorStr = '';
@@ -367,7 +367,8 @@ class SearchMain{
         });
         
         feeds = await response.json();
-        this.tagsMap.set(tag_id, feeds.data[0].localization_names["en-us"]);
+        if(feeds.data)
+            this.tagsMap.set(tag_id, feeds.data[0].localization_names["en-us"]);
         }   
         catch(error){
             console.log(error);
@@ -484,11 +485,12 @@ async function loadChannels() {
                     </div>
                 </div>
             </div>`;
+           
             });
-
+           
 // //https://static-cdn.jtvnw.net/cf_vods/d2nvs31859zcd8/d62baf5b9966672aa9a8_gorgc_1278993105_79997912/thumb/thumb0.jpg
             videosMainElem.innerHTML = vidStr;
-            console.log(arrVid);
+            // console.log(arrVid);
             return true;
         }
         else{
@@ -541,7 +543,8 @@ async function loadChannels() {
             }
             // console.log(gameN.res);
             arr.forEach(elem =>{
-                str += `<div class='streams-list-elem'>
+                str += `
+            <div class='streams-list-elem'>
                 <div class='streams-elem-grid'>
                     <div class='streamer-img-div'>
                         <img src =${getImageThumb(elem.thumbnail_url)} class='online-img streamer-img'>
@@ -552,11 +555,22 @@ async function loadChannels() {
                         <h4 class='stream-game-name'>${searchEx1.gameName}</h4>
                         <h4 class='stream-view-count'>${getCounts(elem.viewer_count)} viewers</h4>
                         <h4 class='stream-title-name'>${elem.title}</h4>
-                        <h5 class='Language'>${elem.language}</h5>
-                    </div>
+                        <h5 class='Language'>${elem.language}</h5>`;
+                    
+            if(elem.tag_ids){
+                str += `<div class="tags-container">`;
+                elem.tag_ids.forEach(async(e) =>{
+                    await searchEx1.getTagByGame(e);
+                    console.log(searchEx1.tagsMap.get(e));
+                    str +=`<p class="tags-elem">${searchEx1.tagsMap.get(e)} </p>`;
+                })
+                str += '</div>';
+            }
+            str +=`</div>
                 </div>
             </div>`;
             });
+            
             channelMainElem.innerHTML = str;
 
             //let allStreams = document
@@ -665,7 +679,7 @@ function getDuration(str){
 function getImageThumb(str){
     let ind = str.indexOf('-{width}x{height}');
     let res1 = str.replace('{width}', '412');
-    let res = res1.replace('{height}', '230');
+    let res = res1.replace('{height}', '236');
     // let res = str.substr(0, ind) + str.substr(ind+17);
     // console.log(res);
     return res;
@@ -673,7 +687,7 @@ function getImageThumb(str){
 function getImageThumb2(str){
     let ind = str.indexOf('-%{width}x%{height}');
     let res1 = str.replace('%{width}', '412');
-    let res = res1.replace('%{height}', '230');
+    let res = res1.replace('%{height}', '236');
     // let res = str.substr(0, ind) + str.substr(ind+17);
     // console.log(res);
     return res;
