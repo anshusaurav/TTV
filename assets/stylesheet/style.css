@@ -511,10 +511,10 @@ body{
     
     background-repeat: none;
     object-fit: cover;
-    min-height: 90px;
-    min-width: 162px;
-    max-width: 162px;
-    max-height: 90px;
+    min-height: 45px;
+    min-width: 80px;
+    max-width: 80px;
+    max-height: 45px;
     /* //border: 1px solid indigo; */
     display: flex;
     justify-content: center;
@@ -533,7 +533,7 @@ body{
 .video-nav {
     /* border-radius: 8px; */
     /* margin: 0.75rem 0; */
-    max-height: 90px;
+    max-height: 45px;
     /* width: 100%; */
     object-fit: cover;
     background-image: linear-gradient(0deg,rgba(4, 3, 3, 0.8),transparent 60%);
@@ -573,7 +573,18 @@ body{
     box-sizing: border-box;
     /* transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); */
 }
+.video-bg-left-helper{
 
+}
+.video-bg-right-helper{
+    
+}
+.video-bg-secondleft-helper{
+    
+}
+.video-bg-secondright-helper{
+    
+}
 .backgroundwrap {
     /* width:100%; */
     /* border: 1px solid rgb(12, 137, 172); */
@@ -595,10 +606,10 @@ body{
 
 .prev-content, .next-content{
     position: absolute;
-    max-height: 90px;
+    max-height: 45px;
     
     color: rgba(221, 221, 231, 0.95);
-    max-width: 162px;
+    max-width: 80px;
     font-family: "Montserrat", serif;
     font-size: 32px;
     font-weight: 700;
@@ -654,13 +665,11 @@ body{
     justify-content: center;
     align-items: center;
     position: absolute;
-    right: 12px;
-    top: 320px;
+    /* right: 12px;
+    top: 320px; */
     grid-area: n;
-    min-width: 48px;
-    max-width: 48px;
-    min-height: 32px;
-    max-height: 32px;
+    top:50%;
+    left:40%;
     font-size: 32px;
     font-weight: 700;
     color: rgba(217, 135, 127, 0.55);
@@ -674,13 +683,11 @@ body{
     justify-content: center;
     align-items: center;
     position: absolute;
-    left: 12px;
-    top: 320px;
+    /* left: 12px;
+    top: 320px; */
     grid-area: p;
-    min-width: 48px;
-    max-width: 48px;
-    min-height: 32px;
-    max-height: 32px;
+    top:50%;
+    left:40%;
     font-size: 32px;
     font-weight: 700;  
     color: rgba(217, 135, 127, 0.55);
@@ -691,10 +698,10 @@ body{
 .next-thumb, .prev-thumb{
     width: 100%;
     border-radius: 12px;
-    max-height: 90px;
+    max-height: 45px;
     background: url("assets/media/giphy.gif") center center no-repeat;
     background-clip: border-box;
-    min-width: 160px;
+    min-width: 80px;
 }
 
 

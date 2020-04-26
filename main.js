@@ -199,16 +199,17 @@ function next(event) {
     sliderIndex = 0;
 
     console.log(sliderIndex);
-    postInPost = postIn;
     postIn = sliderIndex + 1;
     if(postIn == objArr.length)
         postIn = 0;
+    postInPost = postIn+1;
+    postInPost%=objArr.length;
     
     loadNewSliders(sliderIndex);
 }
 function previous(event) {
     console.log('dsdas');
-    
+    postInPost = postIn;
     postIn = sliderIndex;
     if(sliderIndex == 0)
         sliderIndex = objArr.length-1;
@@ -218,6 +219,9 @@ function previous(event) {
     preIn = sliderIndex - 1;
     if(preIn == -1)
         preIn = objArr.length-1;
+    preInPre = preIn-1;
+    if(preInPre == -1)
+        preInPre = objArr.length-1;
     loadNewSliders(sliderIndex);
 
 }
@@ -229,7 +233,7 @@ function loadNewSliders(sliderIndex) {
         videoElem.removeChild(videoElem.firstChild);
     }
     videoElem.style.background = 'url("assets/media/giphy.gif") center center no-repeat;';
-    console.log(preIn, postIn);
+    console.log(preInPre, preIn, sliderIndex, postIn, postInPost);
     videoElem.style.background = '#300A66';
     embedTwo = new Twitch.Embed("twitch-embed2", {
         width: 880,
