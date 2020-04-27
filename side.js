@@ -21,7 +21,7 @@ class SearchMain{
         this.flagView = false;
         this.lang = '';
         this.view = '';
-        this.numResult = 20;
+        this.numResult = 2;
         this.query = '';
         this.valid = false;
         this.errorStr = '';
@@ -357,6 +357,8 @@ class SearchMain{
     }
     async getTagByGame(tag_id){
         //https://api.twitch.tv/helix/tags/streams?tag_id=0569b171-2a2b-476e-a596-5bdfb45a1327
+        if(this.tagsMap.has(tag_id))
+            return; 
         let feeds,response;
         try{
         response = await fetch(`https://api.twitch.tv/helix/tags/streams?tag_id=${tag_id}`,{
@@ -560,8 +562,15 @@ async function loadChannels() {
             // if(elem.tag_ids){
             //     str += `<div class="tags-container">`;
             //     elem.tag_ids.forEach(async(e) =>{
-            //         await searchEx1.getTagByGame(e);
+            //         let temp = await searchEx1.getTagByGame(e);
+            //         // console.log('T',temp, e);
             //         console.log(searchEx1.tagsMap.get(e));
+            //         while(true)
+            //         {
+            //             if(searchEx1.tagsMap.has(e))
+            //             break;
+            //             console.log('here');
+            //         }
             //         str +=`<p class="tags-elem">${searchEx1.tagsMap.get(e)} </p>`;
             //     })
             //     str += '</div>';

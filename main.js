@@ -71,6 +71,12 @@ let nVidMainElem = document.querySelector('.next-inside');
 let ggGridElem = document.querySelector('.wrapper');
 let pElem = document.querySelector('.prev-thumb');
 let nElem = document.querySelector('.next-thumb');
+
+let left2Elem = document.querySelector('.side-thumb-minus2');
+let left1Elem = document.querySelector('.side-thumb-minus1');
+let right1Elem = document.querySelector('.side-thumb-plus1');
+let right2Elem = document.querySelector('.side-thumb-plus2');
+
 let headerElem = document.querySelector('.header');
 let resultBigElem = document.querySelector('.result-container');
 let trendingButton = document.querySelector('.trending-tab');
@@ -250,23 +256,53 @@ function loadNewSliders(sliderIndex) {
 //     allowfullscreen="true">
 // </iframe>`;
     // videoElem.style.background = 'black';
-    pElem.src = 'assets/media/giphy.gif';
-    nElem.src = 'assets/media/giphy.gif';
+    // pElem.src = 'assets/media/giphy.gif';
+    // nElem.src = 'assets/media/giphy.gif';
 
-    let imgP = new Image();
-    imgP.onload = function(){
-        pElem.src = this.src;
-    };
-    imgP.src = getImageThumb(objArr[preIn].thumbnail_url);
+    // let imgP = new Image();
+    // imgP.onload = function(){
+    //     pElem.src = this.src;
+    // };
+    // imgP.src = getImageThumb(objArr[preIn].thumbnail_url);
 
     
     
-    let imgN = new Image();
-    imgN.onload = function(){
-        nElem.src = this.src;
-    };
-    imgN.src = getImageThumb(objArr[postIn].thumbnail_url);
+    // let imgN = new Image();
+    // imgN.onload = function(){
+    //     nElem.src = this.src;
+    // };
+    // imgN.src = getImageThumb(objArr[postIn].thumbnail_url);
     
+    left2Elem.src = 'assets/media/side-thumb-img2.jpg';
+    right2Elem.src = 'assets/media/side-thumb-img2.jpg';
+    left1Elem.src = 'assets/media/side-thumb-img1.jpg'
+    right1Elem.src = 'assets/media/side-thumb-img1.jpg'
+
+    let imgL2 = new Image();
+    imgL2.onload = function(){
+        left2Elem.src = this.src;
+    }
+    imgL2.src = getImageThumb(objArr[preInPre].thumbnail_url);
+
+    let imgL1 = new Image();
+    imgL1.onload = function(){
+        left1Elem.src = this.src;
+    }
+    imgL1.src = getImageThumb(objArr[preIn].thumbnail_url);
+
+
+    let imgR2 = new Image();
+    imgR2.onload = function(){
+        right2Elem.src = this.src;
+    }
+    imgR2.src = getImageThumb(objArr[postInPost].thumbnail_url);
+
+    let imgR1 = new Image();
+    imgR1.onload = function(){
+        right1Elem.src = this.src;
+    }
+    imgR1.src = getImageThumb(objArr[postIn].thumbnail_url);
+
 }
 function imgReplaceGif(){
     let pElem = document.querySelector('.prev-thumb');
