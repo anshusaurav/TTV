@@ -512,8 +512,8 @@ body{
     background-repeat: none;
     object-fit: cover;
     min-height: 45px;
-    min-width: 80px;
-    max-width: 80px;
+    min-width: 45px;
+    max-width: 45px;
     max-height: 45px;
     /* //border: 1px solid indigo; */
     display: flex;
@@ -684,8 +684,13 @@ body{
     max-width: 880px;
     font-family: "Montserrat", serif;
 }
-.prev-content, .next-content{
+.prev-video, .next-video{
     cursor: pointer;
+}
+.prev-video:hover, .next-video:hover{
+    background-color: #323234;
+    border: 1px solid grey;
+    border-radius: 4px;
 }
 .pre-content p, .next-content p{
     opacity: 1;
