@@ -138,8 +138,16 @@ class SearchMain{
         feeds = await response.json();
         // console.log('Sunygame', feeds);
         console.log(feeds);
-        if(feeds.data.length > 0)
+        if(feeds.data.length > 0){
+            feeds.data.forEach(elem => {
+                let arr = elem.tag_ids;
+                arr.forEach(async(e) =>{
+                    let x = await this.getTagByGame(e);
+                    console.log(x);
+                })
+            })
             return {isDone: true,result: feeds.data};
+        }
         return {isDone: false,result: feeds.data};
         }   
         catch(error){
@@ -358,7 +366,7 @@ class SearchMain{
     async getTagByGame(tag_id){
         //https://api.twitch.tv/helix/tags/streams?tag_id=0569b171-2a2b-476e-a596-5bdfb45a1327
         if(this.tagsMap.has(tag_id))
-            return; 
+            return this.tagsMap.get(tag_id); 
         let feeds,response;
         try{
         response = await fetch(`https://api.twitch.tv/helix/tags/streams?tag_id=${tag_id}`,{
@@ -371,6 +379,7 @@ class SearchMain{
         feeds = await response.json();
         if(feeds.data)
             this.tagsMap.set(tag_id, feeds.data[0].localization_names["en-us"]);
+            return this.tagsMap.get(tag_id)
         }   
         catch(error){
             console.log(error);
@@ -545,6 +554,9 @@ async function loadChannels() {
             }
             // console.log(gameN.res);
             arr.forEach(elem =>{
+
+                let tempStr = '';
+                
                 str += `
             <div class='streams-list-elem'>
                 <div class='streams-elem-grid'>
@@ -559,22 +571,14 @@ async function loadChannels() {
                         <h4 class='stream-title-name'>${elem.title}</h4>
                         <h5 class='Language'>${elem.language}</h5>`;
                     
-            // if(elem.tag_ids){
-            //     str += `<div class="tags-container">`;
-            //     elem.tag_ids.forEach(async(e) =>{
-            //         let temp = await searchEx1.getTagByGame(e);
-            //         // console.log('T',temp, e);
-            //         console.log(searchEx1.tagsMap.get(e));
-            //         while(true)
-            //         {
-            //             if(searchEx1.tagsMap.has(e))
-            //             break;
-            //             console.log('here');
-            //         }
-            //         str +=`<p class="tags-elem">${searchEx1.tagsMap.get(e)} </p>`;
-            //     })
-            //     str += '</div>';
-            // }
+            if(elem.tag_ids){
+                str += `<div class="tags-container">`;
+                elem.tag_ids.forEach(async(e) =>{
+                    let x = await searchEx1.tagsMap.get(e);
+                    str +=`<p class="tags-elem">${x} </p>`;
+                })
+                str += '</div>';
+            }   
             str +=`</div>
                 </div>
             </div>`;

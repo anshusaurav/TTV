@@ -263,9 +263,7 @@ body{
     */
     border: 2px solid rgb(113, 18, 255); 
 }
-.search-pop-help{
-    
-}
+
 .help-hint-div{
     color: white;
     background: rgb(7, 6, 6);
@@ -522,7 +520,7 @@ body{
     align-items: center;
     opacity: 0.60;
     margin: 0 auto;
-    background-color: rgba(44, 38, 44, 0.081);
+    /* background-color: rgba(44, 38, 44, 0.081); */
 }
 .prev-video:hover, .next-video:hover{
     opacity: 0.95;
@@ -535,9 +533,7 @@ body{
     -webkit-box-shadow: 0 0 10px rgba(145,71,255,0.6);
     -o-box-shadow: 0 0 10px rgba(145,71,255,0.6);
 }
-.prev-thumb, .next-thumb{
-    
-}
+
 .video-nav {
     /* border-radius: 8px; */
     /* margin: 0.75rem 0; */
