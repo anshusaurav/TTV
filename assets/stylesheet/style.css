@@ -474,7 +474,7 @@ body{
 .result-container{
     display:grid;
     justify-content: space-between;
-    grid-template-columns: 1fr 6fr 1fr;
+    grid-template-columns: 1fr 8fr 1fr;
     align-items: center;
     margin: 1rem 0;
     border-bottom: 2px solid aliceblue;
