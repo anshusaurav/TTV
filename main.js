@@ -241,20 +241,21 @@ function loadNewSliders(sliderIndex) {
     videoElem.style.background = 'url("assets/media/giphy.gif") center center no-repeat;';
     console.log(preInPre, preIn, sliderIndex, postIn, postInPost);
     videoElem.style.background = '#300A66';
-    embedTwo = new Twitch.Embed("twitch-embed2", {
-        width: 880,
-        height: 420,
-        layout: "video",
-        channel: objArr[sliderIndex].user_name
-    });
-//     embedTwo.innerHTML = `<iframe
-//     src="https://player.twitch.tv/?channel=${objArr[sliderIndex].user_name}&parent=streamernews.example.com&muted=true"
-//     height="720"
-//     width="1280"
-//     frameborder="0"
-//     scrolling="no"
-//     allowfullscreen="true">
-// </iframe>`;
+    console.log('This: ',objArr[sliderIndex]);
+    // embedTwo = new Twitch.Embed("twitch-embed2", {
+    //     width: 880,
+    //     height: 420,
+    //     layout: "video",
+    //     channel: objArr[sliderIndex].user_name
+    // });
+    videoElem.innerHTML = `<iframe
+    src="https://player.twitch.tv/?channel=${objArr[sliderIndex].user_name}&parent=localhost&muted=true"
+    height="420"
+    width="880"
+    frameborder="0"
+    scrolling="no"
+    allowfullscreen="true">
+</iframe>`;
     // videoElem.style.background = 'black';
     // pElem.src = 'assets/media/giphy.gif';
     // nElem.src = 'assets/media/giphy.gif';

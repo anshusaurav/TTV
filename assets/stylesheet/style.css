@@ -489,6 +489,7 @@ body{
     cursor: pointer;
 }
 .game-div:hover{
+    -o-box-shadow: -6px 6px 2px 0px rgba(145,71,255,0.6);
     -webkit-box-shadow: -6px 6px 2px 0px rgba(145,71,255,1);
     -moz-box-shadow: -6px 6px 2px 0px rgba(145,71,255,1);
     box-shadow: -6px 6px 2px 0px rgba(145,71,255,1);
@@ -526,6 +527,13 @@ body{
 .prev-video:hover, .next-video:hover{
     opacity: 0.95;
     transition: opacity 0.5s;
+    
+}
+.pre-video:active, .next-video:active{
+    box-shadow: 0 0 10px rgba(145,71,255,0.6);
+    -moz-box-shadow: 0 0 10px rgba(145,71,255,0.6);
+    -webkit-box-shadow: 0 0 10px rgba(145,71,255,0.6);
+    -o-box-shadow: 0 0 10px rgba(145,71,255,0.6);
 }
 .prev-thumb, .next-thumb{
     
@@ -550,7 +558,7 @@ body{
     min-width: 1080px;
     margin: 0 20px;
     max-width: 1080px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     /* display: flex;
     justify-content: center;
     align-items: center; */
@@ -558,7 +566,7 @@ body{
     box-shadow: inset 2px 2px 18px 10px rgb(41, 23, 23)(194, 148, 148);
 }
 .video-bg {
-    background: #300A66;
+    /* background: #300A66; */
     min-height: 420px;
     position: absolute;
     /* top: 0;  */
@@ -618,6 +626,10 @@ body{
     background-color: rgb(178, 131, 250);
     z-index: 2;
 }
+.video-bg-left-helper:hover, .video-bg-right-helper:hover, .video-bg-secondleft-helper:hover, .video-bg-secondright-helper:hover{
+    transform: scale(1.02);
+    transition: 0.2s ease-in-out;
+}
 .side-thumb1{
     width: 100%;
     max-height: 380px;
@@ -652,10 +664,11 @@ body{
     left: 100px;
     top: 0px;
     display: flex;
+    z-index: 10;
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
-    background: url("/assets/media/giphy.gif") center center no-repeat;
+    background: rgb(97, 35, 191);
     background-repeat: none;
     object-fit: cover;
     /* background: linear-gradient(0deg,rgba(0,0,0,.8),transparent 320px); */
