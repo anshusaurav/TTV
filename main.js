@@ -241,6 +241,14 @@ function loadNewSliders(sliderIndex) {
         layout: "video",
         channel: objArr[sliderIndex].user_name
     });
+//     embedTwo.innerHTML = `<iframe
+//     src="https://player.twitch.tv/?channel=${objArr[sliderIndex].user_name}&parent=streamernews.example.com&muted=true"
+//     height="720"
+//     width="1280"
+//     frameborder="0"
+//     scrolling="no"
+//     allowfullscreen="true">
+// </iframe>`;
     // videoElem.style.background = 'black';
     pElem.src = 'assets/media/giphy.gif';
     nElem.src = 'assets/media/giphy.gif';

@@ -548,12 +548,13 @@ body{
     max-height: 420px;
     min-height: 420px;
     min-width: 880px;
-    margin: 0 auto;
-    max-width: 880px;
+    /* margin: 0 auto; */
+    max-width: 1080px;
     border: 1px solid black;
-    display: flex;
+    /* display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
+    position: relative;
     box-shadow: inset 2px 2px 18px 10px rgb(41, 23, 23)(194, 148, 148);
 }
 .video-bg {
@@ -574,16 +575,48 @@ body{
     /* transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); */
 }
 .video-bg-left-helper{
-
+    position: absolute;
+    min-height: 420px;
+    min-width: 880px;
+    max-width: 880px;
+    max-height: 420px;
+    left:50px;
+    top: 0px;
+    background-color: teal;
+    z-index: 5;
 }
 .video-bg-right-helper{
-    
+    position: absolute;
+    left:150px;
+    top: 0px;
+    min-height: 420px;
+    min-width: 880px;
+    max-width: 880px;
+    max-height: 420px;
+    background-color: teal;
+    z-index: 5;
 }
 .video-bg-secondleft-helper{
-    
+    position: absolute;
+    left:0px;
+    top: 0px;
+    min-height: 420px;
+    min-width: 880px;
+    max-width: 880px;
+    max-height: 420px;
+    background-color: tomato;
+    z-index: 2;
 }
 .video-bg-secondright-helper{
-    
+    position: absolute;
+    left:200px;
+    top: 0px;
+    min-height: 420px;
+    min-width: 880px;
+    max-width: 880px;
+    max-height: 420px;
+    background-color: tomato;
+    z-index: 2;
 }
 .backgroundwrap {
     /* width:100%; */
@@ -593,6 +626,9 @@ body{
     min-width: 880px;
     max-width: 880px;
     max-height: 420px;
+    position: absolute;
+    left: 100px;
+    top: 0px;
     display: flex;
     justify-content: center;
     align-items: center;
