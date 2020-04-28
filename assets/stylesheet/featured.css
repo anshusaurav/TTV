@@ -1,0 +1,68 @@
+.featured-container{
+    max-width: 1080px;
+    min-width: 1080px;
+    min-height: 420px;
+    max-height: 420px;
+    position: relative;
+    border: 2px solid indianred;
+}
+.featured-container > div {
+    max-width: 1040px;
+    position: absolute;
+    border: 2px solid palegreen;
+}
+.featured-elem > img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.featured-container >:nth-child(1) {
+    left:0px;
+    top: 40px;
+    min-height: 340px;
+    min-width: 880px;
+    max-width: 880px;
+    max-height: 340px;
+    z-index: 2;
+    background-color: purple;
+}
+.featured-container >:nth-child(2) {
+    left:50px;
+    top: 20px;
+    min-height: 380px;
+    min-width: 880px;
+    max-width: 880px;
+    max-height: 380px;
+    z-index: 5;
+    background-color: rgba(167, 3, 167, 0.75);
+}
+.featured-container >:nth-child(3) {
+    left:100px;
+    top: 0px;
+    min-height: 420px;
+    min-width: 880px;
+    max-width: 880px;
+    max-height: 420px;
+    z-index: 10;
+    background-color: rgba(184, 39, 184, 0.25);
+}
+.featured-container >:nth-child(4) {
+    left:150px;
+    top: 20px;
+    min-height: 380px;
+    min-width: 880px;
+    max-width: 880px;
+    max-height: 380px;
+    z-index: 5;
+    background-color: rgba(167, 3, 167, 0.75);
+}
+.featured-container >:nth-child(5) {
+    left:200px;
+    top: 40px;
+    min-height: 340px;
+    min-width: 880px;
+    max-width: 880px;
+    max-height: 340px;
+    z-index: 2;
+    background-color: purple;
+}
