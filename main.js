@@ -7,6 +7,7 @@ let postIn;
 let preInPre;
 let postInPost;
 var embedOne, embedTwo, embedThree;
+var divArr = [];
 async function showTopic() {
     let feeds,response;
     response = await fetch(`https://api.twitch.tv/helix/streams`,{
@@ -26,7 +27,7 @@ async function showTopic() {
     postInPost = 2;
     preInPre = objArr.length-2;
     console.log()
-    loadNewSliders(sliderIndex)
+    // init();
    
 }
 showTopic();
@@ -50,15 +51,17 @@ async function showGame(gameId) {
     postIn = 1;
     postInPost = 2;
     preInPre = objArr.length-2;
-    loadNewSliders(sliderIndex);
+    // init();
     
    
 }
 let logoImgElem = document.querySelector('.logo-img');
 let mainContElem = document.querySelector('.full-container');
 let contElem = document.querySelector('.container');
-let rightElem = document.querySelector('.right-arrow');
-let leftElem = document.querySelector('.left-arrow');
+
+let mainResultCont = document.querySelector('.featured-container');
+let nextMoveButton = document.querySelector('.right-arrow');
+let prevMoveButton = document.querySelector('.left-arrow');
 let introElem = document.querySelector('.intro-content');
 let descElem = document.querySelector('.desc-content');
 let videoElem = document.querySelector('.video-bg');
@@ -103,10 +106,171 @@ async function proceedWithSearch(event){
     }
 }
 
+async function init(){
+    await showTopic();
+    let indArr = [preInPre, preIn,sliderIndex, postIn, postInPost];
+    for(let i =0; i < 5; i++){
+        let tempDiv = document.createElement('div');
+        let imgElem = document.createElement('img');
+        let imgL = new Image();
+        imgL.onload = function(){
+            imgElem.src = this.src;
+        }
+        imgL.src = getImageThumb(objArr[indArr[i]].thumbnail_url);
+        tempDiv.classList.add('featured-elem'); 
+        tempDiv.append(imgElem);
+        
+        mainResultCont.append(tempDiv);
+        divArr.push(tempDiv);
+    }
+    let videoFeatureElem = document.querySelector('.featured-container >:nth-child(3)');
+    videoFeatureElem.removeChild(videoFeatureElem.firstChild);
+    videoFeatureElem.innerHTML = `<iframe
+    src="https://player.twitch.tv/?channel=${objArr[sliderIndex].user_name}&parent=localhost&muted=true"
+    height="420"
+    width="880"
+    frameborder="0"
+    scrolling="no"
+    allowfullscreen="true">
+    </iframe>`;
+    console.log(sliderIndex);
+
+}
+async function initGame(x){
+    await showGame(x);
+    let indArr = [preInPre, preIn,sliderIndex, postIn, postInPost];
+    for(let i =0; i < 5; i++){
+        let tempDiv = document.createElement('div');
+        let imgElem = document.createElement('img');
+        let imgL = new Image();
+        imgL.onload = function(){
+            imgElem.src = this.src;
+        }
+        imgL.src = getImageThumb(objArr[indArr[i]].thumbnail_url);
+        tempDiv.classList.add('featured-elem'); 
+        tempDiv.append(imgElem);
+        
+        mainResultCont.append(tempDiv);
+        divArr.push(tempDiv);
+    }
+    let videoFeatureElem = document.querySelector('.featured-container >:nth-child(3)');
+    videoFeatureElem.removeChild(videoFeatureElem.firstChild);
+    videoFeatureElem.innerHTML = `<iframe
+    src="https://player.twitch.tv/?channel=${objArr[sliderIndex].user_name}&parent=localhost&muted=true"
+    height="420"
+    width="880"
+    frameborder="0"
+    scrolling="no"
+    allowfullscreen="true">
+    </iframe>`;
+    console.log(sliderIndex);
+}
+function moveLeft(event){
+    
+    postInPost = postIn;
+    postIn = sliderIndex;
+    sliderIndex--;
+    if(sliderIndex == -1)
+        sliderIndex = objArr.length-1;
+    
+    console.log(sliderIndex);
+    preIn = sliderIndex - 1;
+    if(preIn == -1)
+        preIn = objArr.length-1;
+    preInPre = preIn-1;
+    if(preInPre == -1)
+        preInPre = objArr.length-1;
+
+    
+    let newDiv = document.createElement('div');
+    newDiv.classList.add('featured-elem');
+
+    let imgElem = document.createElement('img');
+    let imgL = new Image();
+    imgL.onload = function(){
+        imgElem.src = this.src;
+    }
+    imgL.src = getImageThumb(objArr[postInPost].thumbnail_url);
+    newDiv.append(imgElem);
+    mainResultCont.removeChild(mainResultCont.querySelector('.featured-elem'));
+    mainResultCont.append(newDiv);
 
 
-rightElem.addEventListener('click', next);
-leftElem.addEventListener('click', previous);
+    let imageFeatureElem = document.querySelector('.featured-container >:nth-child(2)');
+    console.dir(imageFeatureElem);
+    imageFeatureElem.removeChild(mainResultCont.querySelector('iframe'));
+    imgElem = document.createElement('img');
+    imgL = new Image();
+    imgL.onload = function(){
+        imgElem.src = this.src;
+    }
+    imgL.src = getImageThumb(objArr[preIn].thumbnail_url);
+    imageFeatureElem.append(imgElem);
+
+    let videoFeatureElem = document.querySelector('.featured-container >:nth-child(3)');
+    videoFeatureElem.removeChild(videoFeatureElem.firstChild);
+    videoFeatureElem.innerHTML = `<iframe
+    src="https://player.twitch.tv/?channel=${objArr[sliderIndex].user_name}&parent=localhost&muted=true"
+    height="420"
+    width="880"
+    frameborder="0"
+    scrolling="no"
+    allowfullscreen="true">
+    </iframe>`;
+
+
+}
+function moveRight(event){
+    preInPre = preIn;
+    preIn = sliderIndex;
+    sliderIndex++;
+    if(sliderIndex == objArr.length)
+    sliderIndex = 0;
+
+    console.log(sliderIndex);
+    postIn = sliderIndex + 1;
+    if(postIn == objArr.length)
+        postIn = 0;
+    postInPost = postIn+1;
+    postInPost%=objArr.length;
+
+    mainResultCont.removeChild(mainResultCont.lastChild);
+    let newDiv = document.createElement('div');
+    newDiv.classList.add('featured-elem');
+
+    let imgElem = document.createElement('img');
+    let imgL = new Image();
+    imgL.onload = function(){
+        imgElem.src = this.src;
+    }
+    imgL.src = getImageThumb(objArr[preInPre].thumbnail_url);
+    newDiv.append(imgElem);
+    mainResultCont.prepend(newDiv);
+
+    let imageFeatureElem = document.querySelector('.featured-container >:nth-child(4)');
+    console.dir(imageFeatureElem);
+    imageFeatureElem.removeChild(mainResultCont.querySelector('iframe'));
+    imgElem = document.createElement('img');
+    imgL = new Image();
+    imgL.onload = function(){
+        imgElem.src = this.src;
+    }
+    imgL.src = getImageThumb(objArr[postIn].thumbnail_url);
+    imageFeatureElem.append(imgElem);
+
+    let videoFeatureElem = document.querySelector('.featured-container >:nth-child(3)');
+    videoFeatureElem.removeChild(videoFeatureElem.firstChild);
+    videoFeatureElem.innerHTML = `<iframe
+    src="https://player.twitch.tv/?channel=${objArr[sliderIndex].user_name}&parent=localhost&muted=true"
+    height="420"
+    width="880"
+    frameborder="0"
+    scrolling="no"
+    allowfullscreen="true">
+    </iframe>`;
+}
+prevMoveButton.addEventListener('click', moveLeft);
+nextMoveButton.addEventListener('click', moveRight);
 
 logoImgElem.addEventListener('mouseenter', replaceSrctoGif);
 logoImgElem.addEventListener('mouseleave', replaceSrctoPng);
@@ -327,6 +491,7 @@ function switchGames(event){
     let gameDivElem = event.target.closest('.game-div');
     if(gameDivElem){
         let x = gameDivElem.dataset.gameid;
-        showGame(x) 
+        initGame(x) 
     }
 }
+init();
