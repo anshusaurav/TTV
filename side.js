@@ -716,9 +716,7 @@ function getCounts(cnt) {
     
 
 }
-function loadComplete(){
-    
-}
+
 loadChannels();
 
 

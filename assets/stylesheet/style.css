@@ -527,7 +527,7 @@ body{
     transition: opacity 0.5s;
     
 }
-.pre-video:active, .next-video:active{
+.prev-video:active, .next-video:active{
     box-shadow: 0 0 10px rgba(145,71,255,0.6);
     -moz-box-shadow: 0 0 10px rgba(145,71,255,0.6);
     -webkit-box-shadow: 0 0 10px rgba(145,71,255,0.6);

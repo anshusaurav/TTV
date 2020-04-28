@@ -211,7 +211,7 @@ function next(event) {
     postInPost = postIn+1;
     postInPost%=objArr.length;
     
-    loadNewSliders(sliderIndex);
+    loadNewSliders();
 }
 function previous(event) {
     console.log('dsdas');
@@ -228,17 +228,20 @@ function previous(event) {
     preInPre = preIn-1;
     if(preInPre == -1)
         preInPre = objArr.length-1;
-    loadNewSliders(sliderIndex);
+    loadNewSliders();
 
 }
-function loadNewSliders(sliderIndex) {
+function moveLeft(){
+
+}
+function loadNewSliders() {  
     embedOne = null;
     embedTwo = null;
     embedThree = null; 
-    while(videoElem.firstChild){
-        videoElem.removeChild(videoElem.firstChild);
-    }
-    videoElem.style.background = 'url("assets/media/giphy.gif") center center no-repeat;';
+    // while(videoElem.firstChild){
+    //     videoElem.removeChild(videoElem.firstChild);
+    // }
+    // videoElem.style.background = 'url("assets/media/giphy.gif") center center no-repeat;';
     console.log(preInPre, preIn, sliderIndex, postIn, postInPost);
     videoElem.style.background = '#300A66';
     console.log('This: ',objArr[sliderIndex]);
@@ -255,7 +258,7 @@ function loadNewSliders(sliderIndex) {
     frameborder="0"
     scrolling="no"
     allowfullscreen="true">
-</iframe>`;
+    </iframe>`;
     // videoElem.style.background = 'black';
     // pElem.src = 'assets/media/giphy.gif';
     // nElem.src = 'assets/media/giphy.gif';
