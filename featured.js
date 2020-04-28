@@ -52,16 +52,16 @@ async function init(){
         mainResultCont.append(tempDiv);
         divArr.push(tempDiv);
     }
-    // let videoFeatureElem = document.querySelector('.featured-container >:nth-child(3)');
-    // videoFeatureElem.removeChild(videoFeatureElem.firstChild);
-    // videoFeatureElem.innerHTML = `<iframe
-    // src="https://player.twitch.tv/?channel=${objArr[sliderIndex].user_name}&parent=localhost&muted=true"
-    // height="420"
-    // width="880"
-    // frameborder="0"
-    // scrolling="no"
-    // allowfullscreen="true">
-    // </iframe>`;
+    let videoFeatureElem = document.querySelector('.featured-container >:nth-child(3)');
+    videoFeatureElem.removeChild(videoFeatureElem.firstChild);
+    videoFeatureElem.innerHTML = `<iframe
+    src="https://player.twitch.tv/?channel=${objArr[sliderIndex].user_name}&parent=localhost&muted=true"
+    height="420"
+    width="880"
+    frameborder="0"
+    scrolling="no"
+    allowfullscreen="true">
+    </iframe>`;
     console.log(sliderIndex);
 
 }
@@ -96,16 +96,27 @@ function moveLeft(event){
     mainResultCont.append(newDiv);
 
 
-    // let videoFeatureElem = document.querySelector('.featured-container >:nth-child(2)');
-    // console.dir(videoFeatureElem);
-    // videoFeatureElem.removeChild(videoFeatureElem.firstChild);
-    // imgElem = document.createElement('img');
-    // imgL = new Image();
-    // imgL.onload = function(){
-    //     imgElem.src = this.src;
-    // }
-    // imgL.src = getImageThumb(objArr[preIn].thumbnail_url);
-    // videoFeatureElem.append(imgElem);
+    let imageFeatureElem = document.querySelector('.featured-container >:nth-child(2)');
+    console.dir(imageFeatureElem);
+    imageFeatureElem.removeChild(mainResultCont.querySelector('iframe'));
+    imgElem = document.createElement('img');
+    imgL = new Image();
+    imgL.onload = function(){
+        imgElem.src = this.src;
+    }
+    imgL.src = getImageThumb(objArr[preIn].thumbnail_url);
+    imageFeatureElem.append(imgElem);
+
+    let videoFeatureElem = document.querySelector('.featured-container >:nth-child(3)');
+    videoFeatureElem.removeChild(videoFeatureElem.firstChild);
+    videoFeatureElem.innerHTML = `<iframe
+    src="https://player.twitch.tv/?channel=${objArr[sliderIndex].user_name}&parent=localhost&muted=true"
+    height="420"
+    width="880"
+    frameborder="0"
+    scrolling="no"
+    allowfullscreen="true">
+    </iframe>`;
 
 
 }
@@ -135,6 +146,28 @@ function moveRight(event){
     imgL.src = getImageThumb(objArr[preInPre].thumbnail_url);
     newDiv.append(imgElem);
     mainResultCont.prepend(newDiv);
+
+    let imageFeatureElem = document.querySelector('.featured-container >:nth-child(4)');
+    console.dir(imageFeatureElem);
+    imageFeatureElem.removeChild(mainResultCont.querySelector('iframe'));
+    imgElem = document.createElement('img');
+    imgL = new Image();
+    imgL.onload = function(){
+        imgElem.src = this.src;
+    }
+    imgL.src = getImageThumb(objArr[postIn].thumbnail_url);
+    imageFeatureElem.append(imgElem);
+
+    let videoFeatureElem = document.querySelector('.featured-container >:nth-child(3)');
+    videoFeatureElem.removeChild(videoFeatureElem.firstChild);
+    videoFeatureElem.innerHTML = `<iframe
+    src="https://player.twitch.tv/?channel=${objArr[sliderIndex].user_name}&parent=localhost&muted=true"
+    height="420"
+    width="880"
+    frameborder="0"
+    scrolling="no"
+    allowfullscreen="true">
+    </iframe>`;
 }
 
 function getImageThumb(str){
