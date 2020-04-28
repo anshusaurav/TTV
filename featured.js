@@ -41,23 +41,38 @@ async function init(){
     for(let i =0; i < 5; i++){
         let tempDiv = document.createElement('div');
         let imgElem = document.createElement('img');
-        imgElem.src = getImageThumb(objArr[indArr[i]].thumbnail_url);
+        let imgL = new Image();
+        imgL.onload = function(){
+            imgElem.src = this.src;
+        }
+        imgL.src = getImageThumb(objArr[indArr[i]].thumbnail_url);
         tempDiv.classList.add('featured-elem'); 
         tempDiv.append(imgElem);
         
         mainResultCont.append(tempDiv);
         divArr.push(tempDiv);
     }
+    // let videoFeatureElem = document.querySelector('.featured-container >:nth-child(3)');
+    // videoFeatureElem.removeChild(videoFeatureElem.firstChild);
+    // videoFeatureElem.innerHTML = `<iframe
+    // src="https://player.twitch.tv/?channel=${objArr[sliderIndex].user_name}&parent=localhost&muted=true"
+    // height="420"
+    // width="880"
+    // frameborder="0"
+    // scrolling="no"
+    // allowfullscreen="true">
+    // </iframe>`;
+    console.log(sliderIndex);
 
 }
-function moveLeft(){
+function moveLeft(event){
     
     postInPost = postIn;
     postIn = sliderIndex;
-    if(sliderIndex == 0)
+    sliderIndex--;
+    if(sliderIndex == -1)
         sliderIndex = objArr.length-1;
-    else
-        sliderIndex--;
+    
     console.log(sliderIndex);
     preIn = sliderIndex - 1;
     if(preIn == -1)
@@ -65,16 +80,36 @@ function moveLeft(){
     preInPre = preIn-1;
     if(preInPre == -1)
         preInPre = objArr.length-1;
-    mainResultCont.removeChild(mainResultCont.firstChild);
+
+    
     let newDiv = document.createElement('div');
     newDiv.classList.add('featured-elem');
+
     let imgElem = document.createElement('img');
-    imgElem.src = getImageThumb(objArr[postInPost].thumbnail_url);
+    let imgL = new Image();
+    imgL.onload = function(){
+        imgElem.src = this.src;
+    }
+    imgL.src = getImageThumb(objArr[postInPost].thumbnail_url);
     newDiv.append(imgElem);
+    mainResultCont.removeChild(mainResultCont.querySelector('.featured-elem'));
     mainResultCont.append(newDiv);
 
+
+    // let videoFeatureElem = document.querySelector('.featured-container >:nth-child(2)');
+    // console.dir(videoFeatureElem);
+    // videoFeatureElem.removeChild(videoFeatureElem.firstChild);
+    // imgElem = document.createElement('img');
+    // imgL = new Image();
+    // imgL.onload = function(){
+    //     imgElem.src = this.src;
+    // }
+    // imgL.src = getImageThumb(objArr[preIn].thumbnail_url);
+    // videoFeatureElem.append(imgElem);
+
+
 }
-function moveRight(){
+function moveRight(event){
     preInPre = preIn;
     preIn = sliderIndex;
     sliderIndex++;
@@ -87,11 +122,17 @@ function moveRight(){
         postIn = 0;
     postInPost = postIn+1;
     postInPost%=objArr.length;
+
     mainResultCont.removeChild(mainResultCont.lastChild);
     let newDiv = document.createElement('div');
     newDiv.classList.add('featured-elem');
+
     let imgElem = document.createElement('img');
-    imgElem.src = getImageThumb(objArr[preInPre].thumbnail_url);
+    let imgL = new Image();
+    imgL.onload = function(){
+        imgElem.src = this.src;
+    }
+    imgL.src = getImageThumb(objArr[preInPre].thumbnail_url);
     newDiv.append(imgElem);
     mainResultCont.prepend(newDiv);
 }

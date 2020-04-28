@@ -10,7 +10,7 @@
     max-width: 1040px;
     position: absolute;
     border: 2px solid palegreen;
-    transition: all 0.3s ease-in;
+    transition: all 0.3s ease-in-out    ;
 }
 .featured-elem > img{
     width:100%;
