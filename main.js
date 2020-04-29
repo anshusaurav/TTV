@@ -20,13 +20,13 @@ async function showTopic() {
     console.log('search');
     //console.log(feeds);
     objArr.push(...feeds.data);
-    console.log(objArr);
+    // console.log(objArr);
     sliderIndex = 0;
     preIn = objArr.length-1;
     postIn = 1;
     postInPost = 2;
     preInPre = objArr.length-2;
-    console.log()
+    // console.log()
     // init();
    
 }
@@ -41,11 +41,11 @@ async function showGame(gameId) {
     });
     
     feeds = await response.json();
-    console.log('game');
+    // console.log('game');
     objArr = [];
 
     objArr.push(...feeds.data);
-    console.log(objArr);
+    // console.log(objArr);
     sliderIndex = 0;
     preIn = objArr.length-1;
     postIn = 1;
@@ -96,7 +96,7 @@ let searchFound = true;
 async function proceedWithSearch(event){
     if(event.keyCode == 13) {
         let str = this.value;
-        console.log(str);
+        // console.log(str);
         sessionStorage.setItem('searchedKey', str);  
         window.open(
             'search.html',
@@ -133,7 +133,7 @@ async function init(){
     scrolling="no"
     allowfullscreen="true">
     </iframe>`;
-    console.log(sliderIndex);
+    // console.log(sliderIndex);
 
 }
 async function initGame(x){
@@ -163,7 +163,7 @@ async function initGame(x){
     scrolling="no"
     allowfullscreen="true">
     </iframe>`;
-    console.log(sliderIndex);
+    // console.log(sliderIndex);
 }
 function moveLeft(event){
     
@@ -173,7 +173,7 @@ function moveLeft(event){
     if(sliderIndex == -1)
         sliderIndex = objArr.length-1;
     
-    console.log(sliderIndex);
+    // console.log(sliderIndex);
     preIn = sliderIndex - 1;
     if(preIn == -1)
         preIn = objArr.length-1;
@@ -197,7 +197,7 @@ function moveLeft(event){
 
 
     let imageFeatureElem = document.querySelector('.featured-container >:nth-child(2)');
-    console.dir(imageFeatureElem);
+    // console.dir(imageFeatureElem);
     imageFeatureElem.removeChild(mainResultCont.querySelector('iframe'));
     imgElem = document.createElement('img');
     imgL = new Image();
@@ -227,7 +227,7 @@ function moveRight(event){
     if(sliderIndex == objArr.length)
     sliderIndex = 0;
 
-    console.log(sliderIndex);
+    // console.log(sliderIndex);
     postIn = sliderIndex + 1;
     if(postIn == objArr.length)
         postIn = 0;
@@ -248,7 +248,7 @@ function moveRight(event){
     mainResultCont.prepend(newDiv);
 
     let imageFeatureElem = document.querySelector('.featured-container >:nth-child(4)');
-    console.dir(imageFeatureElem);
+    // console.dir(imageFeatureElem);
     imageFeatureElem.removeChild(mainResultCont.querySelector('iframe'));
     imgElem = document.createElement('img');
     imgL = new Image();
@@ -295,9 +295,9 @@ let categoryElemList = document.querySelectorAll('.section-header');
 let categorySupportList = document.querySelectorAll('.support-header');
 let categoryCompList = document.querySelectorAll('.section-tab');
 
-console.log(categoryElemList);
-console.log(categorySupportList);
-console.log(categoryCompList);
+// console.log(categoryElemList);
+// console.log(categorySupportList);
+// console.log(categoryCompList);
 // gameNavElem.style.display = 'none';
 function placeSupport(){
     categorySupportList.forEach((elem, index) =>{
@@ -361,15 +361,15 @@ function showCategories(event){
 }
 function imgReplaceGif(){
     let pElem = document.querySelector('.prev-thumb');
-    console.log(pElem.clientHeight, pElem.clientWidth);
+    // console.log(pElem.clientHeight, pElem.clientWidth);
     pElem = document.querySelector('.next-thumb');
-    console.log(pElem.clientHeight, pElem.clientWidth);
+    // console.log(pElem.clientHeight, pElem.clientWidth);
 
 }
 function getImageThumb(str){
     let ind = str.indexOf('-{width}x{height}');
     let res = str.substr(0, ind) + str.substr(ind+17);
-    console.log(res);
+    // console.log(res);
     return res;
 }
 

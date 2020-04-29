@@ -17,6 +17,10 @@
     height:100% !important;
     position:absolute;
 }
+.featured-container div:hover:not(:nth-child(3)) {
+    transform: scale(1.02);
+    transition: scale 1s cubic-bezier(0.79, 0.14, 0, 1);
+}
 .featured-container >:nth-child(1) {
     left:0px;
     top: 40px;
