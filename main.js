@@ -199,13 +199,13 @@ function moveLeft(event){
     let imageFeatureElem = document.querySelector('.featured-container >:nth-child(2)');
     // console.dir(imageFeatureElem);
     imageFeatureElem.removeChild(mainResultCont.querySelector('iframe'));
-    imgElem = document.createElement('img');
-    imgL = new Image();
-    imgL.onload = function(){
-        imgElem.src = this.src;
+    let imgElem2 = document.createElement('img');
+    let  imgL2 = new Image();
+    imgL2.onload = function(){
+        imgElem2.src = this.src;
     }
-    imgL.src = getImageThumb(objArr[preIn].thumbnail_url);
-    imageFeatureElem.append(imgElem);
+    imgL2.src = getImageThumb(objArr[preIn].thumbnail_url);
+    imageFeatureElem.append(imgElem2);
 
     let videoFeatureElem = document.querySelector('.featured-container >:nth-child(3)');
     videoFeatureElem.removeChild(videoFeatureElem.firstChild);
@@ -250,13 +250,13 @@ function moveRight(event){
     let imageFeatureElem = document.querySelector('.featured-container >:nth-child(4)');
     // console.dir(imageFeatureElem);
     imageFeatureElem.removeChild(mainResultCont.querySelector('iframe'));
-    imgElem = document.createElement('img');
-    imgL = new Image();
-    imgL.onload = function(){
-        imgElem.src = this.src;
+    let imgElem2 = document.createElement('img');
+    let imgL2 = new Image();
+    imgL2.onload = function(){
+        imgElem2.src = this.src;
     }
-    imgL.src = getImageThumb(objArr[postIn].thumbnail_url);
-    imageFeatureElem.append(imgElem);
+    imgL2.src = getImageThumb(objArr[postIn].thumbnail_url);
+    imageFeatureElem.append(imgElem2);
 
     let videoFeatureElem = document.querySelector('.featured-container >:nth-child(3)');
     videoFeatureElem.removeChild(videoFeatureElem.firstChild);
