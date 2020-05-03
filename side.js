@@ -1,6 +1,3 @@
-//https://api.twitch.tv/helix/videos?user_id=108268890 for videos
-
-
 
 let channelMainElem = document.querySelector('.streams-list-div');
 let videosMainElem = document.querySelector('.videos-list-div');
@@ -9,8 +6,6 @@ let headerElems = document.querySelectorAll('.search-res-headers');
 let allHrElems = document.querySelectorAll('hr');
 let titleElem = document.querySelector('title');
 
-//gameNameIdMap.set()
-//169376085
 class SearchMain{
     constructor(str){
         this.user = '';
@@ -21,7 +16,7 @@ class SearchMain{
         this.flagView = false;
         this.lang = '';
         this.view = '';
-        this.numResult = 2;
+        this.numResult = 10;
         this.query = '';
         this.valid = false;
         this.errorStr = '';
@@ -364,7 +359,6 @@ class SearchMain{
         }
     }
     async getTagByGame(tag_id){
-        //https://api.twitch.tv/helix/tags/streams?tag_id=0569b171-2a2b-476e-a596-5bdfb45a1327
         if(this.tagsMap.has(tag_id))
             return this.tagsMap.get(tag_id); 
         let feeds,response;
@@ -387,14 +381,6 @@ class SearchMain{
         }
     }
 }
-
-
-
-
-
-// getGameName(29595)
-
-
 headerElems.forEach(elem =>elem.style.display = 'none');
 allHrElems.forEach(elem =>elem.style.display = 'none');
 async function loadChannels() {
@@ -474,7 +460,6 @@ async function loadChannels() {
             });
             headerElems.forEach(elem =>elem.style.display = 'block');
             allHrElems.forEach(elem =>elem.style.display = 'block');
-            // headerElem.style.display = 'block';
 
             let resVid = await searchEx1.getVideosByUser();
             let arrVid = resVid.result;
@@ -498,23 +483,17 @@ async function loadChannels() {
             </div>`;
            
             });
-           
-// //https://static-cdn.jtvnw.net/cf_vods/d2nvs31859zcd8/d62baf5b9966672aa9a8_gorgc_1278993105_79997912/thumb/thumb0.jpg
             videosMainElem.innerHTML = vidStr;
-            // console.log(arrVid);
             return true;
         }
         else{
             console.log(searchEx1.user +' '+ searchEx1.game + ' ' +searchEx1.errorStr);
-            // if()
             console.log(res.isInternet);
             if(res.isInternet === 1)  {
                 headerElems[0].innerHTML = "No Internet";
-                // allHrElems[0].style.display = 'block';
             }
             else if(res.isInternet === 2) {
                 headerElems[0].innerHTML = "No matches found"
-                // allHrElems[0].style.display = 'block';
             }
             headerElems[0].style.display = 'block';
             allHrElems[0].style.display = 'block';
@@ -522,7 +501,6 @@ async function loadChannels() {
             flag = true
             return false;
         }
-        // paintLiveChannel();
     }
     else if(searchEx1.gFlag == 2) {                 
         let res;
@@ -546,13 +524,11 @@ async function loadChannels() {
         console.log('Done: ' + res.isDone);
         if(res.isDone){
             let arr = res.result;
-            
-            // console.log('HERE');
+
             console.log(arr.length);
             if(arr.length == 0) {
                 searchEx1.ErrorStr = 'No results found';
             }
-            // console.log(gameN.res);
             arr.forEach(elem =>{
 
                 let tempStr = '';
@@ -571,14 +547,14 @@ async function loadChannels() {
                         <h4 class='stream-title-name'>${elem.title}</h4>
                         <h5 class='Language'>${elem.language}</h5>`;
                     
-            if(elem.tag_ids){
-                str += `<div class="tags-container">`;
-                elem.tag_ids.forEach(async(e) =>{
-                    let x = await searchEx1.tagsMap.get(e);
-                    str +=`<p class="tags-elem">${x} </p>`;
-                })
-                str += '</div>';
-            }   
+            // if(elem.tag_ids){
+            //     str += `<div class="tags-container">`;
+            //     elem.tag_ids.forEach(async(e) =>{
+            //         let x = await searchEx1.tagsMap.get(e);
+            //         str +=`<p class="tags-elem">${x} </p>`;
+            //     })
+            //     str += '</div>';
+            // }   
             str +=`</div>
                 </div>
             </div>`;
@@ -635,7 +611,6 @@ async function loadChannels() {
             </div>`;
             });
 
-// //https://static-cdn.jtvnw.net/cf_vods/d2nvs31859zcd8/d62baf5b9966672aa9a8_gorgc_1278993105_79997912/thumb/thumb0.jpg
             videosMainElem.innerHTML = vidStr;
             console.log(arrVid);
             return true;
